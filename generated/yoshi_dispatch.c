@@ -3531,6 +3531,14 @@ void call_by_address(uint16_t addr) {
             func_CFB1(); break;
         case 0xA2A5:
             func_A2A5_b1(); break;
+        case 0xA310:
+            func_A310_b1(); break;
+        case 0xA316:
+            func_A316_b1(); break;
+        case 0xA299:
+            func_A299_b1(); break;
+        case 0xA2D3:
+            func_A2D3_b1(); break;
         case 0x9F8E:
             func_9F8E_b0(); break;
         case 0xAE16:

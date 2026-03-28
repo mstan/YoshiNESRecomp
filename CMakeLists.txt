@@ -1,10 +1,18 @@
 cmake_minimum_required(VERSION 3.20)
-project(YoshiRecomp C)
+project(YoshiRecomp C CXX)
 
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 set(NESRECOMP_ROOT ${CMAKE_SOURCE_DIR}/nesrecomp)
 include(${NESRECOMP_ROOT}/runner/runner.cmake)
+
+# ---- Nestopia Oracle (optional) ----
+option(ENABLE_NESTOPIA_ORACLE "Build with Nestopia emulator oracle for verify mode" ON)
+
+if(ENABLE_NESTOPIA_ORACLE)
+    include(${CMAKE_SOURCE_DIR}/nestopia_cmake.cmake)
+endif()
 
 list(APPEND CMAKE_PREFIX_PATH "${NESRECOMP_ROOT}/runner/external/SDL2/cmake")
 find_package(SDL2 REQUIRED)
@@ -12,6 +20,9 @@ find_package(SDL2 REQUIRED)
 add_executable(YoshiRecomp
     ${NESRECOMP_RUNNER_SOURCES}
     extras.c
+    nes_snapshot.c
+    verify_mode.c
+    recomp_stack.c
     generated/yoshi_full.c
     generated/yoshi_dispatch.c
 )
@@ -23,6 +34,18 @@ target_include_directories(YoshiRecomp PRIVATE
 )
 
 target_link_libraries(YoshiRecomp PRIVATE ${SDL2_LIBRARIES})
+
+if(ENABLE_NESTOPIA_ORACLE)
+    target_sources(YoshiRecomp PRIVATE
+        nestopia_bridge.cpp
+    )
+    target_link_libraries(YoshiRecomp PRIVATE nestopia_core)
+    target_compile_definitions(YoshiRecomp PRIVATE ENABLE_NESTOPIA_ORACLE)
+    target_include_directories(YoshiRecomp PRIVATE
+        ${CMAKE_SOURCE_DIR}/nestopia-core/libretro
+        ${CMAKE_SOURCE_DIR}/nestopia-core/libretro/libretro-common/include
+    )
+endif()
 
 if(WIN32)
     target_link_libraries(YoshiRecomp PRIVATE ws2_32)

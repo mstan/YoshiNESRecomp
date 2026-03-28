@@ -22,7 +22,9 @@ void game_on_init(void) {
     debug_server_init(4370);
 }
 
-void game_on_frame(uint64_t frame_count) { (void)frame_count; }
+void game_on_frame(uint64_t frame_count) {
+    (void)frame_count;
+}
 
 void game_post_nmi(uint64_t frame_count) { (void)frame_count; }
 
@@ -37,22 +39,7 @@ void game_run_nmi(void) { func_NMI(); }
 
 void game_run_main(void) { func_RESET(); }
 
-int game_dispatch_override(uint16_t addr) {
-    if (addr == 0x11E7) {
-        extern int g_current_bank;
-        extern uint64_t g_frame_count;
-        fprintf(stderr, "[DIAG] dispatch $11E7 at frame=%llu bank=%d S=$%02X "
-                "stack=[%02X %02X %02X %02X] "
-                "ptr_AD=%02X%02X ptr_DA=%02X%02X "
-                "ram78=%02X A=%02X X=%02X Y=%02X\n",
-                (unsigned long long)g_frame_count, g_current_bank, g_cpu.S,
-                g_ram[0x1FD], g_ram[0x1FE], g_ram[0x1FF], g_ram[0x1FC],
-                g_ram[0xAE], g_ram[0xAD], g_ram[0xDB], g_ram[0xDA],
-                g_ram[0x78], g_cpu.A, g_cpu.X, g_cpu.Y);
-        return 1; /* handled (as no-op) */
-    }
-    return 0;
-}
+int game_dispatch_override(uint16_t addr) { (void)addr; return 0; }
 
 uint8_t game_ram_read_hook(uint16_t pc, uint16_t addr, uint8_t val) {
     (void)pc; (void)addr;

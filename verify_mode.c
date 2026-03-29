@@ -93,26 +93,68 @@ int verify_mode_run_nmi(void) {
         }
     }
 
-    /* Also compare CHR/VRAM tile $00 at $1000 (BG pattern table) */
-    static uint8_t emu_vram[0x4000];
-    int vram_size = 0;
-    nestopia_bridge_get_vram(emu_vram, &vram_size);
+    /* Compare PPU internals: CHR, palette, nametable, OAM */
+    if (g_frame_count == 30) {
+        static uint8_t emu_chr[0x2000];
+        static uint8_t emu_pal[0x20];
+        static uint8_t emu_nmt[0x800];
+        static uint8_t emu_oam[0x100];
 
-    /* Log CHR tile $00 comparison on first few frames */
-    /* Compare framebuffer pixels to detect CHR bank mismatch */
-    if (g_frame_count == 600) {
-        static uint32_t emu_fb[256*240];
-        nestopia_bridge_get_framebuf_argb(emu_fb);
-        /* Pixel (4,4) is deep inside tile $00 at nametable position (0,0) */
-        uint32_t ep = emu_fb[4*256+4] & 0xFFFFFF;
-        /* Pixel (128,120) is mid-screen, also tile $00 area */
-        uint32_t ep2 = emu_fb[120*256+128] & 0xFFFFFF;
-        fprintf(stderr, "[verify] EMU pixels: (4,4)=0x%06X (128,120)=0x%06X\n", ep, ep2);
-        fprintf(stderr, "[verify] NATIVE chr[0x1000]=%02X%02X%02X%02X chr[0x0000]=%02X%02X%02X%02X\n",
-                g_chr_ram[0x1000], g_chr_ram[0x1001], g_chr_ram[0x1002], g_chr_ram[0x1003],
-                g_chr_ram[0x0000], g_chr_ram[0x0001], g_chr_ram[0x0002], g_chr_ram[0x0003]);
-        fprintf(stderr, "[verify] native $76=%02X $77=%02X emu $76=%02X $77=%02X\n",
-                g_ram[0x76], emu_ram[0x76], g_ram[0x77], emu_ram[0x77]);
+        nestopia_bridge_get_chr(emu_chr, 0x2000);
+        nestopia_bridge_get_palette(emu_pal);
+        nestopia_bridge_get_nametable(emu_nmt);
+        nestopia_bridge_get_oam(emu_oam);
+
+        /* CHR at $1000 (BG pattern table, tile $00) */
+        int chr_match = (memcmp(g_chr_ram + 0x1000, emu_chr + 0x1000, 16) == 0);
+        fprintf(stderr, "[PPU-CMP] CHR $1000 tile0: %s\n", chr_match ? "MATCH" : "DIFFER");
+        if (!chr_match) {
+            fprintf(stderr, "  native: %02X%02X%02X%02X %02X%02X%02X%02X\n",
+                    g_chr_ram[0x1000], g_chr_ram[0x1001], g_chr_ram[0x1002], g_chr_ram[0x1003],
+                    g_chr_ram[0x1008], g_chr_ram[0x1009], g_chr_ram[0x100A], g_chr_ram[0x100B]);
+            fprintf(stderr, "  nestop: %02X%02X%02X%02X %02X%02X%02X%02X\n",
+                    emu_chr[0x1000], emu_chr[0x1001], emu_chr[0x1002], emu_chr[0x1003],
+                    emu_chr[0x1008], emu_chr[0x1009], emu_chr[0x100A], emu_chr[0x100B]);
+        }
+
+        /* CHR at $0000 (sprite pattern table, tile $00) */
+        int chr0_match = (memcmp(g_chr_ram, emu_chr, 16) == 0);
+        fprintf(stderr, "[PPU-CMP] CHR $0000 tile0: %s\n", chr0_match ? "MATCH" : "DIFFER");
+        if (!chr0_match) {
+            fprintf(stderr, "  native: %02X%02X%02X%02X\n  nestop: %02X%02X%02X%02X\n",
+                    g_chr_ram[0], g_chr_ram[1], g_chr_ram[2], g_chr_ram[3],
+                    emu_chr[0], emu_chr[1], emu_chr[2], emu_chr[3]);
+        }
+
+        /* Palette */
+        int pal_match = (memcmp(g_ppu_pal, emu_pal, 0x20) == 0);
+        fprintf(stderr, "[PPU-CMP] Palette: %s\n", pal_match ? "MATCH" : "DIFFER");
+        if (!pal_match) {
+            fprintf(stderr, "  native: "); for (int i=0;i<16;i++) fprintf(stderr,"%02X ",g_ppu_pal[i]); fprintf(stderr,"\n");
+            fprintf(stderr, "  nestop: "); for (int i=0;i<16;i++) fprintf(stderr,"%02X ",emu_pal[i]); fprintf(stderr,"\n");
+        }
+
+        /* Nametable (first 64 bytes = rows 0-1) */
+        int nmt_match = (memcmp(g_ppu_nt, emu_nmt, 64) == 0);
+        fprintf(stderr, "[PPU-CMP] Nametable row0-1: %s\n", nmt_match ? "MATCH" : "DIFFER");
+
+        /* OAM (first 16 sprites) */
+        int oam_match = (memcmp(g_ppu_oam, emu_oam, 64) == 0);
+        fprintf(stderr, "[PPU-CMP] OAM spr0-15: %s\n", oam_match ? "MATCH" : "DIFFER");
+        if (!oam_match) {
+            for (int i=0; i<4; i++) {
+                fprintf(stderr, "  spr%d: N=[Y=%d t=$%02X a=$%02X X=%d] E=[Y=%d t=$%02X a=$%02X X=%d] %s\n",
+                    i, g_ppu_oam[i*4], g_ppu_oam[i*4+1], g_ppu_oam[i*4+2], g_ppu_oam[i*4+3],
+                    emu_oam[i*4], emu_oam[i*4+1], emu_oam[i*4+2], emu_oam[i*4+3],
+                    memcmp(g_ppu_oam+i*4, emu_oam+i*4, 4)==0 ? "OK" : "DIFF");
+            }
+        }
+
+        /* Full CHR bank diff summary */
+        int chr_diffs = 0;
+        for (int i = 0; i < 0x2000; i++)
+            if (g_chr_ram[i] != emu_chr[i]) chr_diffs++;
+        fprintf(stderr, "[PPU-CMP] CHR total: %d/8192 bytes differ\n", chr_diffs);
     }
 
     int passed = (diff_count == 0);

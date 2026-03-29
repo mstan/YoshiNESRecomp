@@ -182,6 +182,32 @@ void nestopia_bridge_get_vram(uint8_t *out, int *out_size) {
     }
 }
 
+/* PPU state — calls into libretro.cpp's nestopia_get_ppu_* functions */
+extern void nestopia_get_ppu_chr(uint8_t *out, int size);
+extern void nestopia_get_ppu_nametable(uint8_t *out);
+extern void nestopia_get_ppu_palette(uint8_t *out);
+extern void nestopia_get_ppu_oam(uint8_t *out);
+
+void nestopia_bridge_get_chr(uint8_t *out, int size) {
+    if (!s_loaded || !out) return;
+    nestopia_get_ppu_chr(out, size);
+}
+
+void nestopia_bridge_get_nametable(uint8_t *out) {
+    if (!s_loaded || !out) return;
+    nestopia_get_ppu_nametable(out);
+}
+
+void nestopia_bridge_get_palette(uint8_t *out) {
+    if (!s_loaded || !out) return;
+    nestopia_get_ppu_palette(out);
+}
+
+void nestopia_bridge_get_oam(uint8_t *out) {
+    if (!s_loaded || !out) return;
+    nestopia_get_ppu_oam(out);
+}
+
 void nestopia_bridge_shutdown(void) {
     if (s_loaded) {
         retro_unload_game();

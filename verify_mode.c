@@ -173,9 +173,11 @@ int verify_mode_run_nmi(void) {
         {
             static uint32_t emu_fb[256*240];
             nestopia_bridge_get_framebuf_argb(emu_fb);
-            /* Use the ACTUAL rendered framebuffer, not a re-render */
-            extern const uint32_t *runner_get_framebuf(void);
-            const uint32_t *native_fb = runner_get_framebuf();
+            /* Re-render to get native framebuffer for comparison */
+            extern void ppu_render_frame(uint32_t *fb);
+            static uint32_t native_fb_buf[256*240];
+            ppu_render_frame(native_fb_buf);
+            const uint32_t *native_fb = native_fb_buf;
 
             int px_diffs = 0;
             int structural_diffs = 0; /* diffs that aren't just palette LUT */

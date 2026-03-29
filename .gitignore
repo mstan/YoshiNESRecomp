@@ -5,3 +5,15 @@ build/
 *.log
 *.zip
 .mcp.json
+*.py
+*.toml.bak
+game_test.toml
+game.toml
+ghidra/
+banks/
+nestopia-core/
+nesrecomp/
+native_10s.png
+emu_10s.png
+generated/=*
+generated/Yoshi*

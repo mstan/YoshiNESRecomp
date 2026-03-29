@@ -1,0 +1,120 @@
+# Yoshi (NES) - NESRecomp configuration
+
+[game]
+name = "Yoshi"
+output_prefix = "yoshi"
+
+[functions]
+fixed = [0xF781, 0xF831, 0xFF25]
+bank1 = [0xA2D6, 0xA28E, 0xA284, 0xA2E2, 0xA340]
+
+# Bank 7 (fixed, $C000-$FFFF) data regions
+
+# Tile graphics, palettes, pointer/address tables ($C000-$CCA7)
+[[data_region]]
+bank = 7
+start = 0xC000
+end = 0xCCA8
+
+# Address tables and structured game data ($D302-$D4E4)
+[[data_region]]
+bank = 7
+start = 0xD302
+end = 0xD4E5
+
+# Descending lookup table ($D52F-$D542)
+[[data_region]]
+bank = 7
+start = 0xD52F
+end = 0xD543
+
+# Volume envelope / music data tables ($D5D3-$D842)
+[[data_region]]
+bank = 7
+start = 0xD5D3
+end = 0xD843
+
+# Small data block after PPU attribute writer ($EFB7-$EFD0)
+[[data_region]]
+bank = 7
+start = 0xEFB7
+end = 0xEFD1
+
+# Tile data + unused ROM padding ($F913-$FFD9)
+[[data_region]]
+bank = 7
+start = 0xF913
+end = 0xFFDA
+
+# ROM metadata string + interrupt vectors ($FFE1-$FFFF)
+[[data_region]]
+bank = 7
+start = 0xFFE1
+end = 0x10000
+
+# Bank 1 (switchable, $8000-$BFFF) data regions
+
+# Nametable/tilemap RLE data ($8000-$9E77)
+[[data_region]]
+bank = 1
+start = 0x8000
+end = 0x9E78
+
+# Address pointer tables + sprite defs + palettes ($A98C-$BFFF)
+[[data_region]]
+bank = 1
+start = 0xA98C
+end = 0xC000
+
+# Bank 0 (switchable, $8000-$BFFF) data regions
+
+# Tile data + zeros between functions ($9FE8-$A0AE)
+[[data_region]]
+bank = 0
+start = 0x9FE8
+end = 0xA0AE
+
+# PPU nametable update data ($A0DE-$A205)
+[[data_region]]
+bank = 0
+start = 0xA0DE
+end = 0xA206
+
+# Nametable tile data including inline PPU uploads ($A257-$A37B)
+[[data_region]]
+bank = 0
+start = 0xA257
+end = 0xA37C
+
+# Unused ROM padding + metadata + vectors ($BCC8-$C000)
+[[data_region]]
+bank = 0
+start = 0xBCC8
+end = 0xC000
+
+# Banks 2-6 (entirely unused, all $FF)
+
+[[data_region]]
+bank = 2
+start = 0x8000
+end = 0xC000
+
+[[data_region]]
+bank = 3
+start = 0x8000
+end = 0xC000
+
+[[data_region]]
+bank = 4
+start = 0x8000
+end = 0xC000
+
+[[data_region]]
+bank = 5
+start = 0x8000
+end = 0xC000
+
+[[data_region]]
+bank = 6
+start = 0x8000
+end = 0xC000

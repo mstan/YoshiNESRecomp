@@ -1,0 +1,82 @@
+Yoshi — Ghidra Import Instructions
+====================================
+
+ROM: Yoshi (NES), Mapper 1 (MMC1)
+PRG: 8 x 16KB banks, CHR: 16 x 8KB banks
+Vectors: NMI=$E122  RESET=$FFDA  IRQ=$E1ED
+
+Bank Layout:
+  bank00-06.bin — PRG Banks 0-6 (switchable, mapped at $8000-$BFFF)
+  bank07.bin    — PRG Bank 7 (fixed, always at $C000-$FFFF)
+  chr00-15.bin  — CHR ROM banks (tile graphics, not code)
+
+=====================
+STEP 1: Create Project
+=====================
+  File > New Project > Non-Shared Project > pick a folder > name it "YoshiNES"
+
+=====================
+STEP 2: Import Fixed Bank (bank07.bin) — DO THIS FIRST
+=====================
+  File > Import File > browse to bank07.bin
+  In the import dialog:
+    - Language: click "..." button, search "6502", pick "6502:LE:16:default"
+    - Format: Raw Binary
+    - Click "Options..." button at bottom
+      - Set "Base Address" to: C000
+    - Click OK, then OK again
+  Double-click the imported file in the project window to open it in CodeBrowser.
+  When asked "Analyze now?" click YES, accept defaults, click Analyze.
+
+=====================
+STEP 3: Import Switchable Banks (as needed)
+=====================
+  File > Import File > browse to bank00.bin (or whichever bank you need)
+  Same settings as above EXCEPT:
+    - Base Address: 8000
+  Repeat for other banks as needed. Each one maps to $8000-$BFFF.
+  (You can import them as separate programs in the same project.)
+
+=====================
+STEP 4: Define Entry Points (all in bank07.bin)
+=====================
+  To go to an address:  Press G  (or Edit > Go To...)
+  Type the hex address and press Enter.
+
+  To create a function:  Press F  (or right-click > Create Function)
+
+    G > FFDA > Enter    then    F          (RESET vector)
+    G > E122 > Enter    then    F          (NMI vector)
+    G > E1ED > Enter    then    F          (IRQ vector)
+
+=====================
+OTHER USEFUL HOTKEYS
+=====================
+  G         — Go to address
+  F         — Create function at cursor
+  D         — Disassemble bytes at cursor (if Ghidra didn't auto-disassemble)
+  C         — Clear code/data definition at cursor
+  L         — Rename/label the current address
+  ;         — Add a comment
+  Ctrl+E    — Edit bytes (hex editor)
+  Space     — Toggle between listing view and decompiler view
+  X         — Show cross-references (who calls this / who reads this)
+
+=====================
+KEY ADDRESSES TO INVESTIGATE (in bank07.bin)
+=====================
+  $CF25 — MMC1 Control register write (STA $9000 serial)
+  $CF3B — CHR Bank 0 write (STA $B000 serial)
+  $CF51 — CHR Bank 1 write (STA $D000 serial)
+  $CF65 — PRG bank switch entry: LDA #$01, falls through to $CF6B
+  $CF69 — PRG bank switch entry: LDA $78 (bank from zero page)
+  $CF6B — PRG serial write (STA $F000)
+  $CF7F — Frequently called utility function
+
+=====================
+CURRENT STATUS
+=====================
+  Zero dispatch misses! Game runs but renders garbled graphics because
+  CHR ROM banking isn't applied at runtime. The PPU renderer always uses
+  the first 8KB of CHR data instead of the bank selected by MMC1
+  chr0/chr1 registers. This is a framework-level fix.

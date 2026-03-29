@@ -1892,13 +1892,15 @@ void nestopia_get_ppu_chr(uint8_t *out, int size) {
     Core::Machine& m = emulator;
     int copy = (size < 0x2000) ? size : 0x2000;
     for (int i = 0; i < copy; i++) {
-        out[i] = m.ppu.chr.Source().Mem()[i];
+        out[i] = m.ppu.chr.Peek(i);  /* Read through page mapping, not raw ROM */
     }
 }
 
 void nestopia_get_ppu_nametable(uint8_t *out) {
     Core::Machine& m = emulator;
-    memcpy(out, m.ppu.GetNameTableRam(), 0x800);
+    for (int i = 0; i < 0x800; i++) {
+        out[i] = m.ppu.nmt.Peek(i);  /* Read through page mapping */
+    }
 }
 
 void nestopia_get_ppu_palette(uint8_t *out) {

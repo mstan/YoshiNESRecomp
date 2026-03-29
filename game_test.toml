@@ -1,0 +1,6 @@
+[game]
+name = "Yoshi"
+output_prefix = "yoshi"
+
+[functions]
+fixed = [0xF781, 0xF831, 0xFF25]

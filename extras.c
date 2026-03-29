@@ -14,6 +14,9 @@
 #include <stdio.h>
 #include <string.h>
 
+/* PNG save — defined in main_runner.c */
+extern void save_png(const char *path, int w, int h, const void *rgb, int stride);
+
 /* Globals expected by the runner framework */
 const char *g_rom_path_for_extras = NULL;
 int         g_watchdog_triggered  = 0;
@@ -96,6 +99,21 @@ void game_run_main(void) {
             nestopia_bridge_get_ram(g_ram);
             g_frame_count++;
             debug_server_record_frame();
+
+            /* Screenshot every 60 frames (same cadence as native) */
+            if (g_frame_count % 60 == 0) {
+                char path[80];
+                snprintf(path, sizeof(path), "C:/temp/emu_shot_%04llu.png",
+                         (unsigned long long)g_frame_count);
+                static uint8_t rgb[256 * 240 * 3];
+                for (int i = 0; i < 256 * 240; i++) {
+                    rgb[i*3+0] = (emu_argb[i] >> 16) & 0xFF;
+                    rgb[i*3+1] = (emu_argb[i] >>  8) & 0xFF;
+                    rgb[i*3+2] = (emu_argb[i]      ) & 0xFF;
+                }
+                save_png(path, 256, 240, rgb, 256*3);
+                printf("[EmuShot] Saved %s\n", path);
+            }
 
             SDL_Delay(16);
         }

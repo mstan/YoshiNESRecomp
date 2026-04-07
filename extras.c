@@ -25,7 +25,10 @@ uint32_t game_get_expected_crc32(void) { return 0x9474C09Cu; }
 const char *game_get_name(void) { return "Yoshi"; }
 
 void game_on_init(void) {
-    int port = (g_run_mode == RUN_MODE_EMULATED) ? 4371 : 4370;
+    /* TCP debug ports (project-unique to avoid conflict with siblings):
+     *   4380 — native recompiled Yoshi
+     *   4381 — Nestopia oracle (emulated mode) */
+    int port = (g_run_mode == RUN_MODE_EMULATED) ? 4381 : 4380;
     debug_server_init(port);
 
     if (g_run_mode != RUN_MODE_NATIVE && g_rom_path_for_extras) {
@@ -35,7 +38,14 @@ void game_on_init(void) {
 
 void game_on_frame(uint64_t frame_count) { (void)frame_count; }
 
-void game_post_nmi(uint64_t frame_count) { (void)frame_count; }
+void game_post_nmi(uint64_t frame_count) {
+    (void)frame_count;
+    /* In NATIVE/VERIFY modes, the ring buffer is filled here.
+     * EMULATED mode runs its own loop in game_run_main and records there. */
+    if (g_run_mode != RUN_MODE_EMULATED) {
+        debug_server_record_frame();
+    }
+}
 
 int game_handle_arg(const char *key, const char *val) {
     if (strcmp(key, "--verify") == 0) {
@@ -93,7 +103,40 @@ void game_run_main(void) {
             nestopia_bridge_get_framebuf_argb(emu_argb);
             runner_present_framebuf(emu_argb);
 
+            /* Mirror Nestopia internal state into the runner globals so the
+             * standard ring buffer captures oracle frames. After this block
+             * a snapshot from --emulated is structurally identical to one
+             * from --native, and the two can be byte-diffed for any frame. */
             nestopia_bridge_get_ram(g_ram);
+            nestopia_bridge_get_chr_ram(g_chr_ram, sizeof(g_chr_ram));
+            nestopia_bridge_get_nametable(g_ppu_nt, sizeof(g_ppu_nt));
+            nestopia_bridge_get_palette(g_ppu_pal);
+            nestopia_bridge_get_oam(g_ppu_oam);
+            {
+                NestopiaPpuRegs pr;
+                nestopia_bridge_get_ppu_regs(&pr);
+                g_ppuctrl     = pr.ctrl;
+                g_ppumask     = pr.mask;
+                g_ppuscroll_x = pr.scroll_x;
+                g_ppuscroll_y = pr.scroll_y;
+            }
+            {
+                NestopiaCpuRegs cr;
+                nestopia_bridge_get_cpu_regs(&cr);
+                g_cpu.A = cr.a;
+                g_cpu.X = cr.x;
+                g_cpu.Y = cr.y;
+                g_cpu.S = cr.sp;
+                g_cpu.P = cr.p;
+                /* Decode flag bits from P so the snapshot matches native. */
+                g_cpu.N = (cr.p >> 7) & 1;
+                g_cpu.V = (cr.p >> 6) & 1;
+                g_cpu.D = (cr.p >> 3) & 1;
+                g_cpu.I = (cr.p >> 2) & 1;
+                g_cpu.Z = (cr.p >> 1) & 1;
+                g_cpu.C = (cr.p >> 0) & 1;
+            }
+
             g_frame_count++;
             debug_server_record_frame();
 

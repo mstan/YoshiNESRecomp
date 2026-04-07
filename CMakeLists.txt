@@ -35,6 +35,10 @@ target_include_directories(YoshiRecomp PRIVATE
 
 target_link_libraries(YoshiRecomp PRIVATE ${SDL2_LIBRARIES})
 
+# Temporary: enable stack tracking for title-screen follower investigation.
+# Remove once root cause of $0248 reset is found.
+target_compile_definitions(YoshiRecomp PRIVATE RECOMP_STACK_TRACKING)
+
 if(ENABLE_NESTOPIA_ORACLE)
     target_sources(YoshiRecomp PRIVATE
         nestopia_bridge.cpp

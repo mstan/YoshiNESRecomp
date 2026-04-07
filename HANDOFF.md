@@ -1,155 +1,226 @@
-# Yoshi NES Recompilation — Handoff Prompt
+# Yoshi NES Recompilation — Handoff: Broken Title Screen
 
-Copy everything below this line into a new Claude Code session opened in
-`F:\Projects\nesrecomp-release\YoshiNESRecomp`:
+Copy everything below the line into a new context-cleared Claude Code session
+opened in `F:\Projects\nesrecomp-release\YoshiNESRecomp`. The session must
+follow the rules in `CLAUDE.md`, `DEBUG.md`, `TCP.md`, and
+`F:\Projects\PRINCIPLES.md`. No exceptions.
 
 ---
 
-## Context
+## What is PROVEN
 
-You are working on a **static NES recompilation** of Yoshi. The project
-translates 6502 machine code → C → native x64. It is NOT an emulator.
+1. **Gameplay works.** Once past the title screen, Yoshi runs correctly to
+   the user's eye. Frames advance at 60 fps, input responds, the game loop
+   is healthy.
+2. **The build is current and clean.** It links against the latest
+   `F:/Projects/nesrecomp/` runner (cycle-accurate NMI timing,
+   `maybe_trigger_vblank(int cycles)`). The local
+   `YoshiNESRecomp/nesrecomp/runner/` has been synced from upstream.
+3. **The recompiler finds 1846 functions** with `game.cfg`. There are no
+   compile errors. There ARE link-time `C4013` warnings about
+   `func_XXXX_bN` being implicitly extern from `yoshi_dispatch.c` —
+   those entries come from `extra_func` lines in `game.cfg` that point at
+   functions the function finder did not actually emit. They have not been
+   shown to cause the title-screen bug. **Do not assume they are related
+   without proof.**
+4. **TCP debug ports are project-unique:**
+   - Native recomp: `127.0.0.1:4380`
+   - Nestopia oracle (`--emulated` / `--verify`): `127.0.0.1:4381`
+   Source of truth: `extras.c::game_on_init`.
+5. **The Nestopia oracle is wired in.** `--verify` runs both, `--emulated`
+   runs Nestopia only. `verify_mode.c` already does per-frame RAM diffing
+   and records divergences in the ring buffer.
 
-The project is set up and builds successfully. The Ghidra MCP server is running
-on port 4998. Before doing anything, verify Ghidra is live:
+## What is NOT the problem
+
+- The build / sync work. Already done. Do not redo.
+- Mapper / CHR banking in general. Gameplay tile graphics work, so MMC1
+  CHR switching is functional in the steady state.
+- The function set for gameplay. The game runs.
+- TCP port collisions with sibling projects. Already moved to 4380/4381.
+
+Do not re-debug any of the above without producing measured evidence that
+contradicts it.
+
+## The bug — observed
+
+Symptom (user screenshot):
+- The Yoshi title screen renders with **garbage tiles in the background**:
+  multi-colored "egg cluster" sprites near the top, a fragment of pipe /
+  ground tiles in the middle, a broken Yoshi character glyph at the
+  bottom, and three stray colored sprite artifacts.
+- Background palette appears wrong (greys / olives where blue/black
+  belong).
+- The mouse cursor is visible because the SDL window has not drawn over
+  it — the framebuffer is still mostly empty.
+- This is **only** the title screen. Gameplay is correct.
+
+## The exact next question to answer
+
+> **At what frame, and at what memory or PPU address, does the recomp
+> first diverge from Nestopia while drawing the title screen?**
+
+Everything else is downstream of that. The bug is to be reduced to a single
+byte difference at a single frame on a single side (CHR / nametable /
+palette / OAM / mapper register / PPUCTRL latch).
+
+## The exact data needed to answer it
+
+You need a per-frame diff between native and Nestopia for the title-screen
+sequence — frame 0 through whichever frame the title fully renders in
+Nestopia (a few hundred frames at most). For each frame you must capture
+**all** of the following on **both** sides:
+
+- CPU: A, X, Y, S, P, full RAM `0x0000–0x07FF`
+- PPU: PPUCTRL, PPUMASK, PPUSTATUS, OAMADDR, scroll latches, addr latch
+- VRAM: nametables `$2000–$2FFF`, attribute tables, palette `$3F00–$3F1F`
+- CHR: pattern tables `$0000–$1FFF` (whichever banks are mapped)
+- OAM: full 256 bytes of sprite RAM
+- Mapper: MMC1 control + chr0 + chr1 + prg bank
+- Frame number, NMI/VBlank depth
+
+If `read_ppu` / `ppu_state` / `mapper_state` cannot return one of these
+fields on either server, **add the command** to
+`nesrecomp/runner/src/debug_server.c` (and the oracle counterpart) and
+rebuild before continuing. See `TCP.md` §"Adding a new command".
+
+Then walk the time series and identify the **first** frame where any byte
+of the above differs. That single byte is the bug.
+
+## The required workflow (do not skip steps)
+
+1. **Sanity check the build.** From `F:\Projects\nesrecomp-release\YoshiNESRecomp`:
+   ```
+   ./build/Release/YoshiRecomp.exe "Yoshi # NES.NES"
+   ```
+   Confirm the broken title screen is reproducible. Kill it. **Never leave
+   orphan instances** — they lock the binary on the next build.
+
+2. **Run verify mode** to get both servers up:
+   ```
+   ./build/Release/YoshiRecomp.exe "Yoshi # NES.NES" --verify
+   ```
+   Native: 4380. Oracle: 4381. Confirm both with `ping`.
+
+3. **Establish a state-sync method**, NOT a frame-number sync. The two
+   sides will not align frame-for-frame after RESET. Sync on a stable
+   marker: e.g. PPUCTRL value, palette write count, or a known title-screen
+   RAM byte. Document the marker.
+
+4. **Pull a time series from both ring buffers** covering frame 0 through
+   the title-screen render. Use `frame_range` / `frame_timeseries` /
+   `get_frame`.
+
+5. **Diff** byte for byte at the synced points. Produce diffs in the
+   format from `CLAUDE.md` §"REQUIRED DEBUGGING PROTOCOL" step 3:
+   ```
+   Frame:    <synced>
+   Location: 0xXXXX
+   Expected: 0xYY
+   Actual:   0xZZ
+   ```
+
+6. **Find the FIRST frame** where the diff appears. Not a downstream
+   symptom. The wrong tile on screen at frame 200 is *not* the bug — the
+   wrong byte at frame 47 (or wherever) is.
+
+7. **Trace the writer.** What recompiled function wrote that byte? What
+   6502 instruction? What was the call path? If you cannot identify the
+   writer, STOP and add the observability you need (watch / follow /
+   call_stack) — do not guess.
+
+8. **Classify.** Exactly one of:
+   - Codegen: the recompiler emitted wrong C for a 6502 instruction or
+     dispatch pattern. Fix in `nesrecomp/recompiler/src/code_generator.c`
+     or `function_finder.c`.
+   - Runner: the runtime / PPU / mapper modeled the hardware wrong. Fix
+     in `nesrecomp/runner/src/runtime.c`, `ppu_renderer.c`, or `mapper.c`.
+   - Timing: NMI / VBlank / cycle count. Fix in the runner timing code.
+   - Config: a missing function or a misclassified data region in
+     `game.cfg`. Per-function `extra_func` is a smell — prefer fixing the
+     function finder generically.
+
+9. **Apply the minimal fix** to the chosen layer. **Never edit
+   `generated/yoshi_full.c` or `generated/yoshi_dispatch.c`** — they are
+   build artifacts. If you cannot resist, you have misunderstood the rules.
+
+10. **Verify at the consumer.** Re-run with `--verify`. The diff must be
+    gone at the same synced frame, AND the title screen must render
+    correctly to the eye.
+
+## Hard rules — do not violate
+
+- **No `printf` / `fprintf` debugging.** TCP only. (`stderr` is unreliable
+  on Windows anyway.)
+- **No editing `generated/*.c` ever.** They are build artifacts.
+- **No stubs.** Missing functions get decoded, not faked. See
+  `PRINCIPLES.md` §20.
+- **No "let me try X and see".** If you cannot point at a measured diff,
+  you do not yet understand the bug. Gather data first.
+- **No reopening proven facts.** Gameplay works. The build is clean. The
+  ports are right. Build forward.
+- **Kill orphan game instances** before rebuilding — they lock
+  `YoshiRecomp.exe`.
+
+## Build / regen / run cheat sheet
 
 ```
-Call mcp__ghidra_yoshi__get_program_info
+# (a) regenerate Yoshi C from the ROM (after game.cfg or recompiler change)
+F:/Projects/nesrecomp/build/recompiler/Release/NESRecomp.exe "Yoshi # NES.NES" --game game.cfg
+
+# (b) build the game
+"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" --build build --config Release
+
+# (c) build the recompiler itself (only if its sources changed)
+"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" --build F:/Projects/nesrecomp/build/recompiler --config Release
+
+# (d) run modes
+./build/Release/YoshiRecomp.exe "Yoshi # NES.NES"            # native
+./build/Release/YoshiRecomp.exe "Yoshi # NES.NES" --verify   # native + oracle, diffed
+./build/Release/YoshiRecomp.exe "Yoshi # NES.NES" --emulated # oracle only
 ```
 
-If it doesn't respond, STOP. Ghidra must be running.
+## ROM / mapper recap
 
-## ROM Details
-
-- **Mapper 1 (MMC1)**, 8 PRG banks (128KB), 16 CHR ROM banks (128KB)
+- Mapper 1 (MMC1), 8 PRG banks (128 KB), 16 CHR ROM banks (128 KB)
 - Vectors: NMI=$E122, RESET=$FFDA, IRQ=$E1ED
 - CRC32 (data): 0x9474C09C
-- Bank 7 is the fixed bank ($C000-$FFFF), banks 0-6 are switchable ($8000-$BFFF)
-- CHR ROM banking is active — MMC1 chr0/chr1 registers switch tile graphics
+- Bank 7 fixed at $C000–$FFFF; banks 0–6 switch into $8000–$BFFF
+- CHR ROM banking via MMC1 chr0/chr1
 
-## What's Working
+## Files you may touch
 
-- CHR ROM bank switching (16 banks, applied at runtime via mapper_init_chr)
-- Title screen partially renders — "YOSHI" logo, copyright text, Yoshi character
-- Game loop runs at 60fps, frames advance normally
-- The recompiler finds 2833 functions
-
-## Current Problem
-
-The title screen **only renders the top half**. The bottom half is blank/wrong,
-the background behind the YOSHI logo is the wrong color (olive instead of blue),
-and there are 3 stray green sprite artifacts. The game appears frozen (no animation)
-but frames ARE advancing at 60fps.
-
-**Root cause: the recompiler's pointer scanner is misidentifying data bytes as
-code addresses.** This causes the game to dispatch to garbage addresses like
-`$11E7` (which is in RAM, not ROM). When these bad dispatches happen, game state
-gets corrupted and rendering setup doesn't complete.
-
-This is the same problem Dr. Mario had — it was fixed by adding `data_region`
-directives to the config to exclude data tables from the pointer scan.
-
-## The Fix
-
-Use Ghidra to identify data regions in each bank (especially bank 7 and bank 1)
-and add `[[data_region]]` entries to `game.toml`. The format is:
-
-```toml
-[[data_region]]
-bank = 7        # or 0-6 for switchable banks, 7 for fixed
-start = 0xC100  # start address (inclusive)
-end = 0xC200    # end address (exclusive)
-```
-
-### How to identify data regions in Ghidra:
-
-1. Look at the fixed bank (bank07.bin loaded at $C000)
-2. After auto-analysis, scroll through the listing view
-3. Data regions show up as:
-   - Undefined bytes (not disassembled as instructions)
-   - Tables of `.word` or `.byte` values
-   - Areas between functions that don't contain valid 6502 instructions
-   - Jump/dispatch tables (arrays of 16-bit addresses)
-4. Use `D` to try disassembling ambiguous regions — if the instructions
-   make no sense, it's data
-5. Note the start and end addresses of each data region
-
-### Priority areas to investigate:
-
-- **Bank 7 (fixed, $C000-$FFFF)**: Contains NMI, RESET, IRQ, and all
-  inter-bank dispatch. Most pointer scan false positives come from here.
-  Key addresses:
-  - $CF25 — MMC1 Control register write
-  - $CF3B — CHR Bank 0 write
-  - $CF51 — CHR Bank 1 write
-  - $CF65/$CF69 — PRG bank switch entries
-  - $CF6B — PRG serial write (STA $F000)
-
-- **Bank 1 ($8000-$BFFF)**: The dispatch miss `$11E7` came from bank 1.
-  This bank likely has data tables that the scanner picked up as addresses.
-
-## The Loop
-
-```
-1. GHIDRA: Examine a bank, identify data regions
-2. UPDATE game.toml: Add [[data_region]] entries
-3. REGENERATE: F:/Projects/nesrecomp/build/recompiler/Release/NESRecomp.exe "Yoshi # NES.NES" --game game.toml
-4. REBUILD: "C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe" --build build --config Release
-5. TEST: Run build/Release/YoshiRecomp.exe "Yoshi # NES.NES" --debug
-6. CHECK: Look at C:/temp/nes_shot_XXXX.png and dispatch_misses.log
-7. REPEAT until title screen renders correctly
-```
-
-## Key Rules
-
-- **RULE 1: Fix the tool, never the output.** generated/*.c files are build
-  artifacts. Never read them whole, never edit them. Fix code_generator.c,
-  function_finder.c, runtime.c, or game.toml instead.
-- **RULE 2: Check PATTERNS.md** before implementing any new dispatch pattern.
-  Read nesrecomp/PATTERNS.md first.
-- **No fprintf debug logging.** Use the TCP debug server if you need runtime
-  inspection (port 4370 when debug.ini exists next to the exe).
-
-## File Locations
-
-| File | Purpose |
-|------|---------|
-| `game.toml` | Recompiler config — add data_region, extra funcs, dispatch here |
-| `extras.c` | Game-specific hooks (CRC32, name, init) |
-| `nesrecomp/recompiler/src/code_generator.c` | 6502→C emitter |
-| `nesrecomp/recompiler/src/function_finder.c` | Function discovery / pointer scan |
+| File | Why |
+|------|-----|
+| `game.cfg` | Add a `data_region` or fix an `extra_func` if discovery is provably the cause |
+| `nesrecomp/recompiler/src/code_generator.c` | Codegen fixes |
+| `nesrecomp/recompiler/src/function_finder.c` | Discovery / dispatch fixes |
 | `nesrecomp/runner/src/runtime.c` | NES memory map, PPU register stubs |
-| `nesrecomp/runner/src/ppu_renderer.c` | Tile/sprite rendering |
-| `nesrecomp/runner/src/mapper.c` | MMC1/MMC3 bank switching + CHR banking |
-| `nesrecomp/PATTERNS.md` | 6502 dispatch idiom catalog |
+| `nesrecomp/runner/src/ppu_renderer.c` | Tile / sprite / palette rendering |
+| `nesrecomp/runner/src/mapper.c` | MMC1 banking |
+| `nesrecomp/runner/src/debug_server.c` | Add missing TCP queries here |
+| `extras.c` | Game hooks only — not a place to patch the bug |
 
-## Current game.toml
+## Files you must NOT touch
 
-```toml
-[game]
-name = "Yoshi"
-output_prefix = "yoshi"
+- `generated/yoshi_full.c`
+- `generated/yoshi_dispatch.c`
 
-[functions]
-fixed = [0xF781, 0xF831, 0xFF25]
-bank1 = [0xA2D6, 0xA28E, 0xA284, 0xA2E2, 0xA340]
-```
+These are regenerated by NESRecomp.exe. Any edit you make is silently lost
+on the next regen and the fix vanishes.
 
-## Bank Files for Ghidra
+## Definition of done
 
-Pre-extracted in `banks/` directory:
-- `bank07.bin` → import at base address $C000 (fixed bank, DO THIS FIRST)
-- `bank00.bin` through `bank06.bin` → import at base address $8000
-- Language: 6502:LE:16:default, Format: Raw Binary
+1. The first divergence between native and Nestopia on the title-screen
+   sequence is identified by frame, address, expected, and actual.
+2. The exact recompiled function and 6502 instruction responsible for the
+   wrong write is named.
+3. The root cause is classified as codegen / runner / timing / config.
+4. A minimal fix is applied to the chosen layer (never to generated/).
+5. `--verify` shows zero diffs across the title-screen frame range.
+6. The title screen renders correctly to the user.
+7. Gameplay still works.
 
-## Immediate Next Steps
-
-1. In Ghidra, examine bank07.bin ($C000-$FFFF). Run auto-analysis.
-2. Identify all data regions — look for undefined bytes, address tables,
-   tile data, string tables between functions.
-3. Add `[[data_region]]` entries to game.toml for each region found.
-4. Regenerate, rebuild, test. Check if dispatch misses decrease.
-5. If misses remain, import the offending switchable bank and repeat.
-6. Goal: zero dispatch misses AND a fully rendered title screen.
-
----
+If you cannot point at the exact variable, the exact instruction, and the
+exact moment of divergence — per `PRINCIPLES.md` §22 — you do not yet
+understand the bug and you must keep gathering data, not propose fixes.

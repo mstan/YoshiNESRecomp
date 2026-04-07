@@ -16,15 +16,6 @@
 #include <stdio.h>
 #include <string.h>
 
-/* Local stub: canonical nesrecomp debug_server has verify_pass / diff_count
- * fields in NESFrameRecord but no public setter (only Yoshi used one). For
- * the migration we keep verify_mode compiling without touching canonical.
- * Per CLAUDE.md Step 3, real plumbing will be revisited after baseline parity. */
-static void debug_server_set_verify_result(int passed, int diff_count,
-                                           const FrameDiffEntry *diffs, int n_diffs) {
-    (void)passed; (void)diff_count; (void)diffs; (void)n_diffs;
-}
-
 #ifdef ENABLE_NESTOPIA_ORACLE
 #include "nestopia_bridge.h"
 #endif

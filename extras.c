@@ -103,7 +103,40 @@ void game_run_main(void) {
             nestopia_bridge_get_framebuf_argb(emu_argb);
             runner_present_framebuf(emu_argb);
 
+            /* Mirror Nestopia internal state into the runner globals so the
+             * standard ring buffer captures oracle frames. After this block
+             * a snapshot from --emulated is structurally identical to one
+             * from --native, and the two can be byte-diffed for any frame. */
             nestopia_bridge_get_ram(g_ram);
+            nestopia_bridge_get_chr_ram(g_chr_ram, sizeof(g_chr_ram));
+            nestopia_bridge_get_nametable(g_ppu_nt, sizeof(g_ppu_nt));
+            nestopia_bridge_get_palette(g_ppu_pal);
+            nestopia_bridge_get_oam(g_ppu_oam);
+            {
+                NestopiaPpuRegs pr;
+                nestopia_bridge_get_ppu_regs(&pr);
+                g_ppuctrl     = pr.ctrl;
+                g_ppumask     = pr.mask;
+                g_ppuscroll_x = pr.scroll_x;
+                g_ppuscroll_y = pr.scroll_y;
+            }
+            {
+                NestopiaCpuRegs cr;
+                nestopia_bridge_get_cpu_regs(&cr);
+                g_cpu.A = cr.a;
+                g_cpu.X = cr.x;
+                g_cpu.Y = cr.y;
+                g_cpu.S = cr.sp;
+                g_cpu.P = cr.p;
+                /* Decode flag bits from P so the snapshot matches native. */
+                g_cpu.N = (cr.p >> 7) & 1;
+                g_cpu.V = (cr.p >> 6) & 1;
+                g_cpu.D = (cr.p >> 3) & 1;
+                g_cpu.I = (cr.p >> 2) & 1;
+                g_cpu.Z = (cr.p >> 1) & 1;
+                g_cpu.C = (cr.p >> 0) & 1;
+            }
+
             g_frame_count++;
             debug_server_record_frame();
 

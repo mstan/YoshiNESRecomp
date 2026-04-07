@@ -65,7 +65,9 @@ int verify_mode_run_nmi(void) {
     }
 
     /* VERIFY mode: native runs the game, Nestopia runs in background.
-     * Compare RAM after each frame. Log all divergences. */
+     * Compare work RAM + nametable RAM after each frame. The first up to
+     * MAX_FRAME_DIFFS divergences are recorded into the ring buffer via
+     * debug_server_set_verify_result(); query frame_diff over TCP. */
 
     /* 1. Run native NMI */
     func_NMI();
@@ -73,60 +75,59 @@ int verify_mode_run_nmi(void) {
     /* 2. Run Nestopia for one frame (same input) */
     nestopia_bridge_run_frame(g_controller1_buttons);
 
-    /* 3. Get Nestopia's RAM */
+    /* 3. Pull oracle state */
     static uint8_t emu_ram[0x800];
     nestopia_bridge_get_ram(emu_ram);
 
-    /* 4. Compare work RAM */
+    static uint8_t emu_vram[0x4000];
+    int vram_size = 0;
+    nestopia_bridge_get_vram(emu_vram, &vram_size);
+
+    /* 4. Diff. addr encoding for FrameDiffEntry:
+     *    0x0000-0x07FF : work RAM
+     *    0x2000-0x2FFF : nametable RAM (libretro VIDEO_RAM is the 2KB NT
+     *                    on NES; we expose it at $2000)
+     */
+    FrameDiffEntry diffs[MAX_FRAME_DIFFS];
+    int n_diffs = 0;
     int diff_count = 0;
-    int first_diff_addr = -1;
-    uint8_t first_native = 0, first_emu = 0;
 
     for (int i = 0; i < 0x0800; i++) {
         if (g_ram[i] != emu_ram[i]) {
-            if (diff_count == 0) {
-                first_diff_addr = i;
-                first_native = g_ram[i];
-                first_emu = emu_ram[i];
+            if (n_diffs < MAX_FRAME_DIFFS) {
+                diffs[n_diffs].addr   = (uint16_t)i;
+                diffs[n_diffs].mine   = g_ram[i];
+                diffs[n_diffs].theirs = emu_ram[i];
+                n_diffs++;
             }
             diff_count++;
         }
     }
 
-    /* Also compare CHR/VRAM tile $00 at $1000 (BG pattern table) */
-    static uint8_t emu_vram[0x4000];
-    int vram_size = 0;
-    nestopia_bridge_get_vram(emu_vram, &vram_size);
-
-    /* Log CHR tile $00 comparison on first few frames */
-    /* Compare framebuffer pixels to detect CHR bank mismatch */
-    if (g_frame_count == 600) {
-        static uint32_t emu_fb[256*240];
-        nestopia_bridge_get_framebuf_argb(emu_fb);
-        /* Pixel (4,4) is deep inside tile $00 at nametable position (0,0) */
-        uint32_t ep = emu_fb[4*256+4] & 0xFFFFFF;
-        /* Pixel (128,120) is mid-screen, also tile $00 area */
-        uint32_t ep2 = emu_fb[120*256+128] & 0xFFFFFF;
-        fprintf(stderr, "[verify] EMU pixels: (4,4)=0x%06X (128,120)=0x%06X\n", ep, ep2);
-        fprintf(stderr, "[verify] NATIVE chr[0x1000]=%02X%02X%02X%02X chr[0x0000]=%02X%02X%02X%02X\n",
-                g_chr_ram[0x1000], g_chr_ram[0x1001], g_chr_ram[0x1002], g_chr_ram[0x1003],
-                g_chr_ram[0x0000], g_chr_ram[0x0001], g_chr_ram[0x0002], g_chr_ram[0x0003]);
-        fprintf(stderr, "[verify] native $76=%02X $77=%02X emu $76=%02X $77=%02X\n",
-                g_ram[0x76], emu_ram[0x76], g_ram[0x77], emu_ram[0x77]);
+    /* Compare nametables. Cap to 0x800 (2KB NT region on most mappers).
+     * g_ppu_nt is the runner's 4KB nametable buffer; only the first 0x800
+     * is meaningful for hardware NT RAM (rest is mirrors). */
+    {
+        extern uint8_t g_ppu_nt[];
+        int nt_len = vram_size;
+        if (nt_len > 0x800) nt_len = 0x800;
+        for (int i = 0; i < nt_len; i++) {
+            if (g_ppu_nt[i] != emu_vram[i]) {
+                if (n_diffs < MAX_FRAME_DIFFS) {
+                    diffs[n_diffs].addr   = (uint16_t)(0x2000 + i);
+                    diffs[n_diffs].mine   = g_ppu_nt[i];
+                    diffs[n_diffs].theirs = emu_vram[i];
+                    n_diffs++;
+                }
+                diff_count++;
+            }
+        }
     }
 
     int passed = (diff_count == 0);
+    if (!passed) s_divergence_count++;
 
-    if (!passed) {
-        s_divergence_count++;
-        fprintf(stderr, "[verify] DIVERGE frame %llu: %d bytes differ | first: $%04X native=0x%02X emu=0x%02X"
-                " | $76:N=%02X/E=%02X $77:N=%02X/E=%02X $0636:N=%02X/E=%02X $0248:N=%02X/E=%02X\n",
-                (unsigned long long)g_frame_count, diff_count,
-                first_diff_addr, first_native, first_emu,
-                g_ram[0x76], emu_ram[0x76], g_ram[0x77], emu_ram[0x77],
-                g_ram[0x636 & 0x7FF], emu_ram[0x636 & 0x7FF],
-                g_ram[0x248], emu_ram[0x248]);
-    }
+    debug_server_set_verify_result(passed, diff_count, diffs, n_diffs);
 
     return passed;
 #else

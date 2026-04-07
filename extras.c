@@ -25,7 +25,10 @@ uint32_t game_get_expected_crc32(void) { return 0x9474C09Cu; }
 const char *game_get_name(void) { return "Yoshi"; }
 
 void game_on_init(void) {
-    int port = (g_run_mode == RUN_MODE_EMULATED) ? 4371 : 4370;
+    /* TCP debug ports (project-unique to avoid conflict with siblings):
+     *   4380 — native recompiled Yoshi
+     *   4381 — Nestopia oracle (emulated mode) */
+    int port = (g_run_mode == RUN_MODE_EMULATED) ? 4381 : 4380;
     debug_server_init(port);
 
     if (g_run_mode != RUN_MODE_NATIVE && g_rom_path_for_extras) {
@@ -35,7 +38,14 @@ void game_on_init(void) {
 
 void game_on_frame(uint64_t frame_count) { (void)frame_count; }
 
-void game_post_nmi(uint64_t frame_count) { (void)frame_count; }
+void game_post_nmi(uint64_t frame_count) {
+    (void)frame_count;
+    /* In NATIVE/VERIFY modes, the ring buffer is filled here.
+     * EMULATED mode runs its own loop in game_run_main and records there. */
+    if (g_run_mode != RUN_MODE_EMULATED) {
+        debug_server_record_frame();
+    }
+}
 
 int game_handle_arg(const char *key, const char *val) {
     if (strcmp(key, "--verify") == 0) {

@@ -1,0 +1,121 @@
+# game.toml — Yoshi (NES, Mapper 1 / MMC1, 8 PRG banks, 16 CHR ROM banks)
+#
+# Migrated from legacy game.cfg on 2026-04-07. The .cfg format was dropped
+# upstream; Yoshi previously stayed on .cfg because the TOML parser had
+# unspecified bugs against Yoshi's config — flag any regen failures and
+# fix the parser, do not hand-edit generated files.
+
+[game]
+output_prefix = "yoshi"
+
+# ── Dispatch misses ──────────────────────────────────────────────────────────
+# Functions only reachable via indirect jump that the static walker doesn't
+# discover. One entry per discovered miss in dispatch_misses.log.
+[functions]
+fixed = [
+    0xF781, 0xF831, 0xFF25, 0xDC10, 0xCFB1,
+]
+bank0 = [
+    0x9F8E, 0xAE16, 0xB57C, 0xA3AF,
+]
+bank1 = [
+    0xA2D6, 0xA28E, 0xA284, 0xA2E2, 0xA340,
+    0xA2A5, 0xA310, 0xA316, 0xA299, 0xA2D3,
+]
+
+# ── Data regions ─────────────────────────────────────────────────────────────
+# Address ranges that contain data, not code. Half-open [start, end).
+
+# Bank 7 (fixed, $C000-$FFFF)
+[[data_region]]
+bank = 7
+start = 0xC000
+end = 0xCCA8
+
+[[data_region]]
+bank = 7
+start = 0xD302
+end = 0xD4E5
+
+[[data_region]]
+bank = 7
+start = 0xD52F
+end = 0xD543
+
+[[data_region]]
+bank = 7
+start = 0xD5D3
+end = 0xD843
+
+[[data_region]]
+bank = 7
+start = 0xEFB7
+end = 0xEFD1
+
+[[data_region]]
+bank = 7
+start = 0xF913
+end = 0xFFDA
+
+[[data_region]]
+bank = 7
+start = 0xFFE1
+end = 0x10000
+
+# Bank 1 (switchable)
+[[data_region]]
+bank = 1
+start = 0x8000
+end = 0x9E78
+
+[[data_region]]
+bank = 1
+start = 0xA98C
+end = 0xC000
+
+# Bank 0 (switchable)
+[[data_region]]
+bank = 0
+start = 0x9FE8
+end = 0xA0AE
+
+[[data_region]]
+bank = 0
+start = 0xA0DE
+end = 0xA206
+
+[[data_region]]
+bank = 0
+start = 0xA257
+end = 0xA37C
+
+[[data_region]]
+bank = 0
+start = 0xBCC8
+end = 0xC000
+
+# Banks 2-6 (entirely unused, all $FF)
+[[data_region]]
+bank = 2
+start = 0x8000
+end = 0xC000
+
+[[data_region]]
+bank = 3
+start = 0x8000
+end = 0xC000
+
+[[data_region]]
+bank = 4
+start = 0x8000
+end = 0xC000
+
+[[data_region]]
+bank = 5
+start = 0x8000
+end = 0xC000
+
+[[data_region]]
+bank = 6
+start = 0x8000
+end = 0xC000

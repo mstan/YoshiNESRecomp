@@ -16,12 +16,19 @@ fixed = [
     0xF781, 0xF831, 0xFF25, 0xDC10, 0xCFB1,
 ]
 bank0 = [
-    0x9F8E, 0xAE16, 0xB57C, 0xA3AF,
+    0x9F8E, 0xAE16, 0xB57C, 0xA3AF, 0xBCCE,
 ]
 bank1 = [
     0xA2D6, 0xA28E, 0xA284, 0xA2E2, 0xA340,
     0xA2A5, 0xA310, 0xA316, 0xA299, 0xA2D3,
 ]
+
+# ── Merge functions ──────────────────────────────────────────────────────────
+# Sound engine: JMP loop between A046/A047 must be goto, not func call
+[[merge_func]]
+bank = 1
+addr_lo = 0xA046
+addr_hi = 0xA047
 
 # ── Data regions ─────────────────────────────────────────────────────────────
 # Address ranges that contain data, not code. Half-open [start, end).
@@ -89,10 +96,6 @@ bank = 0
 start = 0xA257
 end = 0xA37C
 
-[[data_region]]
-bank = 0
-start = 0xBCC8
-end = 0xC000
 
 # Banks 2-6 (entirely unused, all $FF)
 [[data_region]]

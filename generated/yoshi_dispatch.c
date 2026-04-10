@@ -3,6 +3,7 @@
 extern int g_current_bank;
 
 int call_by_address(uint16_t addr) {
+    if (addr < 0x8000) { nes_log_dispatch_miss(addr); return 0; }
     switch (addr) {
         case 0xFFDA:
             func_FFDA(); break;
@@ -12,18 +13,30 @@ int call_by_address(uint16_t addr) {
             func_FFDB(); break;
         case 0xE122:
             func_E122(); break;
+        case 0xE123:
+            func_E123(); break;
         case 0xE129:
             func_E129(); break;
         case 0xE1ED:
             func_E1ED(); break;
-        case 0x8000:
-            func_8000_b0(); break;
         case 0xCE02:
             func_CE02(); break;
+        case 0xCE2D:
+            func_CE2D(); break;
+        case 0xCE03:
+            func_CE03(); break;
+        case 0xCE61:
+            func_CE61(); break;
         case 0xCE04:
             func_CE04(); break;
+        case 0xCE21:
+            func_CE21(); break;
         case 0xCEAD:
             func_CEAD(); break;
+        case 0xCEC8:
+            func_CEC8(); break;
+        case 0xCE06:
+            func_CE06(); break;
         case 0xCE0B:
             func_CE0B(); break;
         case 0xCE4C:
@@ -52,8 +65,12 @@ int call_by_address(uint16_t addr) {
             func_E157(); break;
         case 0xE18C:
             func_E18C(); break;
+        case 0xE1C7:
+            func_E1C7(); break;
         case 0xE18E:
             func_E18E(); break;
+        case 0xE1CF:
+            func_E1CF(); break;
         case 0xE1AE:
             func_E1AE(); break;
         case 0xCF65:
@@ -90,10 +107,10 @@ int call_by_address(uint16_t addr) {
             func_CF16(); break;
         case 0xCECF:
             func_CECF(); break;
-        case 0xCEE8:
-            func_CEE8(); break;
         case 0xCEF0:
             func_CEF0(); break;
+        case 0xCEE8:
+            func_CEE8(); break;
         case 0xCF0F:
             func_CF0F(); break;
         case 0x809B:
@@ -122,16 +139,20 @@ int call_by_address(uint16_t addr) {
             break;
         case 0xEE2C:
             func_EE2C(); break;
+        case 0xEEED:
+            func_EEED(); break;
         case 0xEED5:
             func_EED5(); break;
+        case 0xEEAE:
+            func_EEAE(); break;
         case 0xEFAD:
             func_EFAD(); break;
         case 0xEE8D:
             func_EE8D(); break;
+        case 0xEE81:
+            func_EE81(); break;
         case 0xEE78:
             func_EE78(); break;
-        case 0xEEED:
-            func_EEED(); break;
         case 0xEF65:
             func_EF65(); break;
         case 0xEEA8:
@@ -148,8 +169,12 @@ int call_by_address(uint16_t addr) {
             func_CF85(); break;
         case 0xCCA8:
             func_CCA8(); break;
+        case 0xCD03:
+            func_CD03(); break;
         case 0xCCAD:
             func_CCAD(); break;
+        case 0xCCAE:
+            func_CCAE(); break;
         case 0xCD01:
             func_CD01(); break;
         case 0xCD05:
@@ -192,6 +217,8 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
+        case 0x800D:
+            func_800D_b0(); break;
         case 0x80BA:
             switch (g_current_bank) {
                 case 0: func_80BA_b0(); break;
@@ -206,6 +233,10 @@ int call_by_address(uint16_t addr) {
             break;
         case 0xF6B3:
             func_F6B3(); break;
+        case 0xF6D1:
+            func_F6D1(); break;
+        case 0xF6CA:
+            func_F6CA(); break;
         case 0xF6F0:
             func_F6F0(); break;
         case 0xE600:
@@ -214,14 +245,16 @@ int call_by_address(uint16_t addr) {
             func_E500(); break;
         case 0xB1E5:
             func_B1E5_b1(); break;
-        case 0xE400:
-            func_E400(); break;
         case 0xB0E5:
             func_B0E5_b1(); break;
         case 0xDC21:
             func_DC21(); break;
         case 0xB0E6:
             func_B0E6_b1(); break;
+        case 0xD16E:
+            func_D16E(); break;
+        case 0x8000:
+            func_8000_b0(); break;
         case 0xA381:
             func_A381_b0(); break;
         case 0xA5D6:
@@ -232,6 +265,14 @@ int call_by_address(uint16_t addr) {
             func_CD1F(); break;
         case 0xCD38:
             func_CD38(); break;
+        case 0xCDA6:
+            func_CDA6(); break;
+        case 0xCDA8:
+            func_CDA8(); break;
+        case 0xCDAF:
+            func_CDAF(); break;
+        case 0xCD61:
+            func_CD61(); break;
         case 0xCD85:
             func_CD85(); break;
         case 0xCD4C:
@@ -276,34 +317,82 @@ int call_by_address(uint16_t addr) {
             func_E804(); break;
         case 0xE485:
             func_E485(); break;
+        case 0xE7D1:
+            func_E7D1(); break;
         case 0xE8CD:
             func_E8CD(); break;
+        case 0xE686:
+            func_E686(); break;
+        case 0xE6B2:
+            func_E6B2(); break;
+        case 0xE886:
+            func_E886(); break;
+        case 0xE9A5:
+            func_E9A5(); break;
+        case 0xE6E7:
+            func_E6E7(); break;
         case 0xE9E6:
             func_E9E6(); break;
         case 0xE6DE:
             func_E6DE(); break;
+        case 0xE8E7:
+            func_E8E7(); break;
         case 0xE5A5:
             func_E5A5(); break;
+        case 0xE801:
+            func_E801(); break;
         case 0xE8D0:
             func_E8D0(); break;
+        case 0xE621:
+            func_E621(); break;
+        case 0xE821:
+            func_E821(); break;
+        case 0xE883:
+            func_E883(); break;
         case 0xEE02:
             func_EE02(); break;
+        case 0xE8D6:
+            func_E8D6(); break;
         case 0xE98D:
             func_E98D(); break;
+        case 0xE6A9:
+            func_E6A9(); break;
+        case 0xE4D1:
+            func_E4D1(); break;
         case 0xE538:
             func_E538(); break;
+        case 0xE48E:
+            func_E48E(); break;
         case 0xE58D:
             func_E58D(); break;
         case 0xEE05:
             func_EE05(); break;
+        case 0xEE21:
+            func_EE21(); break;
+        case 0xE656:
+            func_E656(); break;
         case 0xE6E1:
             func_E6E1(); break;
         case 0xE60A:
             func_E60A(); break;
         case 0xE6D0:
             func_E6D0(); break;
+        case 0xEAC7:
+            func_EAC7(); break;
         case 0xEAEA:
             func_EAEA(); break;
+        case 0xE5AE:
+            func_E5AE(); break;
+        case 0xE7AE:
+            func_E7AE(); break;
+        case 0xE9AE:
+            func_E9AE(); break;
+        case 0xEBAE:
+            func_EBAE(); break;
+        case 0xECAE:
+            func_ECAE(); break;
+        case 0xEDAE:
+            func_EDAE(); break;
         case 0xE78D:
             func_E78D(); break;
         case 0xE74C:
@@ -318,6 +407,8 @@ int call_by_address(uint16_t addr) {
             func_E720(); break;
         case 0xEB90:
             func_EB90(); break;
+        case 0xE9EF:
+            func_E9EF(); break;
         case 0xE9CE:
             func_E9CE(); break;
         case 0xE9C8:
@@ -334,8 +425,6 @@ int call_by_address(uint16_t addr) {
             func_EDEC(); break;
         case 0xED7D:
             func_ED7D(); break;
-        case 0xE6A9:
-            func_E6A9(); break;
         case 0xE8D9:
             func_E8D9(); break;
         case 0xEDA9:
@@ -346,8 +435,6 @@ int call_by_address(uint16_t addr) {
             func_E8A9(); break;
         case 0xE535:
             func_E535(); break;
-        case 0xE8E7:
-            func_E8E7(); break;
         case 0xECEB:
             func_ECEB(); break;
         case 0xE5EC:
@@ -380,20 +467,24 @@ int call_by_address(uint16_t addr) {
             func_E665(); break;
         case 0xE726:
             func_E726(); break;
-        case 0xE9A5:
-            func_E9A5(); break;
         case 0xED8C:
             func_ED8C(); break;
         case 0xEFD1:
             func_EFD1(); break;
+        case 0xF003:
+            func_F003(); break;
         case 0xF000:
             func_F000(); break;
         case 0xF018:
             func_F018(); break;
+        case 0xF02A:
+            func_F02A(); break;
         case 0xF006:
             func_F006(); break;
-        case 0xF003:
-            func_F003(); break;
+        case 0xF009:
+            func_F009(); break;
+        case 0xF021:
+            func_F021(); break;
         case 0xF054:
             func_F054(); break;
         case 0xF01E:
@@ -424,8 +515,6 @@ int call_by_address(uint16_t addr) {
             func_A66C_b1(); break;
         case 0xA56C:
             func_A56C_b1(); break;
-        case 0xA047:
-            func_A047_b1(); break;
         case 0xA5E8:
             func_A5E8_b1(); break;
         case 0xA897:
@@ -442,8 +531,6 @@ int call_by_address(uint16_t addr) {
             func_A023_b1(); break;
         case 0xA02D:
             func_A02D_b1(); break;
-        case 0x800D:
-            func_800D_b0(); break;
         case 0x80A4:
             func_80A4_b0(); break;
         case 0x80B3:
@@ -504,8 +591,6 @@ int call_by_address(uint16_t addr) {
             break;
         case 0xCF8A:
             func_CF8A(); break;
-        case 0xD16E:
-            func_D16E(); break;
         case 0xD202:
             func_D202(); break;
         case 0xD04F:
@@ -514,12 +599,26 @@ int call_by_address(uint16_t addr) {
             func_DC20(); break;
         case 0xD9D2:
             func_D9D2(); break;
+        case 0xD0E9:
+            func_D0E9(); break;
         case 0xD00B:
             func_D00B(); break;
+        case 0xD00D:
+            func_D00D(); break;
         case 0xD003:
             func_D003(); break;
+        case 0xDA87:
+            func_DA87(); break;
+        case 0xDC86:
+            func_DC86(); break;
+        case 0xDD86:
+            func_DD86(); break;
+        case 0xDCB2:
+            func_DCB2(); break;
         case 0xDE85:
             func_DE85(); break;
+        case 0xDF86:
+            func_DF86(); break;
         case 0xDEB1:
             func_DEB1(); break;
         case 0xDAA6:
@@ -528,6 +627,10 @@ int call_by_address(uint16_t addr) {
             func_DBA4(); break;
         case 0xD0E1:
             func_D0E1(); break;
+        case 0xD0E2:
+            func_D0E2(); break;
+        case 0xD0D1:
+            func_D0D1(); break;
         case 0xD878:
             func_D878(); break;
         case 0xD012:
@@ -538,24 +641,46 @@ int call_by_address(uint16_t addr) {
             func_D000(); break;
         case 0xD001:
             func_D001(); break;
+        case 0xD051:
+            func_D051(); break;
+        case 0xCFE1:
+            func_CFE1(); break;
         case 0xD0BC:
             func_D0BC(); break;
         case 0xD020:
             func_D020(); break;
+        case 0xD031:
+            func_D031(); break;
+        case 0xD010:
+            func_D010(); break;
         case 0xD005:
             func_D005(); break;
+        case 0xD006:
+            func_D006(); break;
+        case 0xD084:
+            func_D084(); break;
+        case 0xD009:
+            func_D009(); break;
+        case 0xD086:
+            func_D086(); break;
         case 0xD088:
             func_D088(); break;
         case 0xDFAE:
             func_DFAE(); break;
+        case 0xDE05:
+            func_DE05(); break;
         case 0xDE03:
             func_DE03(); break;
+        case 0xD8BE:
+            func_D8BE(); break;
         case 0xD585:
             func_D585(); break;
         case 0xD5B1:
             func_D5B1(); break;
         case 0xD8A9:
             func_D8A9(); break;
+        case 0xD5A6:
+            func_D5A6(); break;
         case 0xDE20:
             func_DE20(); break;
         case 0xD0A6:
@@ -564,46 +689,74 @@ int call_by_address(uint16_t addr) {
             func_D120(); break;
         case 0xD0A5:
             func_D0A5(); break;
+        case 0xD0A8:
+            func_D0A8(); break;
         case 0xD0A3:
             func_D0A3(); break;
+        case 0xD107:
+            func_D107(); break;
         case 0xD0C7:
             func_D0C7(); break;
-        case 0xD006:
-            func_D006(); break;
+        case 0xD007:
+            func_D007(); break;
         case 0xD081:
             func_D081(); break;
+        case 0xCFF1:
+            func_CFF1(); break;
+        case 0xDE61:
+            func_DE61(); break;
+        case 0xDD02:
+            func_DD02(); break;
+        case 0xD5AE:
+            func_D5AE(); break;
+        case 0xD14D:
+            func_D14D(); break;
+        case 0xD521:
+            func_D521(); break;
         case 0xD07E:
             func_D07E(); break;
         case 0xD080:
             func_D080(); break;
-        case 0xD0E0:
-            func_D0E0(); break;
         case 0xDF8E:
             func_DF8E(); break;
+        case 0xD07A:
+            func_D07A(); break;
+        case 0xD0E0:
+            func_D0E0(); break;
+        case 0xD0B3:
+            func_D0B3(); break;
         case 0xD211:
             func_D211(); break;
         case 0xD920:
             func_D920(); break;
         case 0xD0B1:
             func_D0B1(); break;
+        case 0xCFAE:
+            func_CFAE(); break;
         case 0xD0AD:
             func_D0AD(); break;
         case 0xD1AD:
             func_D1AD(); break;
+        case 0xD8AE:
+            func_D8AE(); break;
         case 0xD9AD:
             func_D9AD(); break;
         case 0xDBAD:
             func_DBAD(); break;
+        case 0xDCAE:
+            func_DCAE(); break;
+        case 0xDDAE:
+            func_DDAE(); break;
         case 0xDEAD:
             func_DEAD(); break;
         case 0xD04C:
             func_D04C(); break;
+        case 0xD2CA:
+            func_D2CA(); break;
         case 0xDEB9:
             func_DEB9(); break;
         case 0xDEAA:
             func_DEAA(); break;
-        case 0xDD02:
-            func_DD02(); break;
         case 0xDEF5:
             func_DEF5(); break;
         case 0xDD04:
@@ -614,48 +767,40 @@ int call_by_address(uint16_t addr) {
             func_DDE8(); break;
         case 0xD014:
             func_D014(); break;
+        case 0xD015:
+            func_D015(); break;
+        case 0xDE08:
+            func_DE08(); break;
         case 0xDB39:
             func_DB39(); break;
         case 0xD05D:
             func_D05D(); break;
-        case 0xD124:
-            func_D124(); break;
+        case 0xD125:
+            func_D125(); break;
         case 0xD0A9:
             func_D0A9(); break;
+        case 0xDBEF:
+            func_DBEF(); break;
+        case 0xDAE2:
+            func_DAE2(); break;
         case 0xD077:
             func_D077(); break;
-        case 0xDBA5:
-            func_DBA5(); break;
-        case 0xD849:
-            func_D849(); break;
-        case 0xDB56:
-            func_DB56(); break;
         case 0xD0DA:
             func_D0DA(); break;
         case 0xD0B8:
             func_D0B8(); break;
-        case 0xD517:
-            func_D517(); break;
-        case 0xDAF2:
-            func_DAF2(); break;
+        case 0xD3AD:
+            func_D3AD(); break;
         case 0xD1B8:
             func_D1B8(); break;
-        case 0xD065:
-            func_D065(); break;
         case 0xD87F:
             func_D87F(); break;
-        case 0xD9F6:
-            func_D9F6(); break;
-        case 0xD582:
-            func_D582(); break;
-        case 0xD94C:
-            func_D94C(); break;
+        case 0xDD54:
+            func_DD54(); break;
         case 0xD8EE:
             func_D8EE(); break;
         case 0xD8E2:
             func_D8E2(); break;
-        case 0xD543:
-            func_D543(); break;
         case 0xDC00:
             func_DC00(); break;
         case 0xDDDC:
@@ -666,8 +811,6 @@ int call_by_address(uint16_t addr) {
             func_D08D(); break;
         case 0xCFCE:
             func_CFCE(); break;
-        case 0xD007:
-            func_D007(); break;
         case 0xDA20:
             func_DA20(); break;
         case 0xD9D8:
@@ -676,16 +819,12 @@ int call_by_address(uint16_t addr) {
             func_DEBD(); break;
         case 0xD0C9:
             func_D0C9(); break;
-        case 0xD010:
-            func_D010(); break;
         case 0xCFA5:
             func_CFA5(); break;
         case 0xD186:
             func_D186(); break;
         case 0xD03E:
             func_D03E(); break;
-        case 0xD031:
-            func_D031(); break;
         case 0xDB20:
             func_DB20(); break;
         case 0xDBDA:
@@ -712,12 +851,12 @@ int call_by_address(uint16_t addr) {
             func_D024(); break;
         case 0xD5A9:
             func_D5A9(); break;
+        case 0xD065:
+            func_D065(); break;
         case 0xDF00:
             func_DF00(); break;
         case 0xDF5F:
             func_DF5F(); break;
-        case 0xDE05:
-            func_DE05(); break;
         case 0xDEF3:
             func_DEF3(); break;
         case 0xD026:
@@ -730,8 +869,6 @@ int call_by_address(uint16_t addr) {
             func_D8B1(); break;
         case 0xD0A1:
             func_D0A1(); break;
-        case 0xD051:
-            func_D051(); break;
         case 0xDA85:
             func_DA85(); break;
         case 0xD8E6:
@@ -754,14 +891,16 @@ int call_by_address(uint16_t addr) {
             func_D944(); break;
         case 0xCDB4:
             func_CDB4(); break;
+        case 0xCDCD:
+            func_CDCD(); break;
         case 0xCDD0:
             func_CDD0(); break;
         case 0xCDE0:
             func_CDE0(); break;
+        case 0xCDE1:
+            func_CDE1(); break;
         case 0xCDB7:
             func_CDB7(); break;
-        case 0xCDCD:
-            func_CDCD(); break;
         case 0xA7B9:
             func_A7B9_b1(); break;
         case 0x920E:
@@ -801,7 +940,17 @@ int call_by_address(uint16_t addr) {
         case 0x8689:
             func_8689_b1(); break;
         case 0x86AD:
-            func_86AD_b1(); break;
+            switch (g_current_bank) {
+                case 1: func_86AD_b1(); break;
+                case 0: func_86AD_b0(); break;
+                case 2: func_86AD_b2(); break;
+                case 3: func_86AD_b3(); break;
+                case 4: func_86AD_b4(); break;
+                case 5: func_86AD_b5(); break;
+                case 6: func_86AD_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
         case 0x86E0:
             func_86E0_b1(); break;
         case 0xDE09:
@@ -844,6 +993,8 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
+        case 0x8882:
+            func_8882_b0(); break;
         case 0x8840:
             switch (g_current_bank) {
                 case 0: func_8840_b0(); break;
@@ -892,6 +1043,10 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
+        case 0xA8F7:
+            func_A8F7_b0(); break;
+        case 0xA902:
+            func_A902_b0(); break;
         case 0xB601:
             switch (g_current_bank) {
                 case 0: func_B601_b0(); break;
@@ -1014,6 +1169,8 @@ int call_by_address(uint16_t addr) {
             func_DF6D(); break;
         case 0xE000:
             func_E000(); break;
+        case 0xE04D:
+            func_E04D(); break;
         case 0xE022:
             func_E022(); break;
         case 0xE008:
@@ -1044,15 +1201,12 @@ int call_by_address(uint16_t addr) {
             func_A1D3_b1(); break;
         case 0xA046:
             func_A046_b1(); break;
+        case 0xA047:
+            func_A047_b1(); break;
         case 0xA5B1:
             func_A5B1_b1(); break;
         case 0xA1BF:
-            switch (g_current_bank) {
-                case 1: func_A1BF_b1(); break;
-                case 0: func_A1BF_b0(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+            func_A1BF_b1(); break;
         case 0xA579:
             func_A579_b1(); break;
         case 0xA5BA:
@@ -1089,8 +1243,6 @@ int call_by_address(uint16_t addr) {
             func_FFE0(); break;
         case 0xE598:
             func_E598(); break;
-        case 0xA8F7:
-            func_A8F7_b0(); break;
         case 0xBC1D:
             func_BC1D_b0(); break;
         case 0xA7F5:
@@ -1098,12 +1250,7 @@ int call_by_address(uint16_t addr) {
         case 0xAA92:
             func_AA92_b0(); break;
         case 0xA915:
-            switch (g_current_bank) {
-                case 0: func_A915_b0(); break;
-                case 1: func_A915_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+            func_A915_b0(); break;
         case 0xAAE7:
             func_AAE7_b0(); break;
         case 0xAA9F:
@@ -1116,6 +1263,12 @@ int call_by_address(uint16_t addr) {
             func_91C9_b0(); break;
         case 0x8939:
             func_8939_b0(); break;
+        case 0x8978:
+            func_8978_b0(); break;
+        case 0x8980:
+            func_8980_b0(); break;
+        case 0x899E:
+            func_899E_b0(); break;
         case 0x91AC:
             func_91AC_b0(); break;
         case 0xF750:
@@ -1134,12 +1287,6 @@ int call_by_address(uint16_t addr) {
             func_AC58_b0(); break;
         case 0xE083:
             func_E083(); break;
-        case 0xE08D:
-            func_E08D(); break;
-        case 0xE090:
-            func_E090(); break;
-        case 0xE085:
-            func_E085(); break;
         case 0xE099:
             func_E099(); break;
         case 0xE0AD:
@@ -1174,8 +1321,6 @@ int call_by_address(uint16_t addr) {
             func_AA30_b0(); break;
         case 0xAA39:
             func_AA39_b0(); break;
-        case 0x8978:
-            func_8978_b0(); break;
         case 0xA7CA:
             func_A7CA_b0(); break;
         case 0xA7DD:
@@ -1198,1009 +1343,709 @@ int call_by_address(uint16_t addr) {
             func_BBBD_b0(); break;
         case 0xBB57:
             func_BB57_b0(); break;
+        case 0xE805:
+            func_E805(); break;
         case 0xD0E8:
             func_D0E8(); break;
-        case 0x8D02:
-            func_8D02_b0(); break;
-        case 0xADCF:
-            func_ADCF_b0(); break;
-        case 0x8D40:
-            func_8D40_b0(); break;
-        case 0xA202:
-            func_A202_b1(); break;
-        case 0x8505:
-            func_8505_b0(); break;
+        case 0xCD20:
+            func_CD20(); break;
+        case 0xCF66:
+            func_CF66(); break;
         case 0xE0CA:
             func_E0CA(); break;
-        case 0xD0FF:
-            func_D0FF(); break;
-        case 0xA217:
-            switch (g_current_bank) {
-                case 0: func_A217_b0(); break;
-                case 1: func_A217_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xE0E8:
-            func_E0E8(); break;
+        case 0xE0CB:
+            func_E0CB(); break;
         case 0xD00C:
             func_D00C(); break;
+        case 0xFFE1:
+            func_FFE1(); break;
+        case 0xD0FF:
+            func_D0FF(); break;
+        case 0xE7D0:
+            func_E7D0(); break;
+        case 0xE0E8:
+            func_E0E8(); break;
+        case 0xE0E9:
+            func_E0E9(); break;
+        case 0xEDD1:
+            func_EDD1(); break;
         case 0xF0ED:
             func_F0ED(); break;
-        case 0xA218:
-            func_A218_b0(); break;
-        case 0xA90B:
-            func_A90B_b0(); break;
+        case 0xF0EE:
+            func_F0EE(); break;
+        case 0xD004:
+            func_D004(); break;
+        case 0xCF6A:
+            func_CF6A(); break;
         case 0xF8A9:
             func_F8A9(); break;
-        case 0x9DF8:
-            func_9DF8_b0(); break;
         case 0xE807:
             func_E807(); break;
-        case 0xADF5:
-            func_ADF5_b0(); break;
-        case 0x8DBF:
-            func_8DBF_b0(); break;
+        case 0xE808:
+            func_E808(); break;
+        case 0xF5D1:
+            func_F5D1(); break;
         case 0xDA86:
             func_DA86(); break;
         case 0xDB84:
             func_DB84(); break;
-        case 0xA80A:
-            func_A80A_b0(); break;
-        case 0x85A9:
-            func_85A9_b0(); break;
-        case 0xA98F:
-            func_A98F_b0(); break;
         case 0xDD85:
             func_DD85(); break;
-        case 0xAD18:
-            func_AD18_b0(); break;
-        case 0xA505:
-            func_A505_b1(); break;
-        case 0x8500:
-            func_8500_b0(); break;
-        case 0xB5A5:
-            func_B5A5_b0(); break;
-        case 0xF0B5:
-            func_F0B5(); break;
-        case 0xA514:
-            func_A514_b1(); break;
+        case 0xE285:
+            func_E285(); break;
         case 0xD002:
             func_D002(); break;
         case 0xE385:
             func_E385(); break;
-        case 0xB1A8:
-            func_B1A8_b0(); break;
         case 0xDCB1:
             func_DCB1(); break;
-        case 0xB1C8:
-            func_B1C8_b0(); break;
-        case 0xA0E7:
-            func_A0E7_b1(); break;
-        case 0xA0E1:
-            func_A0E1_b1(); break;
-        case 0x85E6:
-            func_85E6_b0(); break;
+        case 0xDE86:
+            func_DE86(); break;
+        case 0xE786:
+            func_E786(); break;
+        case 0xDEB2:
+            func_DEB2(); break;
         case 0xE585:
             func_E585(); break;
-        case 0xA9E5:
-            func_A9E5_b0(); break;
-        case 0xA6CD:
-            func_A6CD_b1(); break;
-        case 0xA4DA:
-            func_A4DA_b1(); break;
-        case 0xAE60:
-            func_AE60_b0(); break;
-        case 0xB1E8:
-            func_B1E8_b0(); break;
-        case 0x9DE8:
-            func_9DE8_b0(); break;
-        case 0xE265:
-            func_E265(); break;
+        case 0xE586:
+            func_E586(); break;
+        case 0xE986:
+            func_E986(); break;
+        case 0xCDB5:
+            func_CDB5(); break;
+        case 0xDAA7:
+            func_DAA7(); break;
+        case 0xDBA5:
+            func_DBA5(); break;
+        case 0xE9A4:
+            func_E9A4(); break;
+        case 0xE6E6:
+            func_E6E6(); break;
+        case 0xE9E7:
+            func_E9E7(); break;
+        case 0xE8A4:
+            func_E8A4(); break;
+        case 0xE6DF:
+            func_E6DF(); break;
+        case 0xE8E6:
+            func_E8E6(); break;
+        case 0xE5A6:
+            func_E5A6(); break;
         case 0xD0D0:
             func_D0D0(); break;
-        case 0xA960:
-            func_A960_b1(); break;
-        case 0x8D00:
-            func_8D00_b0(); break;
-        case 0xA900:
-            switch (g_current_bank) {
-                case 0: func_A900_b0(); break;
-                case 1: func_A900_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x9DFF:
-            func_9DFF_b0(); break;
         case 0xE802:
             func_E802(); break;
         case 0xD018:
             func_D018(); break;
-        case 0xA9F8:
-            func_A9F8_b0(); break;
-        case 0xA9D8:
-            func_A9D8_b0(); break;
-        case 0x8520:
-            func_8520_b0(); break;
-        case 0xB085:
-            func_B085_b0(); break;
-        case 0xA9B0:
-            func_A9B0_b0(); break;
-        case 0xAD0F:
-            func_AD0F_b0(); break;
-        case 0xA9CF:
-            func_A9CF_b0(); break;
-        case 0x851F:
-            func_851F_b0(); break;
-        case 0xA977:
-            switch (g_current_bank) {
-                case 0: func_A977_b0(); break;
-                case 1: func_A977_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA50C:
-            func_A50C_b0(); break;
-        case 0xA506:
-            func_A506_b1(); break;
-        case 0x9EC9:
-            func_9EC9_b0(); break;
-        case 0xF09E:
-            func_F09E(); break;
-        case 0x8512:
-            func_8512_b0(); break;
-        case 0x8548:
-            func_8548_b0(); break;
-        case 0x9EA9:
-            switch (g_current_bank) {
-                case 0: func_9EA9_b0(); break;
-                case 1: func_9EA9_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA910:
-            func_A910_b0(); break;
-        case 0xAD06:
-            func_AD06_b0(); break;
-        case 0xA983:
-            func_A983_b1(); break;
-        case 0x9500:
-            func_9500_b0(); break;
-        case 0xACFB:
-            func_ACFB_b0(); break;
-        case 0xA206:
-            func_A206_b0(); break;
-        case 0x9D00:
-            func_9D00_b0(); break;
-        case 0x9D01:
-            func_9D01_b0(); break;
-        case 0x9D03:
-            func_9D03_b0(); break;
-        case 0x9D04:
-            func_9D04_b0(); break;
-        case 0x9D05:
-            func_9D05_b0(); break;
-        case 0x9D06:
-            func_9D06_b0(); break;
-        case 0x8D3F:
-            func_8D3F_b0(); break;
-        case 0xA920:
-            func_A920_b0(); break;
-        case 0x8D20:
-            func_8D20_b0(); break;
+        case 0xD019:
+            func_D019(); break;
+        case 0xF8D1:
+            func_F8D1(); break;
+        case 0xD879:
+            func_D879(); break;
+        case 0xF811:
+            func_F811(); break;
+        case 0xD013:
+            func_D013(); break;
+        case 0xD049:
+            func_D049(); break;
+        case 0xF09F:
+            func_F09F(); break;
+        case 0xE800:
+            func_E800(); break;
         case 0xCF20:
             func_CF20(); break;
-        case 0xA9CE:
-            func_A9CE_b0(); break;
-        case 0xA9B4:
-            func_A9B4_b0(); break;
-        case 0x851E:
-            func_851E_b0(); break;
-        case 0xA902:
-            switch (g_current_bank) {
-                case 0: func_A902_b0(); break;
-                case 1: func_A902_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA980:
-            func_A980_b1(); break;
-        case 0xB685:
-            func_B685_b0(); break;
-        case 0xA9A3:
-            func_A9A3_b0(); break;
-        case 0x8D77:
-            func_8D77_b0(); break;
-        case 0xB785:
-            func_B785_b0(); break;
-        case 0xA9B7:
-            func_A9B7_b0(); break;
-        case 0x8502:
-            func_8502_b0(); break;
-        case 0xB885:
-            func_B885_b0(); break;
-        case 0xA9B8:
-            func_A9B8_b0(); break;
-        case 0x8DB5:
-            func_8DB5_b0(); break;
-        case 0xA20F:
-            func_A20F_b0(); break;
-        case 0x8D75:
-            func_8D75_b0(); break;
-        case 0x9000:
-            func_9000_b0(); break;
-        case 0x9003:
-            func_9003_b0(); break;
-        case 0x9014:
-            func_9014_b0(); break;
-        case 0x9041:
-            func_9041_b0(); break;
-        case 0x90A0:
-            func_90A0_b0(); break;
-        case 0x9005:
-            func_9005_b0(); break;
-        case 0x900D:
-            func_900D_b0(); break;
-        case 0x8D4A:
-            func_8D4A_b0(); break;
-        case 0x8D76:
-            func_8D76_b0(); break;
-        case 0x8D78:
-            func_8D78_b0(); break;
-        case 0x8560:
-            func_8560_b0(); break;
-        case 0xBB85:
-            func_BB85_b0(); break;
-        case 0xB1BB:
-            func_B1BB_b0(); break;
-        case 0xB7B1:
-            func_B7B1_b0(); break;
-        case 0x85C0:
-            func_85C0_b0(); break;
-        case 0x8DB7:
-            func_8DB7_b0(); break;
-        case 0xBA85:
-            func_BA85_b0(); break;
-        case 0xA5C8:
-            func_A5C8_b1(); break;
-        case 0xA903:
-            func_A903_b0(); break;
-        case 0xA92C:
-            switch (g_current_bank) {
-                case 7: func_E92C(); break;
-                case 0: func_A92C_b0(); break;
-                case 1: func_A92C_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xAF05:
-            func_AF05_b0(); break;
-        case 0x8DAF:
-            func_8DAF_b0(); break;
-        case 0xB120:
-            func_B120_b0(); break;
-        case 0xAA3F:
-            func_AA3F_b0(); break;
-        case 0xB148:
-            func_B148_b0(); break;
-        case 0xA8B7:
-            func_A8B7_b1(); break;
-        case 0xA868:
-            switch (g_current_bank) {
-                case 0: func_A868_b0(); break;
-                case 1: func_A868_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x8D28:
-            func_8D28_b0(); break;
+        case 0xCED0:
+            func_CED0(); break;
+        case 0xF6B4:
+            func_F6B4(); break;
+        case 0xEE01:
+            func_EE01(); break;
+        case 0xCF24:
+            func_CF24(); break;
+        case 0xCF50:
+            func_CF50(); break;
+        case 0xF0BE:
+            func_F0BE(); break;
         case 0xE620:
             func_E620(); break;
-        case 0xB0A5:
-            func_B0A5_b0(); break;
-        case 0xBC05:
-            func_BC05_b0(); break;
-        case 0x91BC:
-            func_91BC_b0(); break;
-        case 0xBA65:
-            func_BA65_b0(); break;
-        case 0x91BA:
-            func_91BA_b0(); break;
-        case 0xA988:
-            switch (g_current_bank) {
-                case 0: func_A988_b0(); break;
-                case 1: func_A988_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xBB65:
-            func_BB65_b0(); break;
-        case 0xA5D0:
-            func_A5D0_b1(); break;
+        case 0xE0D0:
+            func_E0D0(); break;
         case 0xF0BC:
             func_F0BC(); break;
-        case 0xA020:
-            func_A020_b1(); break;
-        case 0x84BD:
-            func_84BD_b0(); break;
-        case 0xB1BF:
-            func_B1BF_b0(); break;
+        case 0xF0C8:
+            func_F0C8(); break;
+        case 0xF0DE:
+            func_F0DE(); break;
+        case 0xF0E0:
+            func_F0E0(); break;
+        case 0xF0C2:
+            func_F0C2(); break;
+        case 0xF0CA:
+            func_F0CA(); break;
+        case 0xF0D8:
+            func_F0D8(); break;
+        case 0xF0DC:
+            func_F0DC(); break;
+        case 0xF0E3:
+            func_F0E3(); break;
         case 0xF0FF:
             func_F0FF(); break;
-        case 0x8A4C:
-            func_8A4C_b0(); break;
-        case 0x9860:
-            func_9860_b0(); break;
-        case 0xB765:
-            func_B765_b0(); break;
-        case 0xB865:
-            func_B865_b0(); break;
-        case 0x85B8:
-            func_85B8_b0(); break;
-        case 0xA660:
-            func_A660_b1(); break;
-        case 0x9DB9:
-            func_9DB9_b0(); break;
-        case 0xB9E6:
-            func_B9E6_b0(); break;
-        case 0xA6FF:
-            func_A6FF_b1(); break;
-        case 0xA6D0:
-            func_A6D0_b1(); break;
-        case 0x9DC5:
-            func_9DC5_b0(); break;
-        case 0x9DC4:
-            func_9DC4_b0(); break;
-        case 0xB986:
-            func_B986_b0(); break;
-        case 0x85C4:
-            func_85C4_b0(); break;
-        case 0x9D07:
-            func_9D07_b0(); break;
-        case 0xA220:
-            switch (g_current_bank) {
-                case 7: func_E220(); break;
-                case 0: func_A220_b0(); break;
-                case 1: func_A220_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA000:
-            func_A000_b1(); break;
-        case 0x8DF0:
-            func_8DF0_b0(); break;
+        case 0xF100:
+            func_F100(); break;
+        case 0xE603:
+            func_E603(); break;
+        case 0xD098:
+            func_D098(); break;
+        case 0xE820:
+            func_E820(); break;
+        case 0xF610:
+            func_F610(); break;
+        case 0xF611:
+            func_F611(); break;
         case 0xCE2C:
             func_CE2C(); break;
-        case 0xA927:
-            switch (g_current_bank) {
-                case 0: func_A927_b0(); break;
-                case 1: func_A927_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
         case 0xE938:
             func_E938(); break;
-        case 0xAA0A:
-            func_AA0A_b0(); break;
-        case 0xA0CF:
-            switch (g_current_bank) {
-                case 0: func_A0CF_b0(); break;
-                case 1: func_A0CF_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+        case 0xED39:
+            func_ED39(); break;
+        case 0xEEEC:
+            func_EEEC(); break;
+        case 0xD021:
+            func_D021(); break;
         case 0xF4D0:
             func_F4D0(); break;
-        case 0xADD2:
-            func_ADD2_b0(); break;
+        case 0xD2D9:
+            func_D2D9(); break;
+        case 0xD204:
+            func_D204(); break;
         case 0xD0C0:
             func_D0C0(); break;
         case 0xD030:
             func_D030(); break;
-        case 0xADC5:
-            func_ADC5_b0(); break;
-        case 0xADF8:
-            func_ADF8_b0(); break;
-        case 0xA5CE:
-            func_A5CE_b1(); break;
-        case 0x85D3:
-            func_85D3_b0(); break;
-        case 0x8485:
-            func_8485_b0(); break;
-        case 0x8585:
-            func_8585_b0(); break;
-        case 0x8685:
-            func_8685_b0(); break;
-        case 0xAD01:
-            func_AD01_b0(); break;
+        case 0xD00F:
+            func_D00F(); break;
+        case 0xE882:
+            func_E882(); break;
         case 0xD1C8:
             func_D1C8(); break;
         case 0xD083:
             func_D083(); break;
-        case 0xA90A:
-            func_A90A_b1(); break;
-        case 0x8CC8:
-            func_8CC8_b0(); break;
-        case 0xB188:
-            func_B188_b0(); break;
-        case 0x8D83:
-            func_8D83_b0(); break;
         case 0xD008:
             func_D008(); break;
-        case 0xACAF:
-            func_ACAF_b0(); break;
-        case 0x85D1:
-            func_85D1_b0(); break;
         case 0xD085:
             func_D085(); break;
-        case 0x8D85:
-            func_8D85_b0(); break;
         case 0xD102:
             func_D102(); break;
-        case 0x9101:
-            func_9101_b0(); break;
-        case 0x91C8:
-            func_91C8_b0(); break;
-        case 0xA985:
-            func_A985_b1(); break;
-        case 0xA260:
-            func_A260_b1(); break;
-        case 0xA040:
-            func_A040_b1(); break;
-        case 0xA208:
-            switch (g_current_bank) {
-                case 0: func_A208_b0(); break;
-                case 1: func_A208_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
         case 0xF310:
             func_F310(); break;
-        case 0xA200:
-            func_A200_b1(); break;
-        case 0x8A02:
-            func_8A02_b0(); break;
-        case 0x8DD5:
-            func_8DD5_b0(); break;
-        case 0xAD04:
-            func_AD04_b0(); break;
-        case 0xA90F:
-            func_A90F_b1(); break;
-        case 0xE28D:
-            func_E28D(); break;
-        case 0xAE02:
-            func_AE02_b0(); break;
+        case 0xF311:
+            func_F311(); break;
+        case 0xD089:
+            func_D089(); break;
+        case 0xEED1:
+            func_EED1(); break;
+        case 0xDFAF:
+            func_DFAF(); break;
+        case 0xDE04:
+            func_DE04(); break;
+        case 0xE28E:
+            func_E28E(); break;
+        case 0xE38E:
+            func_E38E(); break;
         case 0xD8BD:
             func_D8BD(); break;
-        case 0x85D5:
-            func_85D5_b0(); break;
-        case 0xA0D6:
-            switch (g_current_bank) {
-                case 0: func_A0D6_b0(); break;
-                case 1: func_A0D6_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+        case 0xD586:
+            func_D586(); break;
+        case 0xD5B2:
+            func_D5B2(); break;
         case 0xE18D:
             func_E18D(); break;
-        case 0xB160:
-            func_B160_b0(); break;
+        case 0xD56F:
+            func_D56F(); break;
         case 0xE1CE:
             func_E1CE(); break;
-        case 0xA946:
-            func_A946_b1(); break;
         case 0xCCA9:
             func_CCA9(); break;
-        case 0xA918:
-            switch (g_current_bank) {
-                case 0: func_A918_b0(); break;
-                case 1: func_A918_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x853A:
-            func_853A_b0(); break;
-        case 0xA9D5:
-            func_A9D5_b0(); break;
-        case 0xA9D6:
-            func_A9D6_b0(); break;
-        case 0x8DC8:
-            func_8DC8_b0(); break;
-        case 0xE2EE:
-            func_E2EE(); break;
-        case 0xA908:
-            func_A908_b0(); break;
-        case 0xA588:
-            func_A588_b1(); break;
-        case 0x8503:
-            func_8503_b0(); break;
-        case 0x90D5:
-            func_90D5_b0(); break;
-        case 0x8AE8:
-            func_8AE8_b0(); break;
-        case 0xA386:
-            func_A386_b1(); break;
-        case 0x8508:
-            switch (g_current_bank) {
-                case 0: func_8508_b0(); break;
-                case 1: func_8508_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA485:
-            switch (g_current_bank) {
-                case 7: func_E485(); break;
-                case 0: func_A485_b0(); break;
-                case 1: func_A485_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x852C:
-            func_852C_b0(); break;
-        case 0xA585:
-            switch (g_current_bank) {
-                case 7: func_E585(); break;
-                case 0: func_A585_b0(); break;
-                case 1: func_A585_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x8514:
-            func_8514_b0(); break;
-        case 0xB185:
-            func_B185_b0(); break;
-        case 0xA5A5:
-            func_A5A5_b1(); break;
-        case 0xA9F6:
-            func_A9F6_b0(); break;
-        case 0xA5A4:
-            func_A5A4_b1(); break;
-        case 0x81A5:
-            func_81A5_b0(); break;
-        case 0xA685:
-            func_A685_b1(); break;
-        case 0xA5A6:
-            func_A5A6_b1(); break;
-        case 0x8D04:
-            func_8D04_b0(); break;
-        case 0x8DA4:
-            func_8DA4_b0(); break;
-        case 0x8DC7:
-            func_8DC7_b0(); break;
-        case 0xA6C6:
-            func_A6C6_b1(); break;
+        case 0xE3CE:
+            func_E3CE(); break;
+        case 0xD8AA:
+            func_D8AA(); break;
+        case 0xD5C7:
+            func_D5C7(); break;
+        case 0xEE03:
+            func_EE03(); break;
+        case 0xE2EF:
+            func_E2EF(); break;
+        case 0xE2CD:
+            func_E2CD(); break;
+        case 0xE2CE:
+            func_E2CE(); break;
+        case 0xD5A5:
+            func_D5A5(); break;
+        case 0xDE21:
+            func_DE21(); break;
+        case 0xF700:
+            func_F700(); break;
+        case 0xEA8E:
+            func_EA8E(); break;
+        case 0xE98E:
+            func_E98E(); break;
+        case 0xE6A8:
+            func_E6A8(); break;
+        case 0xD0A7:
+            func_D0A7(); break;
         case 0xE5D0:
             func_E5D0(); break;
-        case 0xA5C6:
-            func_A5C6_b1(); break;
+        case 0xD121:
+            func_D121(); break;
+        case 0xEFD2:
+            func_EFD2(); break;
         case 0xCDA5:
             func_CDA5(); break;
         case 0xCDA7:
             func_CDA7(); break;
-        case 0x8BCD:
-            func_8BCD_b0(); break;
-        case 0xA2B0:
-            func_A2B0_b1(); break;
-        case 0xA785:
-            switch (g_current_bank) {
-                case 0: func_A785_b0(); break;
-                case 1: func_A785_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA885:
-            switch (g_current_bank) {
-                case 0: func_A885_b0(); break;
-                case 1: func_A885_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xF0A8:
-            func_F0A8(); break;
         case 0xF1F0:
             func_F1F0(); break;
-        case 0xA6A6:
-            func_A6A6_b1(); break;
-        case 0xA5E4:
-            func_A5E4_b1(); break;
-        case 0x8509:
-            func_8509_b0(); break;
-        case 0xD0A7:
-            func_D0A7(); break;
-        case 0xA3E5:
-            switch (g_current_bank) {
-                case 0: func_A3E5_b0(); break;
-                case 1: func_A3E5_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+        case 0xE4D0:
+            func_E4D0(); break;
+        case 0xCDD1:
+            func_CDD1(); break;
         case 0xD0A4:
             func_D0A4(); break;
-        case 0xA385:
-            switch (g_current_bank) {
-                case 7: func_E385(); break;
-                case 0: func_A385_b0(); break;
-                case 1: func_A385_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xB1A4:
-            func_B1A4_b0(); break;
         case 0xD00A:
             func_D00A(); break;
-        case 0xA913:
-            func_A913_b1(); break;
-        case 0x9100:
-            func_9100_b0(); break;
-        case 0xA3C6:
-            switch (g_current_bank) {
-                case 0: func_A3C6_b0(); break;
-                case 1: func_A3C6_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x8883:
-            func_8883_b0(); break;
-        case 0x88B7:
-            func_88B7_b0(); break;
-        case 0x88E8:
-            func_88E8_b0(); break;
-        case 0x88C8:
-            func_88C8_b0(); break;
-        case 0x88EC:
-            func_88EC_b0(); break;
-        case 0x88AD:
-            func_88AD_b0(); break;
-        case 0x88A8:
-            func_88A8_b0(); break;
-        case 0x8918:
-            func_8918_b0(); break;
-        case 0x88BC:
-            func_88BC_b0(); break;
-        case 0x8906:
-            func_8906_b0(); break;
-        case 0x88FB:
-            func_88FB_b0(); break;
+        case 0xECD1:
+            func_ECD1(); break;
         case 0xD106:
             func_D106(); break;
-        case 0xA54D:
-            func_A54D_b0(); break;
-        case 0xAC05:
-            func_AC05_b0(); break;
-        case 0xA905:
-            switch (g_current_bank) {
-                case 0: func_A905_b0(); break;
-                case 1: func_A905_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x8A05:
-            func_8A05_b0(); break;
-        case 0xA804:
-            func_A804_b1(); break;
-        case 0x8534:
-            func_8534_b0(); break;
-        case 0xA984:
-            switch (g_current_bank) {
-                case 0: func_A984_b0(); break;
-                case 1: func_A984_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA948:
-            switch (g_current_bank) {
-                case 0: func_A948_b0(); break;
-                case 1: func_A948_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+        case 0xD92A:
+            func_D92A(); break;
+        case 0xF3D1:
+            func_F3D1(); break;
+        case 0xF0C7:
+            func_F0C7(); break;
+        case 0xE606:
+            func_E606(); break;
         case 0xE6A4:
             func_E6A4(); break;
-        case 0xA5F8:
-            func_A5F8_b1(); break;
-        case 0x8D22:
-            func_8D22_b0(); break;
-        case 0x8D1B:
-            func_8D1B_b0(); break;
+        case 0xE58E:
+            func_E58E(); break;
+        case 0xE68E:
+            func_E68E(); break;
         case 0xCFF0:
             func_CFF0(); break;
-        case 0xAE91:
-            func_AE91_b0(); break;
-        case 0xBBD0:
-            func_BBD0_b0(); break;
-        case 0xAA05:
-            func_AA05_b0(); break;
-        case 0xADBC:
-            func_ADBC_b0(); break;
-        case 0x8AD0:
-            func_8AD0_b0(); break;
-        case 0xA98A:
-            switch (g_current_bank) {
-                case 0: func_A98A_b0(); break;
-                case 1: func_A98A_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+        case 0xD9D4:
+            func_D9D4(); break;
+        case 0xDE60:
+            func_DE60(); break;
         case 0xDD01:
             func_DD01(); break;
-        case 0xAD0C:
-            func_AD0C_b0(); break;
-        case 0xD004:
-            func_D004(); break;
-        case 0xAEA8:
-            func_AEA8_b0(); break;
-        case 0xA805:
-            func_A805_b0(); break;
-        case 0x9902:
-            func_9902_b0(); break;
         case 0xCEA8:
             func_CEA8(); break;
+        case 0xCEA9:
+            func_CEA9(); break;
+        case 0xCE05:
+            func_CE05(); break;
+        case 0xCE20:
+            func_CE20(); break;
         case 0xD5AD:
             func_D5AD(); break;
-        case 0xB09D:
-            func_B09D_b0(); break;
-        case 0xA060:
-            func_A060_b1(); break;
-        case 0xA515:
-            func_A515_b1(); break;
-        case 0xAA04:
-            func_AA04_b0(); break;
-        case 0xA9CD:
-            func_A9CD_b0(); break;
-        case 0x8D50:
-            func_8D50_b0(); break;
-        case 0xAC8D:
-            func_AC8D_b0(); break;
-        case 0xA0A9:
-            func_A0A9_b1(); break;
-        case 0x8DA0:
-            func_8DA0_b0(); break;
-        case 0x8D68:
-            func_8D68_b0(); break;
-        case 0x8D14:
-            func_8D14_b0(); break;
-        case 0x9DA3:
-            func_9DA3_b0(); break;
-        case 0xE6E8:
-            func_E6E8(); break;
-        case 0xA3E6:
-            switch (g_current_bank) {
-                case 0: func_A3E6_b0(); break;
-                case 1: func_A3E6_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x8D48:
-            func_8D48_b0(); break;
-        case 0x8D98:
-            func_8D98_b0(); break;
-        case 0x8DC0:
-            func_8DC0_b0(); break;
-        case 0xBCA9:
-            func_BCA9_b0(); break;
-        case 0xB08D:
-            func_B08D_b0(); break;
-        case 0xB18D:
-            func_B18D_b0(); break;
-        case 0xB28D:
-            func_B28D_b0(); break;
-        case 0x988D:
-            func_988D_b0(); break;
-        case 0x998D:
-            func_998D_b0(); break;
-        case 0xA928:
-            func_A928_b1(); break;
-        case 0xAE05:
-            func_AE05_b0(); break;
-        case 0xA90E:
-            func_A90E_b0(); break;
-        case 0xAEDD:
-            func_AEDD_b0(); break;
-        case 0xA24C:
-            switch (g_current_bank) {
-                case 0: func_A24C_b0(); break;
-                case 1: func_A24C_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA9DD:
-            func_A9DD_b0(); break;
-        case 0x8D09:
-            func_8D09_b0(); break;
-        case 0xF0DE:
-            func_F0DE(); break;
-        case 0xA50E:
-            func_A50E_b1(); break;
-        case 0xF07D:
-            func_F07D(); break;
-        case 0xEE20:
-            func_EE20(); break;
-        case 0xA510:
-            switch (g_current_bank) {
-                case 0: func_A510_b0(); break;
-                case 1: func_A510_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xF004:
-            func_F004(); break;
-        case 0xA91D:
-            func_A91D_b0(); break;
-        case 0xA205:
-            func_A205_b1(); break;
-        case 0xA207:
-            func_A207_b0(); break;
-        case 0xA9E0:
-            func_A9E0_b0(); break;
-        case 0xA20A:
-            switch (g_current_bank) {
-                case 0: func_A20A_b0(); break;
-                case 1: func_A20A_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA20C:
-            switch (g_current_bank) {
-                case 0: func_A20C_b0(); break;
-                case 1: func_A20C_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x8D0A:
-            func_8D0A_b0(); break;
-        case 0xA952:
-            switch (g_current_bank) {
-                case 0: func_A952_b0(); break;
-                case 1: func_A952_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA90C:
-            func_A90C_b1(); break;
-        case 0xA27E:
-            func_A27E_b1(); break;
-        case 0x8D64:
-            func_8D64_b0(); break;
-        case 0x958D:
-            func_958D_b0(); break;
-        case 0x80A5:
-            func_80A5_b0(); break;
-        case 0xF080:
-            func_F080(); break;
-        case 0x8085:
-            func_8085_b0(); break;
-        case 0xA280:
-            func_A280_b1(); break;
-        case 0x8D7D:
-            func_8D7D_b0(); break;
-        case 0x8D7F:
-            func_8D7F_b0(); break;
-        case 0xA91B:
-            func_A91B_b1(); break;
+        case 0xF6AD:
+            func_F6AD(); break;
         case 0xF6AE:
             func_F6AE(); break;
-        case 0xA907:
-            switch (g_current_bank) {
-                case 0: func_A907_b0(); break;
-                case 1: func_A907_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+        case 0xF004:
+            func_F004(); break;
+        case 0xCDF1:
+            func_CDF1(); break;
+        case 0xDCC2:
+            func_DCC2(); break;
+        case 0xDD27:
+            func_DD27(); break;
+        case 0xDD93:
+            func_DD93(); break;
+        case 0xE6E8:
+            func_E6E8(); break;
+        case 0xDECD:
+            func_DECD(); break;
+        case 0xDF5E:
+            func_DF5E(); break;
+        case 0xDE2D:
+            func_DE2D(); break;
+        case 0xDC4F:
+            func_DC4F(); break;
+        case 0xDC68:
+            func_DC68(); break;
+        case 0xDC5D:
+            func_DC5D(); break;
+        case 0xDD37:
+            func_DD37(); break;
+        case 0xDCD2:
+            func_DCD2(); break;
+        case 0xDDA3:
+            func_DDA3(); break;
+        case 0xF0DF:
+            func_F0DF(); break;
+        case 0xEE20:
+            func_EE20(); break;
+        case 0xE0EF:
+            func_E0EF(); break;
+        case 0xE62F:
+            func_E62F(); break;
+        case 0xD520:
+            func_D520(); break;
+        case 0xE0D6:
+            func_E0D6(); break;
+        case 0xD0CA:
+            func_D0CA(); break;
+        case 0xD0CB:
+            func_D0CB(); break;
+        case 0xD07F:
+            func_D07F(); break;
+        case 0xF6AF:
+            func_F6AF(); break;
+        case 0xDE71:
+            func_DE71(); break;
         case 0xDC4C:
             func_DC4C(); break;
-        case 0xF0E0:
-            func_F0E0(); break;
-        case 0xF07A:
-            func_F07A(); break;
-        case 0xA27A:
-            func_A27A_b1(); break;
-        case 0xA9DF:
-            func_A9DF_b0(); break;
-        case 0xA979:
-            func_A979_b1(); break;
-        case 0x8D0B:
-            func_8D0B_b0(); break;
-        case 0xA959:
-            func_A959_b1(); break;
-        case 0xA511:
-            func_A511_b1(); break;
-        case 0x9920:
-            func_9920_b0(); break;
-        case 0xA513:
-            switch (g_current_bank) {
-                case 0: func_A513_b0(); break;
-                case 1: func_A513_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA648:
-            func_A648_b1(); break;
-        case 0xAE15:
-            func_AE15_b0(); break;
+        case 0xDEDD:
+            func_DEDD(); break;
+        case 0xDF6E:
+            func_DF6E(); break;
+        case 0xF0E1:
+            func_F0E1(); break;
+        case 0xD079:
+            func_D079(); break;
+        case 0xF68E:
+            func_F68E(); break;
+        case 0xD07B:
+            func_D07B(); break;
+        case 0xE635:
+            func_E635(); break;
         case 0xE095:
             func_E095(); break;
+        case 0xE096:
+            func_E096(); break;
         case 0xE091:
             func_E091(); break;
-        case 0x89CD:
-            func_89CD_b0(); break;
-        case 0xA9FF:
-            func_A9FF_b0(); break;
-        case 0x8D06:
-            func_8D06_b0(); break;
-        case 0x8D79:
-            func_8D79_b0(); break;
-        case 0x8D7B:
-            func_8D7B_b0(); break;
-        case 0xAD40:
-            func_AD40_b0(); break;
-        case 0x854C:
-            switch (g_current_bank) {
-                case 0: func_854C_b0(); break;
-                case 1: func_854C_b1(); break;
-                case 2: func_854C_b2(); break;
-                case 3: func_854C_b3(); break;
-                case 4: func_854C_b4(); break;
-                case 5: func_854C_b5(); break;
-                case 6: func_854C_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xB2E6:
-            func_B2E6_b0(); break;
+        case 0xE101:
+            func_E101(); break;
+        case 0xE1EF:
+            func_E1EF(); break;
         case 0xD0B2:
             func_D0B2(); break;
-        case 0x85E1:
-            func_85E1_b0(); break;
-        case 0xBAAD:
-            func_BAAD_b0(); break;
-        case 0xBA8D:
-            func_BA8D_b0(); break;
-        case 0xA59E:
-            func_A59E_b1(); break;
-        case 0xAD00:
-            func_AD00_b0(); break;
-        case 0xADD0:
-            func_ADD0_b0(); break;
-        case 0xB1C6:
-            func_B1C6_b0(); break;
-        case 0xA820:
-            switch (g_current_bank) {
-                case 0: func_A820_b0(); break;
-                case 1: func_A820_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+        case 0xE158:
+            func_E158(); break;
+        case 0xF041:
+            func_F041(); break;
+        case 0xCF80:
+            func_CF80(); break;
         case 0xF220:
             func_F220(); break;
-        case 0xAC60:
-            func_AC60_b0(); break;
+        case 0xD0F3:
+            func_D0F3(); break;
         case 0xE42F:
             func_E42F(); break;
-        case 0xA941:
-            switch (g_current_bank) {
-                case 0: func_A941_b0(); break;
-                case 1: func_A941_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x853E:
-            switch (g_current_bank) {
-                case 0: func_853E_b0(); break;
-                case 1: func_853E_b1(); break;
-                case 2: func_853E_b2(); break;
-                case 3: func_853E_b3(); break;
-                case 4: func_853E_b4(); break;
-                case 5: func_853E_b5(); break;
-                case 6: func_853E_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+        case 0xE430:
+            func_E430(); break;
         case 0xE41C:
             func_E41C(); break;
-        case 0xA9E4:
-            func_A9E4_b0(); break;
-        case 0x89AD:
-            func_89AD_b0(); break;
+        case 0xE41D:
+            func_E41D(); break;
+        case 0xF055:
+            func_F055(); break;
+        case 0xF2F0:
+            func_F2F0(); break;
+        case 0xF06D:
+            func_F06D(); break;
+        case 0xF057:
+            func_F057(); break;
+        case 0xCEEF:
+            func_CEEF(); break;
+        case 0xF1D0:
+            func_F1D0(); break;
+        case 0xF1D1:
+            func_F1D1(); break;
+        case 0xEAC6:
+            func_EAC6(); break;
+        case 0xEAEB:
+            func_EAEB(); break;
+        case 0xD54D:
+            func_D54D(); break;
+        case 0xCDAD:
+            func_CDAD(); break;
+        case 0xCDAE:
+            func_CDAE(); break;
+        case 0xD1AE:
+            func_D1AE(); break;
+        case 0xD2AD:
+            func_D2AD(); break;
+        case 0xD2AE:
+            func_D2AE(); break;
+        case 0xD9AE:
+            func_D9AE(); break;
+        case 0xDAAD:
+            func_DAAD(); break;
+        case 0xDBAE:
+            func_DBAE(); break;
+        case 0xDCAD:
+            func_DCAD(); break;
+        case 0xDDAD:
+            func_DDAD(); break;
+        case 0xDEAE:
+            func_DEAE(); break;
+        case 0xE2AE:
+            func_E2AE(); break;
+        case 0xE3AD:
+            func_E3AD(); break;
+        case 0xE4AE:
+            func_E4AE(); break;
+        case 0xE6AE:
+            func_E6AE(); break;
+        case 0xE8AE:
+            func_E8AE(); break;
+        case 0xEAAE:
+            func_EAAE(); break;
+        case 0xEBAD:
+            func_EBAD(); break;
+        case 0xEEAD:
+            func_EEAD(); break;
+        case 0xF1AD:
+            func_F1AD(); break;
+        case 0xF3AD:
+            func_F3AD(); break;
+        case 0xF3AE:
+            func_F3AE(); break;
+        case 0xF4AD:
+            func_F4AD(); break;
+        case 0xF4AE:
+            func_F4AE(); break;
+        case 0xF8AE:
+            func_F8AE(); break;
+        case 0xE2A9:
+            func_E2A9(); break;
+        case 0xF6D0:
+            func_F6D0(); break;
+        case 0xEDBE:
+            func_EDBE(); break;
+        case 0xD04D:
+            func_D04D(); break;
+        case 0xF7D1:
+            func_F7D1(); break;
+        case 0xE78E:
+            func_E78E(); break;
+        case 0xF061:
+            func_F061(); break;
+        case 0xF080:
+            func_F080(); break;
+        case 0xF0B5:
+            func_F0B5(); break;
+        case 0xF0B6:
+            func_F0B6(); break;
+        case 0xF09E:
+            func_F09E(); break;
+        case 0xF0A8:
+            func_F0A8(); break;
+        case 0xF07D:
+            func_F07D(); break;
+        case 0xF07A:
+            func_F07A(); break;
+        case 0xF06C:
+            func_F06C(); break;
+        case 0xF063:
+            func_F063(); break;
+        case 0xF0AD:
+            func_F0AD(); break;
+        case 0xF0A6:
+            func_F0A6(); break;
+        case 0xF0A3:
+            func_F0A3(); break;
+        case 0xCEE9:
+            func_CEE9(); break;
+        case 0xE3D0:
+            func_E3D0(); break;
+        case 0xE3D1:
+            func_E3D1(); break;
+        case 0xF1FF:
+            func_F1FF(); break;
+        case 0xF200:
+            func_F200(); break;
+        case 0xF10D:
+            func_F10D(); break;
+        case 0xE74D:
+            func_E74D(); break;
+        case 0xF0E7:
+            func_F0E7(); break;
+        case 0xF13B:
+            func_F13B(); break;
+        case 0xF13C:
+            func_F13C(); break;
+        case 0xF109:
+            func_F109(); break;
+        case 0xF184:
+            func_F184(); break;
+        case 0xF1C2:
+            func_F1C2(); break;
+        case 0xD2C9:
+            func_D2C9(); break;
+        case 0xEBCA:
+            func_EBCA(); break;
+        case 0xF1F9:
+            func_F1F9(); break;
+        case 0xF1FA:
+            func_F1FA(); break;
+        case 0xF1ED:
+            func_F1ED(); break;
+        case 0xF34C:
+            func_F34C(); break;
+        case 0xF34D:
+            func_F34D(); break;
+        case 0xF1F3:
+            func_F1F3(); break;
+        case 0xF1F4:
+            func_F1F4(); break;
+        case 0xF253:
+            func_F253(); break;
+        case 0xF254:
+            func_F254(); break;
+        case 0xF24C:
+            func_F24C(); break;
+        case 0xEA5D:
+            func_EA5D(); break;
+        case 0xEA5E:
+            func_EA5E(); break;
+        case 0xDEBA:
+            func_DEBA(); break;
+        case 0xF2DF:
+            func_F2DF(); break;
+        case 0xF2A4:
+            func_F2A4(); break;
+        case 0xF2BC:
+            func_F2BC(); break;
+        case 0xF34F:
+            func_F34F(); break;
+        case 0xF554:
+            func_F554(); break;
+        case 0xDD03:
+            func_DD03(); break;
+        case 0xE420:
+            func_E420(); break;
+        case 0xE421:
+            func_E421(); break;
+        case 0xF5E4:
+            func_F5E4(); break;
+        case 0xDD05:
+            func_DD05(); break;
+        case 0xF380:
+            func_F380(); break;
+        case 0xF3D5:
+            func_F3D5(); break;
+        case 0xF3D6:
+            func_F3D6(); break;
+        case 0xF41B:
+            func_F41B(); break;
+        case 0xF3DE:
+            func_F3DE(); break;
+        case 0xF42A:
+            func_F42A(); break;
+        case 0xF3E7:
+            func_F3E7(); break;
+        case 0xF44A:
+            func_F44A(); break;
+        case 0xF517:
+            func_F517(); break;
+        case 0xF3F0:
+            func_F3F0(); break;
+        case 0xF47B:
+            func_F47B(); break;
+        case 0xF47C:
+            func_F47C(); break;
+        case 0xE9EE:
+            func_E9EE(); break;
+        case 0xE3F0:
+            func_E3F0(); break;
+        case 0xE021:
+            func_E021(); break;
+        case 0xD905:
+            func_D905(); break;
+        case 0xDDE9:
+            func_DDE9(); break;
+        case 0xF57D:
+            func_F57D(); break;
+        case 0xE1AF:
+            func_E1AF(); break;
+        case 0xCD06:
+            func_CD06(); break;
+        case 0xCE0C:
+            func_CE0C(); break;
+        case 0xF621:
+            func_F621(); break;
+        case 0xF66C:
+            func_F66C(); break;
+        case 0xE9C9:
+            func_E9C9(); break;
+        case 0xCD60:
+            func_CD60(); break;
+        case 0xDB3A:
+            func_DB3A(); break;
+        case 0xF749:
+            func_F749(); break;
+        case 0xEB20:
+            func_EB20(); break;
+        case 0xCDEB:
+            func_CDEB(); break;
+        case 0xCDEC:
+            func_CDEC(); break;
+        case 0xF7E2:
+            func_F7E2(); break;
+        case 0xF7E3:
+            func_F7E3(); break;
+        case 0xD05E:
+            func_D05E(); break;
+        case 0xEE80:
+            func_EE80(); break;
+        case 0xD124:
+            func_D124(); break;
+        case 0xD0AA:
+            func_D0AA(); break;
+        case 0xF034:
+            func_F034(); break;
+        case 0xCE7B:
+            func_CE7B(); break;
+        case 0xCE7C:
+            func_CE7C(); break;
+        case 0xF010:
+            func_F010(); break;
+        case 0xEE79:
+            func_EE79(); break;
+        case 0xEA34:
+            func_EA34(); break;
+        case 0xB6AD:
+            switch (g_current_bank) {
+                case 7: func_F6AD(); break;
+                case 0: func_B6AD_b0(); break;
+                case 1: func_B6AD_b1(); break;
+                case 2: func_B6AD_b2(); break;
+                case 3: func_B6AD_b3(); break;
+                case 4: func_B6AD_b4(); break;
+                case 5: func_B6AD_b5(); break;
+                case 6: func_B6AD_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0xBFAD:
+            switch (g_current_bank) {
+                case 0: func_BFAD_b0(); break;
+                case 1: func_BFAD_b1(); break;
+                case 2: func_BFAD_b2(); break;
+                case 3: func_BFAD_b3(); break;
+                case 4: func_BFAD_b4(); break;
+                case 5: func_BFAD_b5(); break;
+                case 6: func_BFAD_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
         case 0x89B4:
             switch (g_current_bank) {
                 case 0: func_89B4_b0(); break;
@@ -2213,12 +2058,6 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0xE29C:
-            func_E29C(); break;
-        case 0xA9E2:
-            func_A9E2_b0(); break;
-        case 0x8578:
-            func_8578_b0(); break;
         case 0x9358:
             switch (g_current_bank) {
                 case 0: func_9358_b0(); break;
@@ -2231,19 +2070,6 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0xA9D2:
-            func_A9D2_b0(); break;
-        case 0xAC85:
-            func_AC85_b0(); break;
-        case 0xA937:
-            switch (g_current_bank) {
-                case 0: func_A937_b0(); break;
-                case 1: func_A937_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xF06C:
-            func_F06C(); break;
         case 0xACD9:
             switch (g_current_bank) {
                 case 0: func_ACD9_b0(); break;
@@ -2256,14 +2082,6 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0xACA5:
-            func_ACA5_b0(); break;
-        case 0x8DAC:
-            func_8DAC_b0(); break;
-        case 0x9E20:
-            func_9E20_b0(); break;
-        case 0xA9F2:
-            func_A9F2_b0(); break;
         case 0x8148:
             switch (g_current_bank) {
                 case 0: func_8148_b0(); break;
@@ -2276,34 +2094,34 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0x850A:
+        case 0xAAAD:
             switch (g_current_bank) {
-                case 0: func_850A_b0(); break;
-                case 1: func_850A_b1(); break;
+                case 7: func_EAAD(); break;
+                case 0: func_AAAD_b0(); break;
+                case 1: func_AAAD_b1(); break;
+                case 2: func_AAAD_b2(); break;
+                case 3: func_AAAD_b3(); break;
+                case 4: func_AAAD_b4(); break;
+                case 5: func_AAAD_b5(); break;
+                case 6: func_AAAD_b6(); break;
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0x89A5:
+        case 0xFDAD:
+            func_FDAD(); break;
+        case 0x90AD:
             switch (g_current_bank) {
-                case 0: func_89A5_b0(); break;
-                case 1: func_89A5_b1(); break;
-                case 2: func_89A5_b2(); break;
-                case 3: func_89A5_b3(); break;
-                case 4: func_89A5_b4(); break;
-                case 5: func_89A5_b5(); break;
-                case 6: func_89A5_b6(); break;
+                case 7: func_D0AD(); break;
+                case 0: func_90AD_b0(); break;
+                case 1: func_90AD_b1(); break;
+                case 2: func_90AD_b2(); break;
+                case 3: func_90AD_b3(); break;
+                case 4: func_90AD_b4(); break;
+                case 5: func_90AD_b5(); break;
+                case 6: func_90AD_b6(); break;
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0xA989:
-            switch (g_current_bank) {
-                case 0: func_A989_b0(); break;
-                case 1: func_A989_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xF057:
-            func_F057(); break;
         case 0x9910:
             switch (g_current_bank) {
                 case 0: func_9910_b0(); break;
@@ -2328,323 +2146,36 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0xA933:
-            func_A933_b0(); break;
-        case 0xA9AC:
-            func_A9AC_b0(); break;
-        case 0xCEEF:
-            func_CEEF(); break;
-        case 0xF1D0:
-            func_F1D0(); break;
-        case 0xA9EA:
-            func_A9EA_b0(); break;
-        case 0x8D11:
-            func_8D11_b0(); break;
-        case 0x8D31:
-            func_8D31_b0(); break;
-        case 0x8D33:
-            func_8D33_b0(); break;
-        case 0x8D45:
-            func_8D45_b0(); break;
-        case 0x80AD:
-            func_80AD_b0(); break;
-        case 0x84AD:
-            func_84AD_b0(); break;
-        case 0x85AD:
-            func_85AD_b0(); break;
-        case 0x8AAD:
-            func_8AAD_b0(); break;
-        case 0x8BAD:
-            func_8BAD_b0(); break;
-        case 0x93AD:
-            func_93AD_b0(); break;
-        case 0x94AD:
-            func_94AD_b0(); break;
-        case 0x95AD:
-            func_95AD_b0(); break;
-        case 0x97AD:
-            func_97AD_b0(); break;
-        case 0x9BAD:
-            func_9BAD_b0(); break;
-        case 0x9DAD:
-            func_9DAD_b0(); break;
-        case 0x9EAD:
-            func_9EAD_b0(); break;
-        case 0x9FAD:
+        case 0x853E:
             switch (g_current_bank) {
-                case 1: func_9FAD_b1(); break;
-                case 0: func_9FAD_b0(); break;
+                case 0: func_853E_b0(); break;
+                case 1: func_853E_b1(); break;
+                case 2: func_853E_b2(); break;
+                case 3: func_853E_b3(); break;
+                case 4: func_853E_b4(); break;
+                case 5: func_853E_b5(); break;
+                case 6: func_853E_b6(); break;
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0xA0AD:
-            func_A0AD_b1(); break;
-        case 0xA1AD:
-            func_A1AD_b1(); break;
-        case 0xA3AD:
+        case 0xCFEA:
+            func_CFEA(); break;
+        case 0xBEAD:
             switch (g_current_bank) {
-                case 0: func_A3AD_b0(); break;
-                case 1: func_A3AD_b1(); break;
+                case 0: func_BEAD_b0(); break;
+                case 1: func_BEAD_b1(); break;
+                case 2: func_BEAD_b2(); break;
+                case 3: func_BEAD_b3(); break;
+                case 4: func_BEAD_b4(); break;
+                case 5: func_BEAD_b5(); break;
+                case 6: func_BEAD_b6(); break;
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0xA5AD:
-            func_A5AD_b1(); break;
-        case 0xA6AD:
-            func_A6AD_b1(); break;
-        case 0xA7AD:
-            switch (g_current_bank) {
-                case 0: func_A7AD_b0(); break;
-                case 1: func_A7AD_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA9AD:
-            func_A9AD_b0(); break;
-        case 0xAAAD:
-            func_AAAD_b0(); break;
-        case 0xAFAD:
-            func_AFAD_b0(); break;
-        case 0xB0AD:
-            func_B0AD_b0(); break;
-        case 0xB1AD:
-            func_B1AD_b0(); break;
-        case 0xB7AD:
-            func_B7AD_b0(); break;
-        case 0xB8AD:
-            func_B8AD_b0(); break;
-        case 0xB9AD:
-            func_B9AD_b0(); break;
-        case 0xBBAD:
-            func_BBAD_b0(); break;
-        case 0xCDAD:
-            func_CDAD(); break;
-        case 0xD2AD:
-            func_D2AD(); break;
-        case 0xDAAD:
-            func_DAAD(); break;
-        case 0xDCAD:
-            func_DCAD(); break;
-        case 0xE2AD:
-            func_E2AD(); break;
-        case 0xF0AD:
-            func_F0AD(); break;
-        case 0xF1AD:
-            func_F1AD(); break;
-        case 0xF2AD:
-            func_F2AD(); break;
-        case 0xF3AD:
-            func_F3AD(); break;
-        case 0xF4AD:
-            func_F4AD(); break;
-        case 0x8D3E:
-            func_8D3E_b0(); break;
-        case 0x9DA9:
-            func_9DA9_b0(); break;
-        case 0x8D9D:
-            func_8D9D_b0(); break;
-        case 0xAC0D:
-            func_AC0D_b0(); break;
-        case 0xB902:
-            func_B902_b0(); break;
-        case 0xB7B9:
-            func_B7B9_b0(); break;
-        case 0xF6D0:
-            func_F6D0(); break;
-        case 0x8D35:
-            func_8D35_b0(); break;
-        case 0xADED:
-            func_ADED_b0(); break;
-        case 0xCDAE:
-            func_CDAE(); break;
-        case 0x8D73:
-            func_8D73_b0(); break;
-        case 0x8D26:
-            func_8D26_b0(); break;
-        case 0x92A9:
-            func_92A9_b0(); break;
-        case 0x8D92:
-            func_8D92_b0(); break;
-        case 0xA68D:
-            func_A68D_b1(); break;
-        case 0xBC20:
-            func_BC20_b0(); break;
-        case 0xF061:
-            func_F061(); break;
-        case 0x9D12:
-            func_9D12_b0(); break;
-        case 0xF1FF:
-            func_F1FF(); break;
-        case 0xF10D:
-            func_F10D(); break;
-        case 0xF0E7:
-            func_F0E7(); break;
-        case 0xF13B:
-            func_F13B(); break;
-        case 0xADF1:
-            func_ADF1_b0(); break;
-        case 0xF109:
-            func_F109(); break;
-        case 0x8A04:
-            func_8A04_b0(); break;
-        case 0x8420:
-            func_8420_b0(); break;
-        case 0xF184:
-            func_F184(); break;
-        case 0x8575:
-            func_8575_b0(); break;
-        case 0xADC8:
-            func_ADC8_b0(); break;
-        case 0x85C7:
-            func_85C7_b0(); break;
-        case 0xA9C8:
-            func_A9C8_b0(); break;
-        case 0xA4A4:
-            func_A4A4_b1(); break;
-        case 0xA4A3:
-            func_A4A3_b1(); break;
-        case 0x91A4:
-            func_91A4_b0(); break;
-        case 0x91A5:
-            func_91A5_b0(); break;
-        case 0xF1C2:
-            func_F1C2(); break;
-        case 0xA0C9:
-            func_A0C9_b0(); break;
-        case 0xD2C9:
-            func_D2C9(); break;
-        case 0x90EB:
-            func_90EB_b0(); break;
-        case 0xF1F9:
-            func_F1F9(); break;
-        case 0x8CC9:
-            func_8CC9_b0(); break;
-        case 0x908C:
-            func_908C_b0(); break;
-        case 0xF1ED:
-            func_F1ED(); break;
-        case 0xF34C:
-            func_F34C(); break;
-        case 0xF1F3:
-            func_F1F3(); break;
-        case 0xAD43:
-            func_AD43_b0(); break;
-        case 0xADE5:
-            switch (g_current_bank) {
-                case 0: func_ADE5_b0(); break;
-                case 1: func_ADE5_b1(); break;
-                case 2: func_ADE5_b2(); break;
-                case 3: func_ADE5_b3(); break;
-                case 4: func_ADE5_b4(); break;
-                case 5: func_ADE5_b5(); break;
-                case 6: func_ADE5_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xF253:
-            func_F253(); break;
-        case 0xACF2:
-            func_ACF2_b0(); break;
-        case 0xF24C:
-            func_F24C(); break;
-        case 0xAEF2:
-            func_AEF2_b0(); break;
-        case 0xA800:
-            func_A800_b1(); break;
-        case 0x8DA8:
-            func_8DA8_b0(); break;
-        case 0xEA5D:
-            func_EA5D(); break;
-        case 0xF27F:
-            func_F27F(); break;
-        case 0xB960:
-            func_B960_b0(); break;
-        case 0x9919:
-            func_9919_b0(); break;
-        case 0xB9C2:
-            func_B9C2_b0(); break;
-        case 0x85F2:
-            func_85F2_b0(); break;
-        case 0xF2A3:
-            func_F2A3(); break;
-        case 0xA2F2:
-            func_A2F2_b1(); break;
-        case 0xBB4C:
-            func_BB4C_b0(); break;
-        case 0xF2BB:
-            func_F2BB(); break;
-        case 0x9904:
-            func_9904_b0(); break;
-        case 0xAA98:
-            func_AA98_b0(); break;
-        case 0xAE11:
-            func_AE11_b0(); break;
-        case 0xF34F:
-            func_F34F(); break;
-        case 0xF554:
-            func_F554(); break;
-        case 0xF322:
-            func_F322(); break;
-        case 0xAEF3:
-            func_AEF3_b0(); break;
-        case 0xE420:
-            func_E420(); break;
-        case 0xF5E4:
-            func_F5E4(); break;
-        case 0x804C:
-            func_804C_b0(); break;
-        case 0xF380:
-            func_F380(); break;
-        case 0xF3D5:
-            func_F3D5(); break;
-        case 0xF41B:
-            func_F41B(); break;
-        case 0xF3DE:
-            func_F3DE(); break;
-        case 0xF42A:
-            func_F42A(); break;
-        case 0xF3E7:
-            func_F3E7(); break;
-        case 0xF44A:
-            func_F44A(); break;
-        case 0xF517:
-            func_F517(); break;
-        case 0xAEF5:
-            func_AEF5_b0(); break;
-        case 0xAB09:
-            switch (g_current_bank) {
-                case 0: func_AB09_b0(); break;
-                case 1: func_AB09_b1(); break;
-                case 2: func_AB09_b2(); break;
-                case 3: func_AB09_b3(); break;
-                case 4: func_AB09_b4(); break;
-                case 5: func_AB09_b5(); break;
-                case 6: func_AB09_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xAD1D:
-            func_AD1D_b0(); break;
-        case 0xF3F0:
-            func_F3F0(); break;
-        case 0x87DD:
-            func_87DD_b0(); break;
-        case 0xF47B:
-            func_F47B(); break;
-        case 0xA9F4:
-            func_A9F4_b0(); break;
-        case 0xAB29:
-            switch (g_current_bank) {
-                case 0: func_AB29_b0(); break;
-                case 1: func_AB29_b1(); break;
-                case 2: func_AB29_b2(); break;
-                case 3: func_AB29_b3(); break;
-                case 4: func_AB29_b4(); break;
-                case 5: func_AB29_b5(); break;
-                case 6: func_AB29_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
+        case 0xEAAD:
+            func_EAAD(); break;
+        case 0xC3AD:
+            func_C3AD(); break;
         case 0xAC6C:
             switch (g_current_bank) {
                 case 0: func_AC6C_b0(); break;
@@ -2657,425 +2188,20 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0xA9E3:
-            func_A9E3_b0(); break;
-        case 0xABE0:
-            switch (g_current_bank) {
-                case 0: func_ABE0_b0(); break;
-                case 1: func_ABE0_b1(); break;
-                case 2: func_ABE0_b2(); break;
-                case 3: func_ABE0_b3(); break;
-                case 4: func_ABE0_b4(); break;
-                case 5: func_ABE0_b5(); break;
-                case 6: func_ABE0_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xAC14:
-            func_AC14_b0(); break;
-        case 0xA88A:
-            switch (g_current_bank) {
-                case 0: func_A88A_b0(); break;
-                case 1: func_A88A_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xF57D:
-            func_F57D(); break;
-        case 0x8AF5:
-            func_8AF5_b0(); break;
-        case 0xA8AA:
-            func_A8AA_b0(); break;
-        case 0xA939:
-            func_A939_b1(); break;
-        case 0xF620:
-            func_F620(); break;
-        case 0xE805:
-            func_E805(); break;
-        case 0xB905:
-            func_B905_b0(); break;
-        case 0x9805:
-            func_9805_b0(); break;
-        case 0xF66C:
-            func_F66C(); break;
-        case 0xA3FB:
-            switch (g_current_bank) {
-                case 0: func_A3FB_b0(); break;
-                case 1: func_A3FB_b1(); break;
-                case 2: func_A3FB_b2(); break;
-                case 3: func_A3FB_b3(); break;
-                case 4: func_A3FB_b4(); break;
-                case 5: func_A3FB_b5(); break;
-                case 6: func_A3FB_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x8D1F:
-            func_8D1F_b0(); break;
-        case 0xA9FA:
-            func_A9FA_b0(); break;
-        case 0x8569:
-            func_8569_b0(); break;
-        case 0xA9FC:
-            func_A9FC_b0(); break;
-        case 0x85C9:
-            func_85C9_b0(); break;
-        case 0x85C8:
-            func_85C8_b0(); break;
-        case 0xB98D:
-            func_B98D_b0(); break;
-        case 0xCD60:
-            func_CD60(); break;
-        case 0xBACD:
-            func_BACD_b0(); break;
-        case 0xAD48:
-            func_AD48_b0(); break;
-        case 0x90FA:
-            func_90FA_b0(); break;
-        case 0xAD0A:
-            func_AD0A_b0(); break;
-        case 0xAD14:
-            func_AD14_b0(); break;
-        case 0xF749:
-            func_F749(); break;
-        case 0x9DAE:
-            func_9DAE_b0(); break;
-        case 0xAC9D:
-            func_AC9D_b0(); break;
-        case 0xA9CA:
-            func_A9CA_b0(); break;
-        case 0x8086:
-            switch (g_current_bank) {
-                case 0: func_8086_b0(); break;
-                case 1: func_8086_b1(); break;
-                case 2: func_8086_b2(); break;
-                case 3: func_8086_b3(); break;
-                case 4: func_8086_b4(); break;
-                case 5: func_8086_b5(); break;
-                case 6: func_8086_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x9881:
-            switch (g_current_bank) {
-                case 0: func_9881_b0(); break;
-                case 1: func_9881_b1(); break;
-                case 2: func_9881_b2(); break;
-                case 3: func_9881_b3(); break;
-                case 4: func_9881_b4(); break;
-                case 5: func_9881_b5(); break;
-                case 6: func_9881_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA998:
-            func_A998_b0(); break;
-        case 0xCDEB:
-            func_CDEB(); break;
-        case 0xF7E2:
-            func_F7E2(); break;
-        case 0x8506:
-            switch (g_current_bank) {
-                case 0: func_8506_b0(); break;
-                case 1: func_8506_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xB1A9:
-            func_B1A9_b0(); break;
-        case 0xA9D0:
-            func_A9D0_b0(); break;
-        case 0x91A9:
-            func_91A9_b0(); break;
-        case 0x8061:
-            switch (g_current_bank) {
-                case 0: func_8061_b0(); break;
-                case 1: func_8061_b1(); break;
-                case 2: func_8061_b2(); break;
-                case 3: func_8061_b3(); break;
-                case 4: func_8061_b4(); break;
-                case 5: func_8061_b5(); break;
-                case 6: func_8061_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x8513:
-            func_8513_b0(); break;
-        case 0xADC3:
-            switch (g_current_bank) {
-                case 0: func_ADC3_b0(); break;
-                case 1: func_ADC3_b1(); break;
-                case 2: func_ADC3_b2(); break;
-                case 3: func_ADC3_b3(); break;
-                case 4: func_ADC3_b4(); break;
-                case 5: func_ADC3_b5(); break;
-                case 6: func_ADC3_b6(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0x9D6C:
-            func_9D6C_b0(); break;
-        case 0x8DD0:
-            func_8DD0_b0(); break;
-        case 0xA9B5:
-            func_A9B5_b0(); break;
-        case 0x8542:
-            func_8542_b0(); break;
-        case 0xF034:
-            func_F034(); break;
-        case 0xA912:
-            switch (g_current_bank) {
-                case 0: func_A912_b0(); break;
-                case 1: func_A912_b1(); break;
-                default: nes_log_dispatch_miss(addr); return 0;
-            }
-            break;
-        case 0xA981:
-            func_A981_b1(); break;
-        case 0xCE7B:
-            func_CE7B(); break;
-        case 0xAD1E:
-            func_AD1E_b0(); break;
-        case 0xA90D:
-            func_A90D_b0(); break;
-        case 0xBA4C:
-            func_BA4C_b0(); break;
-        case 0xF010:
-            func_F010(); break;
-        case 0xA581:
-            func_A581_b1(); break;
-        case 0x8C39:
-            func_8C39_b0(); break;
-        case 0xA771:
-            func_A771_b0(); break;
-        case 0x8521:
-            func_8521_b0(); break;
-        case 0xA3B0:
-            func_A3B0_b0(); break;
-        case 0xACB9:
-            func_ACB9_b0(); break;
-        case 0xB6C7:
-            func_B6C7_b0(); break;
-        case 0xB6D0:
-            func_B6D0_b0(); break;
-        case 0xB6A7:
-            func_B6A7_b0(); break;
-        case 0xB6AF:
-            func_B6AF_b0(); break;
-        case 0xB695:
-            func_B695_b0(); break;
-        case 0xF663:
-            func_F663(); break;
-        case 0xF66B:
-            func_F66B(); break;
-        case 0xB6FA:
-            func_B6FA_b0(); break;
-        case 0xB5F8:
-            func_B5F8_b0(); break;
-        case 0xB657:
-            func_B657_b0(); break;
-        case 0xB613:
-            func_B613_b0(); break;
-        case 0xDB21:
-            func_DB21(); break;
-        case 0xB5D2:
-            func_B5D2_b0(); break;
-        case 0x8FD4:
-            func_8FD4_b0(); break;
-        case 0x9F9F:
-            func_9F9F_b0(); break;
-        case 0x9F9B:
-            func_9F9B_b0(); break;
-        case 0x9F9E:
-            func_9F9E_b0(); break;
-        case 0xA029:
-            func_A029_b0(); break;
-        case 0x9FBD:
-            func_9FBD_b0(); break;
-        case 0xA0AE:
-            func_A0AE_b0(); break;
-        case 0xA049:
-            func_A049_b0(); break;
-        case 0xA3DA:
-            func_A3DA_b0(); break;
-        case 0x8D4D:
-            func_8D4D_b0(); break;
-        case 0xAB72:
-            func_AB72_b0(); break;
-        case 0xAB97:
-            func_AB97_b0(); break;
-        case 0xACA9:
-            func_ACA9_b0(); break;
-        case 0xAD62:
-            func_AD62_b0(); break;
-        case 0xC5AF:
-            func_C5AF(); break;
-        case 0xBA06:
-            func_BA06_b1(); break;
-        case 0xCFEA:
-            func_CFEA(); break;
-        case 0xB099:
-            func_B099_b0(); break;
-        case 0x852D:
-            func_852D_b0(); break;
-        case 0x9E7B:
-            func_9E7B_b1(); break;
-        case 0x97D8:
-            func_97D8_b0(); break;
-        case 0x9548:
-            func_9548_b0(); break;
-        case 0xF600:
-            func_F600(); break;
-        case 0xF647:
-            func_F647(); break;
-        case 0xB834:
-            func_B834_b0(); break;
-        case 0xE32F:
-            func_E32F(); break;
-        case 0xAE28:
-            func_AE28_b0(); break;
-        case 0xAE8D:
-            func_AE8D_b0(); break;
-        case 0xAEAB:
-            func_AEAB_b0(); break;
-        case 0xAEA9:
-            func_AEA9_b0(); break;
-        case 0xAE8A:
-            func_AE8A_b0(); break;
-        case 0xB6B0:
-            func_B6B0_b0(); break;
-        case 0xB6B6:
-            func_B6B6_b0(); break;
-        case 0xB69E:
-            func_B69E_b0(); break;
-        case 0xB68C:
-            func_B68C_b0(); break;
-        case 0xF65A:
-            func_F65A(); break;
-        case 0xB6DE:
-            func_B6DE_b0(); break;
-        case 0xB5EF:
-            func_B5EF_b0(); break;
-        case 0xB64E:
-            func_B64E_b0(); break;
-        case 0xB60A:
-            func_B60A_b0(); break;
-        case 0xBCB3:
-            func_BCB3_b0(); break;
-        case 0xBCC6:
-            func_BCC6_b0(); break;
-        case 0xA1B4:
-            func_A1B4_b0(); break;
-        case 0x8FFF:
-            func_8FFF_b0(); break;
-        case 0xBA78:
-            func_BA78_b0(); break;
-        case 0xB13C:
-            func_B13C_b0(); break;
-        case 0xB15A:
-            func_B15A_b0(); break;
-        case 0xB0C2:
-            func_B0C2_b0(); break;
-        case 0x8926:
-            func_8926_b0(); break;
-        case 0xB9FA:
-            func_B9FA_b0(); break;
-        case 0x937A:
-            func_937A_b0(); break;
-        case 0x940D:
-            func_940D_b0(); break;
-        case 0x9487:
-            func_9487_b0(); break;
-        case 0x97E7:
-            func_97E7_b0(); break;
-        case 0x94C9:
-            func_94C9_b0(); break;
-        case 0x955A:
-            func_955A_b0(); break;
-        case 0x97CB:
-            func_97CB_b0(); break;
-        case 0x97DB:
-            func_97DB_b0(); break;
-        case 0x97A5:
-            func_97A5_b0(); break;
-        case 0x9616:
-            func_9616_b0(); break;
-        case 0x9652:
-            func_9652_b0(); break;
-        case 0x962D:
-            func_962D_b0(); break;
-        case 0xE51A:
-            func_E51A(); break;
-        case 0x97BE:
-            func_97BE_b0(); break;
-        case 0x9BCC:
-            func_9BCC_b0(); break;
-        case 0x9A0E:
-            func_9A0E_b0(); break;
-        case 0x9BDE:
-            func_9BDE_b0(); break;
-        case 0x9A79:
-            func_9A79_b0(); break;
-        case 0x9E44:
-            func_9E44_b0(); break;
-        case 0x9BF0:
-            func_9BF0_b0(); break;
-        case 0xB0D0:
-            func_B0D0_b0(); break;
-        case 0x84FA:
-            func_84FA_b0(); break;
-        case 0x8A73:
-            func_8A73_b0(); break;
-        case 0x8C6D:
-            func_8C6D_b0(); break;
-        case 0x8C4C:
-            func_8C4C_b0(); break;
-        case 0x8C7F:
-            func_8C7F_b0(); break;
-        case 0x8ACE:
-            func_8ACE_b0(); break;
-        case 0x8CB0:
-            func_8CB0_b0(); break;
-        case 0x8CDA:
-            func_8CDA_b0(); break;
-        case 0x8D8C:
-            func_8D8C_b0(); break;
-        case 0x8BFE:
-            func_8BFE_b0(); break;
-        case 0x8A8A:
-            func_8A8A_b0(); break;
-        case 0xB898:
-            func_B898_b0(); break;
-        case 0xB874:
-            func_B874_b0(); break;
-        case 0x84BB:
-            func_84BB_b0(); break;
-        case 0x9FE8:
-            func_9FE8_b1(); break;
-        case 0xB058:
-            func_B058_b0(); break;
-        case 0xB197:
-            func_B197_b0(); break;
-        case 0xB1DA:
-            func_B1DA_b0(); break;
-        case 0xB070:
-            func_B070_b0(); break;
-        case 0xB4D0:
-            func_B4D0_b0(); break;
-        case 0x8472:
-            func_8472_b0(); break;
         case 0xD02B:
             func_D02B(); break;
-        case 0xB064:
-            func_B064_b0(); break;
-        case 0xB1AE:
-            func_B1AE_b0(); break;
-        case 0xB0FD:
-            func_B0FD_b0(); break;
-        case 0xB52B:
-            func_B52B_b0(); break;
-        case 0x8A40:
-            func_8A40_b0(); break;
+        case 0x84AD:
+            switch (g_current_bank) {
+                case 0: func_84AD_b0(); break;
+                case 1: func_84AD_b1(); break;
+                case 2: func_84AD_b2(); break;
+                case 3: func_84AD_b3(); break;
+                case 4: func_84AD_b4(); break;
+                case 5: func_84AD_b5(); break;
+                case 6: func_84AD_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
         case 0xB4A5:
             switch (g_current_bank) {
                 case 0: func_B4A5_b0(); break;
@@ -3088,202 +2214,313 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
-        case 0x81FD:
-            func_81FD_b0(); break;
-        case 0x8882:
-            func_8882_b0(); break;
+        case 0xFFFF:
+            func_FFFF(); break;
         case 0xD095:
             func_D095(); break;
-        case 0xAF34:
-            func_AF34_b0(); break;
-        case 0xAED2:
-            func_AED2_b0(); break;
-        case 0xAF93:
-            func_AF93_b0(); break;
-        case 0xB20C:
-            func_B20C_b0(); break;
-        case 0x9889:
-            func_9889_b0(); break;
-        case 0xAEE1:
-            func_AEE1_b0(); break;
-        case 0xB038:
-            func_B038_b0(); break;
-        case 0x98A6:
-            func_98A6_b0(); break;
-        case 0x98C8:
-            func_98C8_b0(); break;
-        case 0x990F:
-            func_990F_b0(); break;
-        case 0x990A:
-            func_990A_b0(); break;
-        case 0x98A9:
-            func_98A9_b0(); break;
-        case 0x9901:
-            func_9901_b0(); break;
-        case 0x9903:
-            func_9903_b0(); break;
-        case 0xB61C:
-            func_B61C_b0(); break;
-        case 0x8415:
-            func_8415_b0(); break;
-        case 0xB660:
-            func_B660_b0(); break;
-        case 0xF2E0:
-            func_F2E0(); break;
-        case 0xF272:
-            func_F272(); break;
-        case 0xBA5D:
-            func_BA5D_b0(); break;
-        case 0xB72C:
-            func_B72C_b0(); break;
-        case 0xB800:
-            func_B800_b0(); break;
-        case 0xB78F:
-            func_B78F_b0(); break;
-        case 0xB7A3:
-            func_B7A3_b0(); break;
-        case 0xB8CC:
-            func_B8CC_b0(); break;
-        case 0xB835:
-            func_B835_b0(); break;
-        case 0xB930:
-            func_B930_b0(); break;
-        case 0xA87D:
-            func_A87D_b0(); break;
-        case 0xBA12:
-            func_BA12_b0(); break;
-        case 0xB9F4:
-            func_B9F4_b0(); break;
-        case 0xBA1B:
-            func_BA1B_b0(); break;
-        case 0xBAAA:
-            func_BAAA_b0(); break;
-        case 0xE25D:
-            func_E25D(); break;
-        case 0xB9D4:
-            func_B9D4_b0(); break;
-        case 0xB9FB:
-            func_B9FB_b0(); break;
-        case 0xE666:
-            func_E666(); break;
-        case 0xA225:
-            func_A225_b1(); break;
-        case 0x8586:
-            func_8586_b0(); break;
-        case 0x80A8:
-            func_80A8_b0(); break;
-        case 0x9491:
-            func_9491_b0(); break;
-        case 0x9BAB:
-            func_9BAB_b0(); break;
-        case 0xA624:
-            func_A624_b1(); break;
-        case 0x9D0B:
-            func_9D0B_b0(); break;
-        case 0x9D09:
-            func_9D09_b0(); break;
-        case 0xA072:
-            func_A072_b0(); break;
-        case 0xAFB0:
-            func_AFB0_b0(); break;
-        case 0xB006:
-            func_B006_b0(); break;
-        case 0xAFD0:
-            func_AFD0_b0(); break;
-        case 0xB00D:
-            func_B00D_b0(); break;
-        case 0xB003:
-            func_B003_b0(); break;
-        case 0xB048:
-            func_B048_b0(); break;
-        case 0xB04F:
-            func_B04F_b0(); break;
-        case 0xF321:
-            func_F321(); break;
-        case 0x8033:
-            func_8033_b0(); break;
-        case 0xF3EF:
-            func_F3EF(); break;
-        case 0xB150:
-            func_B150_b0(); break;
-        case 0x8504:
-            func_8504_b1(); break;
-        case 0x851C:
-            func_851C_b1(); break;
-        case 0x8970:
-            func_8970_b1(); break;
-        case 0xE32E:
-            func_E32E(); break;
-        case 0xE076:
-            func_E076(); break;
-        case 0xAF7A:
-            func_AF7A_b0(); break;
-        case 0x99D7:
-            func_99D7_b0(); break;
-        case 0x9A42:
-            func_9A42_b0(); break;
-        case 0xB4DC:
-            func_B4DC_b0(); break;
+        case 0x82AD:
+            switch (g_current_bank) {
+                case 0: func_82AD_b0(); break;
+                case 1: func_82AD_b1(); break;
+                case 2: func_82AD_b2(); break;
+                case 3: func_82AD_b3(); break;
+                case 4: func_82AD_b4(); break;
+                case 5: func_82AD_b5(); break;
+                case 6: func_82AD_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0xD4BF:
+            func_D4BF(); break;
+        case 0xA3FB:
+            switch (g_current_bank) {
+                case 0: func_A3FB_b0(); break;
+                case 1: func_A3FB_b1(); break;
+                case 2: func_A3FB_b2(); break;
+                case 3: func_A3FB_b3(); break;
+                case 4: func_A3FB_b4(); break;
+                case 5: func_A3FB_b5(); break;
+                case 6: func_A3FB_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
         case 0xA42E:
             func_A42E_b0(); break;
-        case 0xD4E5:
-            func_D4E5(); break;
-        case 0x8953:
-            func_8953_b1(); break;
+        case 0xADE5:
+            switch (g_current_bank) {
+                case 0: func_ADE5_b0(); break;
+                case 1: func_ADE5_b1(); break;
+                case 2: func_ADE5_b2(); break;
+                case 3: func_ADE5_b3(); break;
+                case 4: func_ADE5_b4(); break;
+                case 5: func_ADE5_b5(); break;
+                case 6: func_ADE5_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0x87AD:
+            switch (g_current_bank) {
+                case 0: func_87AD_b0(); break;
+                case 1: func_87AD_b1(); break;
+                case 2: func_87AD_b2(); break;
+                case 3: func_87AD_b3(); break;
+                case 4: func_87AD_b4(); break;
+                case 5: func_87AD_b5(); break;
+                case 6: func_87AD_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0xAB29:
+            switch (g_current_bank) {
+                case 0: func_AB29_b0(); break;
+                case 1: func_AB29_b1(); break;
+                case 2: func_AB29_b2(); break;
+                case 3: func_AB29_b3(); break;
+                case 4: func_AB29_b4(); break;
+                case 5: func_AB29_b5(); break;
+                case 6: func_AB29_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0x8061:
+            switch (g_current_bank) {
+                case 0: func_8061_b0(); break;
+                case 1: func_8061_b1(); break;
+                case 2: func_8061_b2(); break;
+                case 3: func_8061_b3(); break;
+                case 4: func_8061_b4(); break;
+                case 5: func_8061_b5(); break;
+                case 6: func_8061_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0xC385:
+            func_C385(); break;
+        case 0xF005:
+            func_F005(); break;
+        case 0xF002:
+            func_F002(); break;
+        case 0xAB09:
+            switch (g_current_bank) {
+                case 0: func_AB09_b0(); break;
+                case 1: func_AB09_b1(); break;
+                case 2: func_AB09_b2(); break;
+                case 3: func_AB09_b3(); break;
+                case 4: func_AB09_b4(); break;
+                case 5: func_AB09_b5(); break;
+                case 6: func_AB09_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0xF3EF:
+            func_F3EF(); break;
+        case 0xCD9B:
+            func_CD9B(); break;
+        case 0xADC3:
+            switch (g_current_bank) {
+                case 0: func_ADC3_b0(); break;
+                case 1: func_ADC3_b1(); break;
+                case 2: func_ADC3_b2(); break;
+                case 3: func_ADC3_b3(); break;
+                case 4: func_ADC3_b4(); break;
+                case 5: func_ADC3_b5(); break;
+                case 6: func_ADC3_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0x8A40:
+            func_8A40_b0(); break;
+        case 0x8A73:
+            func_8A73_b0(); break;
+        case 0x8C6D:
+            func_8C6D_b0(); break;
+        case 0x8C4C:
+            func_8C4C_b0(); break;
+        case 0x8C7F:
+            func_8C7F_b0(); break;
+        case 0x8ACE:
+            func_8ACE_b0(); break;
+        case 0x8C39:
+            func_8C39_b0(); break;
+        case 0x8CB0:
+            func_8CB0_b0(); break;
+        case 0x8CDA:
+            func_8CDA_b0(); break;
+        case 0x8D33:
+            func_8D33_b0(); break;
+        case 0x8D8C:
+            func_8D8C_b0(); break;
+        case 0x8BFE:
+            func_8BFE_b0(); break;
+        case 0x8A8A:
+            func_8A8A_b0(); break;
+        case 0x8970:
+            func_8970_b1(); break;
+        case 0x8086:
+            switch (g_current_bank) {
+                case 0: func_8086_b0(); break;
+                case 1: func_8086_b1(); break;
+                case 2: func_8086_b2(); break;
+                case 3: func_8086_b3(); break;
+                case 4: func_8086_b4(); break;
+                case 5: func_8086_b5(); break;
+                case 6: func_8086_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0x937A:
+            func_937A_b0(); break;
+        case 0xA3B0:
+            func_A3B0_b0(); break;
+        case 0xA3DA:
+            func_A3DA_b0(); break;
+        case 0x940D:
+            func_940D_b0(); break;
+        case 0xA771:
+            func_A771_b0(); break;
+        case 0x9487:
+            func_9487_b0(); break;
+        case 0x97E7:
+            func_97E7_b0(); break;
+        case 0x94C9:
+            func_94C9_b0(); break;
+        case 0x955A:
+            func_955A_b0(); break;
+        case 0x97D8:
+            func_97D8_b0(); break;
+        case 0x9548:
+            func_9548_b0(); break;
+        case 0x97CB:
+            func_97CB_b0(); break;
+        case 0x97DB:
+            func_97DB_b0(); break;
+        case 0x97A5:
+            func_97A5_b0(); break;
+        case 0x9616:
+            func_9616_b0(); break;
+        case 0x9652:
+            func_9652_b0(); break;
+        case 0x962D:
+            func_962D_b0(); break;
+        case 0xACB9:
+            func_ACB9_b0(); break;
+        case 0xAD1E:
+            func_AD1E_b0(); break;
+        case 0x8586:
+            func_8586_b0(); break;
+        case 0x81FD:
+            func_81FD_b0(); break;
+        case 0xC5AF:
+            func_C5AF(); break;
+        case 0x9DAE:
+            func_9DAE_b0(); break;
+        case 0x9D03:
+            func_9D03_b0(); break;
+        case 0x9BCC:
+            func_9BCC_b0(); break;
+        case 0x9A0E:
+            func_9A0E_b0(); break;
+        case 0x9BDE:
+            func_9BDE_b0(); break;
+        case 0x9A79:
+            func_9A79_b0(); break;
+        case 0x9E44:
+            func_9E44_b0(); break;
+        case 0x9BF0:
+            func_9BF0_b0(); break;
         case 0xDC12:
             func_DC12(); break;
         case 0xF71D:
             func_F71D(); break;
         case 0xC810:
             func_C810(); break;
+        case 0x89A5:
+            switch (g_current_bank) {
+                case 0: func_89A5_b0(); break;
+                case 1: func_89A5_b1(); break;
+                case 2: func_89A5_b2(); break;
+                case 3: func_89A5_b3(); break;
+                case 4: func_89A5_b4(); break;
+                case 5: func_89A5_b5(); break;
+                case 6: func_89A5_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0x8504:
+            func_8504_b1(); break;
+        case 0x8506:
+            func_8506_b1(); break;
+        case 0x8508:
+            switch (g_current_bank) {
+                case 1: func_8508_b1(); break;
+                case 0: func_8508_b0(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0x850A:
+            func_850A_b1(); break;
+        case 0x851C:
+            func_851C_b1(); break;
+        case 0xACA9:
+            func_ACA9_b0(); break;
+        case 0x84BB:
+            func_84BB_b0(); break;
+        case 0xAB72:
+            func_AB72_b0(); break;
+        case 0xAB97:
+            func_AB97_b0(); break;
+        case 0x8883:
+            func_8883_b0(); break;
+        case 0x8918:
+            func_8918_b0(); break;
+        case 0x8906:
+            func_8906_b0(); break;
+        case 0x88FB:
+            func_88FB_b0(); break;
+        case 0x8953:
+            func_8953_b1(); break;
+        case 0x9491:
+            func_9491_b0(); break;
+        case 0x97BE:
+            func_97BE_b0(); break;
+        case 0xAD62:
+            func_AD62_b0(); break;
+        case 0x99D7:
+            func_99D7_b0(); break;
+        case 0x9A42:
+            func_9A42_b0(); break;
+        case 0x84FA:
+            func_84FA_b0(); break;
+        case 0x8926:
+            func_8926_b0(); break;
         case 0x893C:
             func_893C_b1(); break;
+        case 0x8521:
+            func_8521_b0(); break;
         case 0x88FC:
             func_88FC_b1(); break;
         case 0x88D3:
             func_88D3_b1(); break;
+        case 0x852D:
+            func_852D_b0(); break;
         case 0xF86C:
             func_F86C(); break;
         case 0xD2D1:
             func_D2D1(); break;
         case 0xE1E0:
             func_E1E0(); break;
-        case 0xE2E1:
-            func_E2E1(); break;
-        case 0xE3E2:
-            func_E3E2(); break;
         case 0xE5E4:
             func_E5E4(); break;
-        case 0xE2E7:
-            func_E2E7(); break;
-        case 0xE3D2:
-            func_E3D2(); break;
         case 0xE0B2:
             func_E0B2(); break;
-        case 0xF0C2:
-            func_F0C2(); break;
-        case 0xF2F1:
-            func_F2F1(); break;
         case 0xCDC9:
             func_CDC9(); break;
-        case 0xF2D0:
-            func_F2D0(); break;
         case 0xF4A9:
             func_F4A9(); break;
         case 0xED9D:
             func_ED9D(); break;
-        case 0xDD05:
-            func_DD05(); break;
-        case 0xF0A6:
-            func_F0A6(); break;
         case 0xD1B7:
             func_D1B7(); break;
-        case 0xF0E1:
-            func_F0E1(); break;
-        case 0xE2D3:
-            func_E2D3(); break;
-        case 0xF2E3:
-            func_F2E3(); break;
         case 0xDDBD:
             func_DDBD(); break;
         case 0xDDEE:
@@ -3306,12 +2543,8 @@ int call_by_address(uint16_t addr) {
             func_F5F0(); break;
         case 0xD8B9:
             func_D8B9(); break;
-        case 0xE101:
-            func_E101(); break;
         case 0xF101:
             func_F101(); break;
-        case 0xE309:
-            func_E309(); break;
         case 0xE6E5:
             func_E6E5(); break;
         case 0xDFDE:
@@ -3338,8 +2571,12 @@ int call_by_address(uint16_t addr) {
             func_F669(); break;
         case 0xF5A9:
             func_F5A9(); break;
+        case 0xDB56:
+            func_DB56(); break;
         case 0xF781:
             func_F781(); break;
+        case 0xF7AE:
+            func_F7AE(); break;
         case 0xF7D0:
             func_F7D0(); break;
         case 0xF7BD:
@@ -3348,6 +2585,8 @@ int call_by_address(uint16_t addr) {
             func_F79D(); break;
         case 0xF831:
             func_F831(); break;
+        case 0xF8AA:
+            func_F8AA(); break;
         case 0xF8D0:
             func_F8D0(); break;
         case 0xF8AD:
@@ -3362,8 +2601,6 @@ int call_by_address(uint16_t addr) {
             func_F8C9(); break;
         case 0xF88D:
             func_F88D(); break;
-        case 0xF0CA:
-            func_F0CA(); break;
         case 0xF7A7:
             func_F7A7(); break;
         case 0xDCA5:
@@ -3374,16 +2611,28 @@ int call_by_address(uint16_t addr) {
             func_D087(); break;
         case 0xF520:
             func_F520(); break;
-        case 0xD089:
-            func_D089(); break;
         case 0xCE0A:
             func_CE0A(); break;
         case 0xE120:
             func_E120(); break;
-        case 0xCEA9:
-            func_CEA9(); break;
-        case 0xF642:
-            func_F642(); break;
+        case 0xE076:
+            func_E076(); break;
+        case 0xE08D:
+            func_E08D(); break;
+        case 0xE090:
+            func_E090(); break;
+        case 0xE085:
+            func_E085(); break;
+        case 0xD849:
+            func_D849(); break;
+        case 0xD543:
+            func_D543(); break;
+        case 0xD582:
+            func_D582(); break;
+        case 0xD4E5:
+            func_D4E5(); break;
+        case 0xD517:
+            func_D517(); break;
         case 0xF6B6:
             func_F6B6(); break;
         case 0xF542:
@@ -3394,6 +2643,12 @@ int call_by_address(uint16_t addr) {
             func_F547(); break;
         case 0xF546:
             func_F546(); break;
+        case 0xF600:
+            func_F600(); break;
+        case 0xF620:
+            func_F620(); break;
+        case 0xF642:
+            func_F642(); break;
         case 0xF800:
             func_F800(); break;
         case 0xF0F3:
@@ -3404,16 +2659,106 @@ int call_by_address(uint16_t addr) {
             func_CFFF(); break;
         case 0xF3CC:
             func_F3CC(); break;
+        case 0xF65A:
+            func_F65A(); break;
+        case 0xF663:
+            func_F663(); break;
+        case 0xF66B:
+            func_F66B(); break;
         case 0xF820:
             func_F820(); break;
+        case 0xDB21:
+            func_DB21(); break;
         case 0xCEFA:
             func_CEFA(); break;
-        case 0xDE21:
-            func_DE21(); break;
+        case 0xD9F6:
+            func_D9F6(); break;
+        case 0xF2E0:
+            func_F2E0(); break;
+        case 0xF2F1:
+            func_F2F1(); break;
+        case 0xF321:
+            func_F321(); break;
+        case 0xF322:
+            func_F322(); break;
+        case 0xF2E3:
+            func_F2E3(); break;
+        case 0xF272:
+            func_F272(); break;
+        case 0xF2AD:
+            func_F2AD(); break;
+        case 0xF27F:
+            func_F27F(); break;
+        case 0xF2A3:
+            func_F2A3(); break;
+        case 0xF2BB:
+            func_F2BB(); break;
+        case 0xF2D0:
+            func_F2D0(); break;
+        case 0xF647:
+            func_F647(); break;
+        case 0xE32F:
+            func_E32F(); break;
+        case 0xE400:
+            func_E400(); break;
+        case 0xE386:
+            func_E386(); break;
+        case 0xE366:
+            func_E366(); break;
+        case 0xE3EF:
+            func_E3EF(); break;
+        case 0xE3AE:
+            func_E3AE(); break;
+        case 0xE3F1:
+            func_E3F1(); break;
+        case 0xE35A:
+            func_E35A(); break;
+        case 0xE381:
+            func_E381(); break;
+        case 0xE3E2:
+            func_E3E2(); break;
+        case 0xE3D2:
+            func_E3D2(); break;
+        case 0xE37D:
+            func_E37D(); break;
+        case 0xE3A5:
+            func_E3A5(); break;
+        case 0xD94C:
+            func_D94C(); break;
         case 0xD58D:
             func_D58D(); break;
-        case 0xF0A3:
-            func_F0A3(); break;
+        case 0xDAF2:
+            func_DAF2(); break;
+        case 0xE25D:
+            func_E25D(); break;
+        case 0xE286:
+            func_E286(); break;
+        case 0xE265:
+            func_E265(); break;
+        case 0xE28D:
+            func_E28D(); break;
+        case 0xE2EE:
+            func_E2EE(); break;
+        case 0xE29C:
+            func_E29C(); break;
+        case 0xE2AD:
+            func_E2AD(); break;
+        case 0xE2AA:
+            func_E2AA(); break;
+        case 0xE27C:
+            func_E27C(); break;
+        case 0xE2E1:
+            func_E2E1(); break;
+        case 0xE2E7:
+            func_E2E7(); break;
+        case 0xE2D3:
+            func_E2D3(); break;
+        case 0xE309:
+            func_E309(); break;
+        case 0xE2A4:
+            func_E2A4(); break;
+        case 0xE2DD:
+            func_E2DD(); break;
         case 0xD0F0:
             func_D0F0(); break;
         case 0xDEF0:
@@ -3436,12 +2781,8 @@ int call_by_address(uint16_t addr) {
             func_E007(); break;
         case 0xF7FE:
             func_F7FE(); break;
-        case 0xF0D8:
-            func_F0D8(); break;
         case 0xF0FE:
             func_F0FE(); break;
-        case 0xF0DC:
-            func_F0DC(); break;
         case 0xDC65:
             func_DC65(); break;
         case 0xDD65:
@@ -3456,12 +2797,8 @@ int call_by_address(uint16_t addr) {
             func_DB9D(); break;
         case 0xE706:
             func_E706(); break;
-        case 0xE0EF:
-            func_E0EF(); break;
         case 0xE646:
             func_E646(); break;
-        case 0xE37D:
-            func_E37D(); break;
         case 0xD8C6:
             func_D8C6(); break;
         case 0xDD22:
@@ -3474,26 +2811,38 @@ int call_by_address(uint16_t addr) {
             func_E009(); break;
         case 0xF78D:
             func_F78D(); break;
-        case 0xE3A5:
-            func_E3A5(); break;
         case 0xF410:
             func_F410(); break;
-        case 0xE2A4:
-            func_E2A4(); break;
-        case 0xF0E3:
-            func_F0E3(); break;
         case 0xDD0C:
             func_DD0C(); break;
         case 0xE4C6:
             func_E4C6(); break;
-        case 0xE2DD:
-            func_E2DD(); break;
-        case 0xF002:
-            func_F002(); break;
-        case 0xCDB5:
-            func_CDB5(); break;
-        case 0xCD9B:
-            func_CD9B(); break;
+        case 0x9881:
+            switch (g_current_bank) {
+                case 0: func_9881_b0(); break;
+                case 1: func_9881_b1(); break;
+                case 2: func_9881_b2(); break;
+                case 3: func_9881_b3(); break;
+                case 4: func_9881_b4(); break;
+                case 5: func_9881_b5(); break;
+                case 6: func_9881_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
+        case 0xE32E:
+            func_E32E(); break;
+        case 0x854C:
+            switch (g_current_bank) {
+                case 0: func_854C_b0(); break;
+                case 1: func_854C_b1(); break;
+                case 2: func_854C_b2(); break;
+                case 3: func_854C_b3(); break;
+                case 4: func_854C_b4(); break;
+                case 5: func_854C_b5(); break;
+                case 6: func_854C_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
         case 0xAD60:
             switch (g_current_bank) {
                 case 0: func_AD60_b0(); break;
@@ -3506,16 +2855,42 @@ int call_by_address(uint16_t addr) {
                 default: nes_log_dispatch_miss(addr); return 0;
             }
             break;
+        case 0xABE0:
+            switch (g_current_bank) {
+                case 0: func_ABE0_b0(); break;
+                case 1: func_ABE0_b1(); break;
+                case 2: func_ABE0_b2(); break;
+                case 3: func_ABE0_b3(); break;
+                case 4: func_ABE0_b4(); break;
+                case 5: func_ABE0_b5(); break;
+                case 6: func_ABE0_b6(); break;
+                default: nes_log_dispatch_miss(addr); return 0;
+            }
+            break;
         case 0xDB75:
             func_DB75(); break;
+        case 0xAC14:
+            func_AC14_b0(); break;
         case 0xDB07:
             func_DB07(); break;
         case 0x88A9:
             func_88A9_b0(); break;
+        case 0xAC8D:
+            func_AC8D_b0(); break;
+        case 0x8D28:
+            func_8D28_b0(); break;
+        case 0x8560:
+            func_8560_b0(); break;
         case 0x850E:
             func_850E_b0(); break;
+        case 0x988D:
+            func_988D_b0(); break;
         case 0x8510:
             func_8510_b0(); break;
+        case 0xA9A3:
+            func_A9A3_b0(); break;
+        case 0x8485:
+            func_8485_b0(); break;
         case 0xB020:
             func_B020_b0(); break;
         case 0x8577:
@@ -3526,12 +2901,20 @@ int call_by_address(uint16_t addr) {
             func_8590_b0(); break;
         case 0x8595:
             func_8595_b0(); break;
+        case 0xA9B7:
+            func_A9B7_b0(); break;
         case 0x8596:
             func_8596_b0(); break;
+        case 0xA910:
+            func_A910_b0(); break;
         case 0x850D:
             func_850D_b0(); break;
         case 0x8597:
             func_8597_b0(); break;
+        case 0xA9B8:
+            func_A9B8_b0(); break;
+        case 0x8D00:
+            func_8D00_b0(); break;
         case 0x8561:
             func_8561_b0(); break;
         case 0xAAAA:
@@ -3540,10 +2923,16 @@ int call_by_address(uint16_t addr) {
             func_859D_b0(); break;
         case 0x8598:
             func_8598_b0(); break;
+        case 0x8500:
+            func_8500_b0(); break;
+        case 0xA9B4:
+            func_A9B4_b0(); break;
         case 0x8592:
             func_8592_b0(); break;
         case 0xA9AF:
             func_A9AF_b0(); break;
+        case 0xA9B5:
+            func_A9B5_b0(); break;
         case 0x8563:
             func_8563_b0(); break;
         case 0x8568:
@@ -3560,6 +2949,8 @@ int call_by_address(uint16_t addr) {
             func_8536_b0(); break;
         case 0xA98D:
             func_A98D_b0(); break;
+        case 0x8503:
+            func_8503_b0(); break;
         case 0x898A:
             func_898A_b0(); break;
         case 0x8B8A:
@@ -3580,12 +2971,20 @@ int call_by_address(uint16_t addr) {
             func_8C8B_b0(); break;
         case 0xA938:
             func_A938_b0(); break;
+        case 0x85C8:
+            func_85C8_b0(); break;
+        case 0xA9B0:
+            func_A9B0_b0(); break;
         case 0x85B5:
             func_85B5_b0(); break;
+        case 0x8D92:
+            func_8D92_b0(); break;
         case 0x994C:
             func_994C_b0(); break;
         case 0x85AA:
             func_85AA_b0(); break;
+        case 0xA9CF:
+            func_A9CF_b0(); break;
         case 0x85D7:
             func_85D7_b0(); break;
         case 0x85B0:
@@ -3594,10 +2993,28 @@ int call_by_address(uint16_t addr) {
             func_85CE_b0(); break;
         case 0x85E0:
             func_85E0_b0(); break;
+        case 0x852C:
+            func_852C_b0(); break;
         case 0x8527:
             func_8527_b0(); break;
         case 0x8531:
             func_8531_b0(); break;
+        case 0xB613:
+            func_B613_b0(); break;
+        case 0xA9CE:
+            func_A9CE_b0(); break;
+        case 0x8502:
+            func_8502_b0(); break;
+        case 0x8520:
+            func_8520_b0(); break;
+        case 0x8D75:
+            func_8D75_b0(); break;
+        case 0x9000:
+            func_9000_b0(); break;
+        case 0x8D4A:
+            func_8D4A_b0(); break;
+        case 0x8DC0:
+            func_8DC0_b0(); break;
         case 0xA284:
             func_A284_b1(); break;
         case 0xA28E:
@@ -3606,8 +3023,6 @@ int call_by_address(uint16_t addr) {
             func_A299_b1(); break;
         case 0xA2A5:
             func_A2A5_b1(); break;
-        case 0xA2AF:
-            func_A2AF_b1(); break;
         case 0xA340:
             func_A340_b1(); break;
         case 0xA4D9:
@@ -3626,56 +3041,74 @@ int call_by_address(uint16_t addr) {
             func_A49D_b1(); break;
         case 0xA4CD:
             func_A4CD_b1(); break;
-        case 0xA518:
-            func_A518_b1(); break;
-        case 0xA507:
-            func_A507_b1(); break;
-        case 0xA402:
-            func_A402_b1(); break;
-        case 0xA4E8:
-            func_A4E8_b1(); break;
-        case 0xA502:
-            func_A502_b1(); break;
-        case 0xA504:
-            func_A504_b1(); break;
-        case 0xA4A5:
-            func_A4A5_b1(); break;
-        case 0xA4E6:
-            func_A4E6_b1(); break;
-        case 0xA520:
-            func_A520_b1(); break;
-        case 0xA509:
-            func_A509_b1(); break;
-        case 0xA4AD:
-            func_A4AD_b1(); break;
-        case 0xA34C:
-            func_A34C_b1(); break;
-        case 0xA500:
-            func_A500_b1(); break;
-        case 0xA534:
-            func_A534_b1(); break;
-        case 0xA3A0:
-            func_A3A0_b1(); break;
         case 0xA37A:
             func_A37A_b1(); break;
         case 0xA2D3:
             func_A2D3_b1(); break;
         case 0xA2D6:
             func_A2D6_b1(); break;
-        case 0xA2FF:
-            func_A2FF_b1(); break;
         case 0xA310:
             func_A310_b1(); break;
         case 0xA316:
             func_A316_b1(); break;
+        case 0x8472:
+            func_8472_b0(); break;
         case 0xB01B:
             func_B01B_b0(); break;
-        case 0x8980:
-            func_8980_b0(); break;
-        case 0x899E:
-            func_899E_b0(); break;
+        case 0xB4D0:
+            func_B4D0_b0(); break;
+        case 0xB4DC:
+            func_B4DC_b0(); break;
+        case 0xB048:
+            func_B048_b0(); break;
+        case 0xAEE1:
+            func_AEE1_b0(); break;
+        case 0xAF34:
+            func_AF34_b0(); break;
+        case 0xAED2:
+            func_AED2_b0(); break;
+        case 0xAF93:
+            func_AF93_b0(); break;
+        case 0xB20C:
+            func_B20C_b0(); break;
+        case 0xBA5D:
+            func_BA5D_b0(); break;
+        case 0xB61C:
+            func_B61C_b0(); break;
         case 0xAFC6:
             func_AFC6_b0(); break;
+        case 0xA87D:
+            func_A87D_b0(); break;
+        case 0x8FD4:
+            func_8FD4_b0(); break;
+        case 0x8FFF:
+            func_8FFF_b0(); break;
+        case 0x8415:
+            func_8415_b0(); break;
+        case 0xB058:
+            func_B058_b0(); break;
+        case 0xB197:
+            func_B197_b0(); break;
+        case 0xB1DA:
+            func_B1DA_b0(); break;
+        case 0xB070:
+            func_B070_b0(); break;
+        case 0xB099:
+            func_B099_b0(); break;
+        case 0xB0C2:
+            func_B0C2_b0(); break;
+        case 0xB064:
+            func_B064_b0(); break;
+        case 0xB1AE:
+            func_B1AE_b0(); break;
+        case 0xB0FD:
+            func_B0FD_b0(); break;
+        case 0xB13C:
+            func_B13C_b0(); break;
+        case 0xB15A:
+            func_B15A_b0(); break;
+        case 0xB52B:
+            func_B52B_b0(); break;
         case 0xCFB1:
             func_CFB1(); break;
         case 0x9F8E:
@@ -3686,16 +3119,122 @@ int call_by_address(uint16_t addr) {
             func_AE27_b0(); break;
         case 0xB57C:
             func_B57C_b0(); break;
-        case 0xB585:
-            func_B585_b0(); break;
-        case 0xB5AD:
-            func_B5AD_b0(); break;
         case 0xB5D1:
             func_B5D1_b0(); break;
         case 0xA3AF:
             func_A3AF_b0(); break;
         case 0xA2E2:
             func_A2E2_b1(); break;
+        case 0x9F9F:
+            func_9F9F_b0(); break;
+        case 0x9F9B:
+            func_9F9B_b0(); break;
+        case 0x9F9E:
+            func_9F9E_b0(); break;
+        case 0xA029:
+            func_A029_b0(); break;
+        case 0xAFB0:
+            func_AFB0_b0(); break;
+        case 0xB04F:
+            func_B04F_b0(); break;
+        case 0x98A6:
+            func_98A6_b0(); break;
+        case 0x98A9:
+            func_98A9_b0(); break;
+        case 0xAE28:
+            func_AE28_b0(); break;
+        case 0xAE8A:
+            func_AE8A_b0(); break;
+        case 0xAE8D:
+            func_AE8D_b0(); break;
+        case 0xB6B0:
+            func_B6B0_b0(); break;
+        case 0xB6B6:
+            func_B6B6_b0(); break;
+        case 0xB69E:
+            func_B69E_b0(); break;
+        case 0xB68C:
+            func_B68C_b0(); break;
+        case 0xB6DE:
+            func_B6DE_b0(); break;
+        case 0xB5EF:
+            func_B5EF_b0(); break;
+        case 0xB64E:
+            func_B64E_b0(); break;
+        case 0xB60A:
+            func_B60A_b0(); break;
+        case 0xBCB3:
+            func_BCB3_b0(); break;
+        case 0xBCCE:
+            func_BCCE_b0(); break;
+        case 0xB6C7:
+            func_B6C7_b0(); break;
+        case 0xB6D0:
+            func_B6D0_b0(); break;
+        case 0xB6A7:
+            func_B6A7_b0(); break;
+        case 0xB6AF:
+            func_B6AF_b0(); break;
+        case 0xB695:
+            func_B695_b0(); break;
+        case 0xB6FA:
+            func_B6FA_b0(); break;
+        case 0xB5F8:
+            func_B5F8_b0(); break;
+        case 0xB657:
+            func_B657_b0(); break;
+        case 0xB5D2:
+            func_B5D2_b0(); break;
+        case 0xA206:
+            func_A206_b0(); break;
+        case 0x9FBD:
+            func_9FBD_b0(); break;
+        case 0xA0AE:
+            func_A0AE_b0(); break;
+        case 0xA049:
+            func_A049_b0(); break;
+        case 0xAF7A:
+            func_AF7A_b0(); break;
+        case 0xB72C:
+            func_B72C_b0(); break;
+        case 0xB765:
+            func_B765_b0(); break;
+        case 0xB800:
+            func_B800_b0(); break;
+        case 0xB834:
+            func_B834_b0(); break;
+        case 0xB660:
+            func_B660_b0(); break;
+        case 0xB78F:
+            func_B78F_b0(); break;
+        case 0xB7A3:
+            func_B7A3_b0(); break;
+        case 0xB8CC:
+            func_B8CC_b0(); break;
+        case 0xB835:
+            func_B835_b0(); break;
+        case 0xB902:
+            func_B902_b0(); break;
+        case 0xB930:
+            func_B930_b0(); break;
+        case 0xB898:
+            func_B898_b0(); break;
+        case 0xB874:
+            func_B874_b0(); break;
+        case 0xBA12:
+            func_BA12_b0(); break;
+        case 0xB9F4:
+            func_B9F4_b0(); break;
+        case 0xB9FA:
+            func_B9FA_b0(); break;
+        case 0xBA1B:
+            func_BA1B_b0(); break;
+        case 0xBAAA:
+            func_BAAA_b0(); break;
+        case 0xB9D4:
+            func_B9D4_b0(); break;
+        case 0xB9FB:
+            func_B9FB_b0(); break;
         default:
             nes_log_dispatch_miss(addr);
             return 0;

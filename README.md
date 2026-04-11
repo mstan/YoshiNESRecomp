@@ -45,11 +45,23 @@ Requires Visual Studio 2022 and CMake 3.20+.
 ```bash
 git clone https://github.com/mstan/YoshiNESRecomp
 cd YoshiNESRecomp
+
+# Windows
+setup.bat
+
+# Linux / macOS
+chmod +x setup.sh && ./setup.sh
+```
+
+This clones [nesrecomp](https://github.com/mstan/nesrecomp) at the exact
+version pinned in `nesrecomp.pin` and links the Nestopia oracle core.
+
+Then build:
+
+```bash
 cmake -S . -B build -G "Visual Studio 17 2022" -A x64
 cmake --build build --config Release
 ```
-
-The build expects the [nesrecomp](https://github.com/mstan/nesrecomp) framework to be available at `./nesrecomp` (a directory junction or clone). The pinned commit is recorded in `nesrecomp.pin` and enforced at configure time.
 
 Place your Yoshi (USA) ROM in the build directory or select it at runtime.
 

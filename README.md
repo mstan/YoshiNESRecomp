@@ -7,7 +7,7 @@ Built with the [NESRecomp](https://github.com/mstan/nesrecomp) framework.
 
 ## What Works
 
-- Title screen with the bouncing-egg animation
+- Title screen
 - Single-player puzzle mode (Type-A and Type-B)
 - Two-player versus mode
 - Score, level, and speed display

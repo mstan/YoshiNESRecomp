@@ -17,3 +17,7 @@ nesrecomp.vendored.bak/
 
 # Generated-output rollback backups
 generated/*.preregen.bak
+
+# recomp-ui launcher is a junction to the shared checkout (submodule later).
+recomp-ui
+build_ui/

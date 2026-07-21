@@ -135,76 +135,6 @@
 
 ## BRK ($00) reachable sites
   count: unique=423
-    bank=0    addr=$A670
-    bank=1    addr=$8179
-    bank=1    addr=$818C
-    bank=1    addr=$8192
-    bank=1    addr=$81AB
-    bank=1    addr=$81B1
-    bank=1    addr=$81CC
-    bank=1    addr=$81D2
-    bank=1    addr=$81ED
-    bank=1    addr=$81F3
-    bank=1    addr=$820C
-    bank=1    addr=$8212
-    bank=1    addr=$822B
-    bank=1    addr=$8231
-    bank=1    addr=$824A
-    bank=1    addr=$8250
-    bank=1    addr=$825E
-    bank=1    addr=$826C
-    bank=1    addr=$8272
-    bank=1    addr=$828B
-    bank=1    addr=$8291
-    bank=1    addr=$82AA
-    bank=1    addr=$82B0
-    bank=1    addr=$82CB
-    bank=1    addr=$82D1
-    bank=1    addr=$82EC
-    bank=1    addr=$82F2
-    bank=1    addr=$830D
-    bank=1    addr=$8313
-    bank=1    addr=$832E
-    bank=1    addr=$8334
-    bank=1    addr=$834F
-    bank=1    addr=$8355
-    bank=1    addr=$8361
-    bank=1    addr=$8372
-    bank=1    addr=$838D
-    bank=1    addr=$8393
-    bank=1    addr=$83A4
-    bank=1    addr=$83B0
-    bank=1    addr=$83BC
-    bank=1    addr=$83C8
-    bank=1    addr=$83D5
-    bank=1    addr=$83DB
-    bank=1    addr=$83EC
-    bank=1    addr=$83F8
-    bank=1    addr=$8409
-    bank=1    addr=$861A
-    bank=1    addr=$86B4
-    bank=1    addr=$86D7
-    bank=1    addr=$883C
-    bank=1    addr=$8864
-    bank=1    addr=$888F
-    bank=1    addr=$8BF3
-    bank=1    addr=$8C04
-    bank=1    addr=$8C37
-    bank=1    addr=$8CB0
-    bank=1    addr=$8CDD
-    bank=1    addr=$8CE7
-    bank=1    addr=$8CF0
-    bank=1    addr=$8D24
-    bank=1    addr=$8D6C
-    bank=1    addr=$8DFD
-    bank=1    addr=$8E2D
-    bank=1    addr=$8E41
-    bank=1    addr=$8E79
-    bank=1    addr=$8EBF
-    bank=1    addr=$8F3A
-    bank=1    addr=$B281
-    bank=1    addr=$B282
-    bank=1    addr=$BFF1
     bank=7    addr=$D310
     bank=7    addr=$D314
     bank=7    addr=$D322
@@ -280,24 +210,6 @@
     bank=7    addr=$D4E2
     bank=7    addr=$D5D3
     bank=7    addr=$D5DA
-    bank=1    addr=$86B0
-    bank=1    addr=$915B
-    bank=1    addr=$9297
-    bank=1    addr=$9474
-    bank=1    addr=$955F
-    bank=1    addr=$961F
-    bank=1    addr=$9652
-    bank=1    addr=$9692
-    bank=1    addr=$96A2
-    bank=1    addr=$96A3
-    bank=1    addr=$96BE
-    bank=1    addr=$9720
-    bank=2    addr=$BFF1
-    bank=3    addr=$BFF1
-    bank=4    addr=$BFF1
-    bank=5    addr=$BFF1
-    bank=6    addr=$BFF1
-    bank=1    addr=$AC39
     bank=7    addr=$F5D2
     bank=7    addr=$DD89
     bank=7    addr=$DE86
@@ -332,104 +244,6 @@
     bank=7    addr=$CDEC
     bank=7    addr=$F7E3
     bank=7    addr=$CE7E
-    bank=1    addr=$ACE0
-    bank=0    addr=$90AF
-    bank=1    addr=$9A7E
-    bank=1    addr=$9A7F
-    bank=1    addr=$9ABE
-    bank=1    addr=$9AC8
-    bank=1    addr=$9B89
-    bank=1    addr=$9B92
-    bank=1    addr=$9BCA
-    bank=1    addr=$9BE1
-    bank=1    addr=$9C27
-    bank=1    addr=$9C36
-    bank=1    addr=$9CF0
-    bank=1    addr=$9CF1
-    bank=1    addr=$9D10
-    bank=1    addr=$9D11
-    bank=1    addr=$9D12
-    bank=1    addr=$9D55
-    bank=1    addr=$9D5C
-    bank=1    addr=$9D5D
-    bank=1    addr=$9D7C
-    bank=1    addr=$9D7D
-    bank=1    addr=$9D7E
-    bank=1    addr=$9DDA
-    bank=1    addr=$9DF4
-    bank=1    addr=$9E03
-    bank=1    addr=$9E4D
-    bank=1    addr=$A56D
-    bank=1    addr=$A61C
-    bank=1    addr=$ADE9
-    bank=1    addr=$ADEA
-    bank=1    addr=$ADEB
-    bank=1    addr=$ADEC
-    bank=1    addr=$ADEE
-    bank=1    addr=$ADF2
-    bank=1    addr=$ADF7
-    bank=1    addr=$AE07
-    bank=1    addr=$AE08
-    bank=1    addr=$AE09
-    bank=1    addr=$AE0B
-    bank=1    addr=$AE0F
-    bank=1    addr=$AE14
-    bank=1    addr=$AE32
-    bank=1    addr=$AE33
-    bank=1    addr=$AE35
-    bank=1    addr=$AE39
-    bank=1    addr=$AE69
-    bank=1    addr=$AE6A
-    bank=1    addr=$AE6D
-    bank=1    addr=$AE71
-    bank=1    addr=$AE72
-    bank=1    addr=$AE73
-    bank=1    addr=$AE76
-    bank=1    addr=$AE7B
-    bank=1    addr=$AE7C
-    bank=1    addr=$AE7F
-    bank=1    addr=$AE8F
-    bank=1    addr=$AE90
-    bank=1    addr=$AE92
-    bank=1    addr=$AE95
-    bank=1    addr=$AEAA
-    bank=1    addr=$AEBF
-    bank=1    addr=$AEC1
-    bank=1    addr=$AEF4
-    bank=1    addr=$AEF5
-    bank=1    addr=$AEF8
-    bank=1    addr=$AF02
-    bank=1    addr=$AF20
-    bank=1    addr=$AF21
-    bank=1    addr=$AF22
-    bank=1    addr=$AF24
-    bank=1    addr=$AF29
-    bank=1    addr=$AF87
-    bank=1    addr=$AF88
-    bank=1    addr=$AF89
-    bank=1    addr=$AF8F
-    bank=1    addr=$AFC7
-    bank=1    addr=$AFC8
-    bank=1    addr=$AFCB
-    bank=1    addr=$AFCE
-    bank=1    addr=$AFCF
-    bank=1    addr=$AFD0
-    bank=1    addr=$AFD1
-    bank=1    addr=$AFD4
-    bank=1    addr=$AFE9
-    bank=1    addr=$AFF4
-    bank=1    addr=$AFF6
-    bank=1    addr=$AFFA
-    bank=1    addr=$C021
-    bank=1    addr=$C022
-    bank=1    addr=$C023
-    bank=1    addr=$C024
-    bank=0    addr=$BFF1
-    bank=1    addr=$AC6C
-    bank=0    addr=$86AE
-    bank=0    addr=$82AD
-    bank=0    addr=$87B0
-    bank=1    addr=$AB44
     bank=7    addr=$C420
     bank=7    addr=$C4BB
     bank=7    addr=$C4D3
@@ -548,16 +362,202 @@
     bank=7    addr=$CF10
     bank=7    addr=$CF11
     bank=7    addr=$CD9B
-    bank=1    addr=$ADC6
     bank=7    addr=$F78F
-    bank=1    addr=$AC0B
-    bank=1    addr=$AD66
+    bank=0    addr=$A670
+    bank=0    addr=$90AF
+    bank=0    addr=$BFF1
+    bank=0    addr=$86AE
+    bank=0    addr=$82AD
+    bank=0    addr=$87B0
     bank=0    addr=$A983
     bank=0    addr=$85FC
     bank=0    addr=$856F
     bank=0    addr=$A563
     bank=0    addr=$A9C1
+    bank=1    addr=$8179
+    bank=1    addr=$818C
+    bank=1    addr=$8192
+    bank=1    addr=$81AB
+    bank=1    addr=$81B1
+    bank=1    addr=$81CC
+    bank=1    addr=$81D2
+    bank=1    addr=$81ED
+    bank=1    addr=$81F3
+    bank=1    addr=$820C
+    bank=1    addr=$8212
+    bank=1    addr=$822B
+    bank=1    addr=$8231
+    bank=1    addr=$824A
+    bank=1    addr=$8250
+    bank=1    addr=$825E
+    bank=1    addr=$826C
+    bank=1    addr=$8272
+    bank=1    addr=$828B
+    bank=1    addr=$8291
+    bank=1    addr=$82AA
+    bank=1    addr=$82B0
+    bank=1    addr=$82CB
+    bank=1    addr=$82D1
+    bank=1    addr=$82EC
+    bank=1    addr=$82F2
+    bank=1    addr=$830D
+    bank=1    addr=$8313
+    bank=1    addr=$832E
+    bank=1    addr=$8334
+    bank=1    addr=$834F
+    bank=1    addr=$8355
+    bank=1    addr=$8361
+    bank=1    addr=$8372
+    bank=1    addr=$838D
+    bank=1    addr=$8393
+    bank=1    addr=$83A4
+    bank=1    addr=$83B0
+    bank=1    addr=$83BC
+    bank=1    addr=$83C8
+    bank=1    addr=$83D5
+    bank=1    addr=$83DB
+    bank=1    addr=$83EC
+    bank=1    addr=$83F8
+    bank=1    addr=$8409
+    bank=1    addr=$861A
+    bank=1    addr=$86B4
+    bank=1    addr=$86D7
+    bank=1    addr=$883C
+    bank=1    addr=$8864
+    bank=1    addr=$888F
+    bank=1    addr=$8BF3
+    bank=1    addr=$8C04
+    bank=1    addr=$8C37
+    bank=1    addr=$8CB0
+    bank=1    addr=$8CDD
+    bank=1    addr=$8CE7
+    bank=1    addr=$8CF0
+    bank=1    addr=$8D24
+    bank=1    addr=$8D6C
+    bank=1    addr=$8DFD
+    bank=1    addr=$8E2D
+    bank=1    addr=$8E41
+    bank=1    addr=$8E79
+    bank=1    addr=$8EBF
+    bank=1    addr=$8F3A
+    bank=1    addr=$B281
+    bank=1    addr=$B282
+    bank=1    addr=$BFF1
+    bank=1    addr=$86B0
+    bank=1    addr=$915B
+    bank=1    addr=$9297
+    bank=1    addr=$9474
+    bank=1    addr=$955F
+    bank=1    addr=$961F
+    bank=1    addr=$9652
+    bank=1    addr=$9692
+    bank=1    addr=$96A2
+    bank=1    addr=$96A3
+    bank=1    addr=$96BE
+    bank=1    addr=$9720
+    bank=1    addr=$AC39
+    bank=1    addr=$ACE0
+    bank=1    addr=$9A7E
+    bank=1    addr=$9A7F
+    bank=1    addr=$9ABE
+    bank=1    addr=$9AC8
+    bank=1    addr=$9B89
+    bank=1    addr=$9B92
+    bank=1    addr=$9BCA
+    bank=1    addr=$9BE1
+    bank=1    addr=$9C27
+    bank=1    addr=$9C36
+    bank=1    addr=$9CF0
+    bank=1    addr=$9CF1
+    bank=1    addr=$9D10
+    bank=1    addr=$9D11
+    bank=1    addr=$9D12
+    bank=1    addr=$9D55
+    bank=1    addr=$9D5C
+    bank=1    addr=$9D5D
+    bank=1    addr=$9D7C
+    bank=1    addr=$9D7D
+    bank=1    addr=$9D7E
+    bank=1    addr=$9DDA
+    bank=1    addr=$9DF4
+    bank=1    addr=$9E03
+    bank=1    addr=$9E4D
+    bank=1    addr=$A56D
+    bank=1    addr=$A61C
+    bank=1    addr=$ADE9
+    bank=1    addr=$ADEA
+    bank=1    addr=$ADEB
+    bank=1    addr=$ADEC
+    bank=1    addr=$ADEE
+    bank=1    addr=$ADF2
+    bank=1    addr=$ADF7
+    bank=1    addr=$AE07
+    bank=1    addr=$AE08
+    bank=1    addr=$AE09
+    bank=1    addr=$AE0B
+    bank=1    addr=$AE0F
+    bank=1    addr=$AE14
+    bank=1    addr=$AE32
+    bank=1    addr=$AE33
+    bank=1    addr=$AE35
+    bank=1    addr=$AE39
+    bank=1    addr=$AE69
+    bank=1    addr=$AE6A
+    bank=1    addr=$AE6D
+    bank=1    addr=$AE71
+    bank=1    addr=$AE72
+    bank=1    addr=$AE73
+    bank=1    addr=$AE76
+    bank=1    addr=$AE7B
+    bank=1    addr=$AE7C
+    bank=1    addr=$AE7F
+    bank=1    addr=$AE8F
+    bank=1    addr=$AE90
+    bank=1    addr=$AE92
+    bank=1    addr=$AE95
+    bank=1    addr=$AEAA
+    bank=1    addr=$AEBF
+    bank=1    addr=$AEC1
+    bank=1    addr=$AEF4
+    bank=1    addr=$AEF5
+    bank=1    addr=$AEF8
+    bank=1    addr=$AF02
+    bank=1    addr=$AF20
+    bank=1    addr=$AF21
+    bank=1    addr=$AF22
+    bank=1    addr=$AF24
+    bank=1    addr=$AF29
+    bank=1    addr=$AF87
+    bank=1    addr=$AF88
+    bank=1    addr=$AF89
+    bank=1    addr=$AF8F
+    bank=1    addr=$AFC7
+    bank=1    addr=$AFC8
+    bank=1    addr=$AFCB
+    bank=1    addr=$AFCE
+    bank=1    addr=$AFCF
+    bank=1    addr=$AFD0
+    bank=1    addr=$AFD1
+    bank=1    addr=$AFD4
+    bank=1    addr=$AFE9
+    bank=1    addr=$AFF4
+    bank=1    addr=$AFF6
+    bank=1    addr=$AFFA
+    bank=1    addr=$C021
+    bank=1    addr=$C022
+    bank=1    addr=$C023
+    bank=1    addr=$C024
+    bank=1    addr=$AC6C
+    bank=1    addr=$AB44
+    bank=1    addr=$ADC6
+    bank=1    addr=$AC0B
+    bank=1    addr=$AD66
     bank=1    addr=$A2E7
+    bank=2    addr=$BFF1
+    bank=3    addr=$BFF1
+    bank=4    addr=$BFF1
+    bank=5    addr=$BFF1
+    bank=6    addr=$BFF1
 
 ## JMP (\$xxFF) page-wrap erratum sites
   count: unique=0
@@ -1564,130 +1564,130 @@
   $00  BRK        mode=IMP   1537
   $01  ORA        mode=INDX  1418
   $02  ???  KIL   mode=IMP   654
-  $03  ???  SLO   mode=INDX  462
+  $03  SLO  SLO   mode=INDX  462
   $04  NOP*  NOP*  mode=ZP    376
   $05  ORA        mode=ZP    313
   $06  ASL        mode=ZP    177
-  $07  ???  SLO   mode=ZP    288
+  $07  SLO  SLO   mode=ZP    288
   $08  PHP        mode=IMP   245
   $09  ORA        mode=IMM   196
   $0A  ASL        mode=ACC   367
-  $0B  ???  AAC   mode=IMM   70
+  $0B  ANC  AAC   mode=IMM   70
   $0C  NOP*  NOP*  mode=ABS   215
   $0D  ORA        mode=ABS   85
   $0E  ASL        mode=ABS   47
-  $0F  ???  SLO   mode=ABS   100
+  $0F  SLO  SLO   mode=ABS   100
   $10  BPL        mode=REL   276
   $11  ORA        mode=INDY  489
   $12  ???  KIL   mode=IMP   166
-  $13  ???  SLO   mode=INDY  419
+  $13  SLO  SLO   mode=INDY  419
   $14  NOP*  NOP*  mode=ZPX   238
   $15  ORA        mode=ZPX   117
   $16  ASL        mode=ZPX   94
-  $17  ???  SLO   mode=ZPX   217
+  $17  SLO  SLO   mode=ZPX   217
   $18  CLC        mode=IMP   856
   $19  ORA        mode=ABSY  28
   $1A  NOP  NOP*  mode=IMP   27
-  $1B  ???  SLO   mode=ABSY  24
+  $1B  SLO  SLO   mode=ABSY  24
   $1C  NOP*  NOP*  mode=ABSX  81
   $1D  ORA        mode=ABSX  40
   $1E  ASL        mode=ABSX  7
-  $1F  ???  SLO   mode=ABSX  42
+  $1F  SLO  SLO   mode=ABSX  42
   $20  JSR        mode=ABS   3913
   $21  AND        mode=INDX  1582
   $22  ???  KIL   mode=IMP   74
-  $23  ???  RLA   mode=INDX  547
+  $23  RLA  RLA   mode=INDX  547
   $24  BIT        mode=ZP    28
   $25  AND        mode=ZP    407
   $26  ROL        mode=ZP    412
-  $27  ???  RLA   mode=ZP    110
+  $27  RLA  RLA   mode=ZP    110
   $28  PLP        mode=IMP   123
   $29  AND        mode=IMM   458
   $2A  ROL        mode=ACC   44
-  $2B  ???  AAC   mode=IMM   16
+  $2B  ANC  AAC   mode=IMM   16
   $2C  BIT        mode=ABS   13
   $2D  AND        mode=ABS   117
   $2E  ROL        mode=ABS   13
-  $2F  ???  RLA   mode=ABS   19
+  $2F  RLA  RLA   mode=ABS   19
   $30  BMI        mode=REL   178
   $31  AND        mode=INDY  144
   $32  ???  KIL   mode=IMP   12
-  $33  ???  RLA   mode=INDY  75
+  $33  RLA  RLA   mode=INDY  75
   $34  NOP*  NOP*  mode=ZPX   3
   $35  AND        mode=ZPX   9
   $36  ROL        mode=ZPX   9
-  $37  ???  RLA   mode=ZPX   18
+  $37  RLA  RLA   mode=ZPX   18
   $38  SEC        mode=IMP   184
   $39  AND        mode=ABSY  14
   $3A  NOP  NOP*  mode=IMP   14
-  $3B  ???  RLA   mode=ABSY  2
+  $3B  RLA  RLA   mode=ABSY  2
   $3C  NOP*  NOP*  mode=ABSX  15
   $3D  AND        mode=ABSX  38
   $3E  ROL        mode=ABSX  15
-  $3F  ???  RLA   mode=ABSX  5
+  $3F  RLA  RLA   mode=ABSX  5
   $40  RTI        mode=IMP   602
   $41  EOR        mode=INDX  2122
   $42  ???  KIL   mode=IMP   15
-  $43  ???  SRE   mode=INDX  752
+  $43  SRE  SRE   mode=INDX  752
   $44  NOP*  NOP*  mode=ZP    22
   $45  EOR        mode=ZP    628
   $46  LSR        mode=ZP    49
-  $47  ???  SRE   mode=ZP    187
+  $47  SRE  SRE   mode=ZP    187
   $48  PHA        mode=IMP   86
   $49  EOR        mode=IMM   128
   $4A  LSR        mode=ACC   186
-  $4B  ???  ALR   mode=IMM   24
+  $4B  ALR  ALR   mode=IMM   24
   $4C  JMP        mode=ABS   1084
   $4D  EOR        mode=ABS   20
   $4E  LSR        mode=ABS   16
-  $4F  ???  SRE   mode=ABS   57
+  $4F  SRE  SRE   mode=ABS   57
   $50  BVC        mode=REL   489
   $51  EOR        mode=INDY  672
   $52  ???  KIL   mode=IMP   18
-  $53  ???  SRE   mode=INDY  176
+  $53  SRE  SRE   mode=INDY  176
   $54  NOP*  NOP*  mode=ZPX   14
   $55  EOR        mode=ZPX   119
   $56  LSR        mode=ZPX   4
-  $57  ???  SRE   mode=ZPX   71
+  $57  SRE  SRE   mode=ZPX   71
   $58  CLI        mode=IMP   6
   $59  EOR        mode=ABSY  12
   $5A  NOP  NOP*  mode=IMP   607
-  $5B  ???  SRE   mode=ABSY  6
+  $5B  SRE  SRE   mode=ABSY  6
   $5C  NOP*  NOP*  mode=ABSX  2
   $5D  EOR        mode=ABSX  36
   $5E  LSR        mode=ABSX  27
-  $5F  ???  SRE   mode=ABSX  17
+  $5F  SRE  SRE   mode=ABSX  17
   $60  RTS        mode=IMP   1504
   $61  ADC        mode=INDX  1311
   $62  ???  KIL   mode=IMP   11
-  $63  ???  RRA   mode=INDX  312
+  $63  RRA  RRA   mode=INDX  312
   $64  NOP*  NOP*  mode=ZP    84
   $65  ADC        mode=ZP    284
   $66  ROR        mode=ZP    12
-  $67  ???  RRA   mode=ZP    3
+  $67  RRA  RRA   mode=ZP    3
   $68  PLA        mode=IMP   121
   $69  ADC        mode=IMM   436
   $6A  ROR        mode=ACC   50
-  $6B  ???  ARR   mode=IMM   27
+  $6B  ARR  ARR   mode=IMM   27
   $6C  JMP        mode=IND   17
   $6D  ADC        mode=ABS   85
   $6E  ROR        mode=ABS   3
-  $6F  ???  RRA   mode=ABS   20
+  $6F  RRA  RRA   mode=ABS   20
   $70  BVS        mode=REL   532
   $71  ADC        mode=INDY  1263
   $72  ???  KIL   mode=IMP   20
-  $73  ???  RRA   mode=INDY  572
+  $73  RRA  RRA   mode=INDY  572
   $74  NOP*  NOP*  mode=ZPX   11
   $75  ADC        mode=ZPX   215
   $76  ROR        mode=ZPX   23
-  $77  ???  RRA   mode=ZPX   179
+  $77  RRA  RRA   mode=ZPX   179
   $78  SEI        mode=IMP   40
   $79  ADC        mode=ABSY  46
-  $7B  ???  RRA   mode=ABSY  74
+  $7B  RRA  RRA   mode=ABSY  74
   $7C  NOP*  NOP*  mode=ABSX  13
   $7D  ADC        mode=ABSX  34
   $7E  ROR        mode=ABSX  36
-  $7F  ???  RRA   mode=ABSX  12
+  $7F  RRA  RRA   mode=ABSX  12
   $80  NOP  NOP*  mode=IMM   210
   $81  STA        mode=INDX  535
   $82  NOP  NOP*  mode=IMM   64
@@ -1755,43 +1755,43 @@
   $C0  CPY        mode=IMM   655
   $C1  CMP        mode=INDX  1093
   $C2  NOP  NOP*  mode=IMM   128
-  $C3  ???  DCP   mode=INDX  767
+  $C3  DCP  DCP   mode=INDX  767
   $C4  CPY        mode=ZP    26
   $C5  CMP        mode=ZP    339
   $C6  DEC        mode=ZP    212
-  $C7  ???  DCP   mode=ZP    59
+  $C7  DCP  DCP   mode=ZP    59
   $C8  INY        mode=IMP   494
   $C9  CMP        mode=IMM   777
   $CA  DEX        mode=IMP   305
-  $CB  ???  AXS   mode=IMM   206
+  $CB  AXS  AXS   mode=IMM   206
   $CC  CPY        mode=ABS   24
   $CD  CMP        mode=ABS   87
   $CE  DEC        mode=ABS   271
-  $CF  ???  DCP   mode=ABS   220
+  $CF  DCP  DCP   mode=ABS   220
   $D0  BNE        mode=REL   1375
   $D1  CMP        mode=INDY  34
   $D2  ???  KIL   mode=IMP   8
-  $D3  ???  DCP   mode=INDY  32
+  $D3  DCP  DCP   mode=INDY  32
   $D4  NOP*  NOP*  mode=ZPX   21
   $D5  CMP        mode=ZPX   23
   $D6  DEC        mode=ZPX   71
-  $D7  ???  DCP   mode=ZPX   10
+  $D7  DCP  DCP   mode=ZPX   10
   $D8  CLD        mode=IMP   214
   $D9  CMP        mode=ABSY  12
   $DA  NOP  NOP*  mode=IMP   337
-  $DB  ???  DCP   mode=ABSY  57
+  $DB  DCP  DCP   mode=ABSY  57
   $DC  NOP*  NOP*  mode=ABSX  858
   $DD  CMP        mode=ABSX  106
   $DE  DEC        mode=ABSX  82
-  $DF  ???  DCP   mode=ABSX  3
+  $DF  DCP  DCP   mode=ABSX  3
   $E0  CPX        mode=IMM   253
   $E1  SBC        mode=INDX  31
   $E2  NOP  NOP*  mode=IMM   24
-  $E3  ???  ISC   mode=INDX  676
+  $E3  ISC  ISC   mode=INDX  676
   $E4  CPX        mode=ZP    1866
   $E5  SBC        mode=ZP    1910
   $E6  INC        mode=ZP    1006
-  $E7  ???  ISC   mode=ZP    112
+  $E7  ISC  ISC   mode=ZP    112
   $E8  INX        mode=IMP   1981
   $E9  SBC        mode=IMM   5138
   $EA  NOP        mode=IMP   260
@@ -1799,20 +1799,20 @@
   $EC  CPX        mode=ABS   1
   $ED  SBC        mode=ABS   101
   $EE  INC        mode=ABS   282
-  $EF  ???  ISC   mode=ABS   2
+  $EF  ISC  ISC   mode=ABS   2
   $F0  BEQ        mode=REL   3624
   $F1  SBC        mode=INDY  14
   $F2  ???  KIL   mode=IMP   118
-  $F3  ???  ISC   mode=INDY  32
+  $F3  ISC  ISC   mode=INDY  32
   $F4  NOP*  NOP*  mode=ZPX   58
   $F5  SBC        mode=ZPX   7
   $F6  INC        mode=ZPX   46
-  $F7  ???  ISC   mode=ZPX   5
+  $F7  ISC  ISC   mode=ZPX   5
   $F8  SED        mode=IMP   28
   $F9  SBC        mode=ABSY  8
   $FA  NOP  NOP*  mode=IMP   12
-  $FB  ???  ISC   mode=ABSY  9
+  $FB  ISC  ISC   mode=ABSY  9
   $FC  NOP*  NOP*  mode=ABSX  19
   $FD  SBC        mode=ABSX  935
   $FE  INC        mode=ABSX  775
-  $FF  ???  ISC   mode=ABSX  487909
+  $FF  ISC  ISC   mode=ABSX  487909

@@ -14,3 +14,5 @@ nesrecomp.vendored.bak/
 
 # Generated-output rollback backups
 generated/*.preregen.bak
+
+build_ui/

@@ -10,10 +10,6 @@ set(NESRECOMP_ROOT ${CMAKE_SOURCE_DIR}/nesrecomp)
 # commit is the gitlink recorded in this repo. After cloning run setup.sh/.bat
 # (git submodule update --init) to fetch them at the recorded commits.
 
-# ---- Nestopia Oracle (optional) ----
-option(ENABLE_NESTOPIA_ORACLE "Build with Nestopia emulator oracle for verify mode" ON)
-set(NESTOPIA_DIR "${CMAKE_SOURCE_DIR}/nestopia-core")
-
 include(${NESRECOMP_ROOT}/runner/runner.cmake)
 
 list(APPEND CMAKE_PREFIX_PATH "${NESRECOMP_ROOT}/runner/external/SDL2/cmake")
@@ -39,11 +35,6 @@ target_link_libraries(YoshiRecomp PRIVATE ${SDL2_LIBRARIES})
 # Temporary: enable stack tracking for title-screen follower investigation.
 # Remove once root cause of $0248 reset is found.
 target_compile_definitions(YoshiRecomp PRIVATE RECOMP_STACK_TRACKING)
-
-if(ENABLE_NESTOPIA_ORACLE)
-    target_link_libraries(YoshiRecomp PRIVATE nestopia_core)
-    target_compile_definitions(YoshiRecomp PRIVATE ENABLE_NESTOPIA_ORACLE)
-endif()
 
 if(WIN32)
     target_link_libraries(YoshiRecomp PRIVATE ws2_32)

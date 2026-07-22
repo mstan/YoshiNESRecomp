@@ -157,7 +157,6 @@ void func_E610(void);
 void func_E601(void);
 void func_E501(void);
 void func_E650(void);
-void func_EDBD(void);
 void func_EDD0(void);
 void func_E5D5(void);
 void func_E51F(void);
@@ -267,6 +266,7 @@ void func_A023_b1(void);
 void func_A02D_b1(void);
 void func_80A4_b0(void);
 void func_80B3_b1(void);
+void func_EDBD(void);
 void func_859E_b0(void);
 void func_859E_b1(void);
 void func_859E_b2(void);
@@ -298,6 +298,7 @@ void func_802B_b4(void);
 void func_802B_b5(void);
 void func_802B_b6(void);
 void func_CF8A(void);
+void func_DC10(void);
 void func_D202(void);
 void func_D04F(void);
 void func_DC20(void);
@@ -421,7 +422,6 @@ void func_DCDB(void);
 void func_D1D0(void);
 void func_CFAB(void);
 void func_DF55(void);
-void func_DC10(void);
 void func_D926(void);
 void func_DC31(void);
 void func_D84C(void);
@@ -430,6 +430,7 @@ void func_D024(void);
 void func_D5A9(void);
 void func_D065(void);
 void func_DF00(void);
+void func_E022(void);
 void func_DF5F(void);
 void func_DEF3(void);
 void func_D026(void);
@@ -437,13 +438,17 @@ void func_DEA5(void);
 void func_DE59(void);
 void func_D8B1(void);
 void func_D0A1(void);
+void func_E008(void);
+void func_E02F(void);
 void func_DA85(void);
+void func_E01F(void);
 void func_D8E6(void);
 void func_D0D8(void);
 void func_D9E6(void);
 void func_D946(void);
 void func_D866(void);
 void func_D966(void);
+void func_E01A(void);
 void func_D00E(void);
 void func_DFE6(void);
 void func_D944(void);
@@ -607,12 +612,7 @@ void func_DEDC(void);
 void func_DF6D(void);
 void func_E000(void);
 void func_E04D(void);
-void func_E022(void);
-void func_E008(void);
-void func_E02F(void);
-void func_E01F(void);
 void func_E060(void);
-void func_E01A(void);
 void func_E048(void);
 void func_E0AE(void);
 void func_E0D1(void);
@@ -691,6 +691,7 @@ void func_BB9A_b0(void);
 void func_BB77_b0(void);
 void func_BB1D_b0(void);
 void func_A5DC_b1(void);
+void func_A365_b1(void);
 void func_BBAA_b0(void);
 void func_BBBD_b0(void);
 void func_BB57_b0(void);
@@ -1139,6 +1140,13 @@ void func_90AD_b5(void);
 void func_90AD_b6(void);
 void func_9910_b0(void);
 void func_9910_b1(void);
+void func_A28E_b1(void);
+void func_A299_b1(void);
+void func_A2A5_b1(void);
+void func_A2D3_b1(void);
+void func_A2D6_b1(void);
+void func_A310_b1(void);
+void func_A316_b1(void);
 void func_9910_b2(void);
 void func_9910_b3(void);
 void func_9910_b4(void);
@@ -1308,6 +1316,7 @@ void func_9E44_b0(void);
 void func_9BF0_b0(void);
 void func_DC12(void);
 void func_F71D(void);
+void func_A37A_b1(void);
 void func_C810(void);
 void func_89A5_b0(void);
 void func_8504_b1(void);
@@ -1420,12 +1429,10 @@ void func_EAA5(void);
 void func_F7A7(void);
 void func_DCA5(void);
 void func_F7A5(void);
-void func_D087(void);
 void func_F520(void);
 void func_D9D0(void);
 void func_F3A9(void);
 void func_CE0A(void);
-void func_E120(void);
 void func_E076(void);
 void func_E08D(void);
 void func_E090(void);
@@ -1729,29 +1736,18 @@ void func_A9D8_b0(void);
 void func_8512_b0(void);
 void func_8514_b0(void);
 void func_8DC0_b0(void);
-void func_8575_b0(void);
-void func_ADC8_b0(void);
 void func_A998_b0(void);
 void func_A912_b0(void);
 void func_A981_b0(void);
 void func_A284_b1(void);
-void func_A28E_b1(void);
-void func_A299_b1(void);
-void func_A2A5_b1(void);
 void func_A340_b1(void);
 void func_A4D9_b1(void);
 void func_A516_b1(void);
 void func_A357_b1(void);
 void func_A3F2_b1(void);
 void func_A3D5_b1(void);
-void func_A365_b1(void);
 void func_A49D_b1(void);
 void func_A4CD_b1(void);
-void func_A37A_b1(void);
-void func_A2D3_b1(void);
-void func_A2D6_b1(void);
-void func_A310_b1(void);
-void func_A316_b1(void);
 void func_8472_b0(void);
 void func_B01B_b0(void);
 void func_B4D0_b0(void);
@@ -2150,8 +2146,6 @@ _dispatch_retry:
             func_E501(); break;
         case 0xE650:
             func_E650(); break;
-        case 0xEDBD:
-            func_EDBD(); break;
         case 0xEDD0:
             func_EDD0(); break;
         case 0xE5D5:
@@ -2380,6 +2374,8 @@ _dispatch_retry:
             func_80A4_b0(); break;
         case 0x80B3:
             func_80B3_b1(); break;
+        case 0xEDBD:
+            func_EDBD(); break;
         case 0x859E:
             switch (g_current_bank) {
                 case 0: func_859E_b0(); break;
@@ -2436,6 +2432,8 @@ _dispatch_retry:
             break;
         case 0xCF8A:
             func_CF8A(); break;
+        case 0xDC10:
+            func_DC10(); break;
         case 0xD202:
             func_D202(); break;
         case 0xD04F:
@@ -2682,8 +2680,6 @@ _dispatch_retry:
             func_CFAB(); break;
         case 0xDF55:
             func_DF55(); break;
-        case 0xDC10:
-            func_DC10(); break;
         case 0xD926:
             func_D926(); break;
         case 0xDC31:
@@ -2700,6 +2696,8 @@ _dispatch_retry:
             func_D065(); break;
         case 0xDF00:
             func_DF00(); break;
+        case 0xE022:
+            func_E022(); break;
         case 0xDF5F:
             func_DF5F(); break;
         case 0xDEF3:
@@ -2714,8 +2712,14 @@ _dispatch_retry:
             func_D8B1(); break;
         case 0xD0A1:
             func_D0A1(); break;
+        case 0xE008:
+            func_E008(); break;
+        case 0xE02F:
+            func_E02F(); break;
         case 0xDA85:
             func_DA85(); break;
+        case 0xE01F:
+            func_E01F(); break;
         case 0xD8E6:
             func_D8E6(); break;
         case 0xD0D8:
@@ -2728,6 +2732,8 @@ _dispatch_retry:
             func_D866(); break;
         case 0xD966:
             func_D966(); break;
+        case 0xE01A:
+            func_E01A(); break;
         case 0xD00E:
             func_D00E(); break;
         case 0xDFE6:
@@ -3016,18 +3022,8 @@ _dispatch_retry:
             func_E000(); break;
         case 0xE04D:
             func_E04D(); break;
-        case 0xE022:
-            func_E022(); break;
-        case 0xE008:
-            func_E008(); break;
-        case 0xE02F:
-            func_E02F(); break;
-        case 0xE01F:
-            func_E01F(); break;
         case 0xE060:
             func_E060(); break;
-        case 0xE01A:
-            func_E01A(); break;
         case 0xE048:
             func_E048(); break;
         case 0xE0AE:
@@ -3182,6 +3178,8 @@ _dispatch_retry:
             func_BB1D_b0(); break;
         case 0xA5DC:
             func_A5DC_b1(); break;
+        case 0xA365:
+            func_A365_b1(); break;
         case 0xBBAA:
             func_BBAA_b0(); break;
         case 0xBBBD:
@@ -4073,6 +4071,20 @@ _dispatch_retry:
                 default: return nes_interp_dispatch(addr);
             }
             break;
+        case 0xA28E:
+            func_A28E_b1(); break;
+        case 0xA299:
+            func_A299_b1(); break;
+        case 0xA2A5:
+            func_A2A5_b1(); break;
+        case 0xA2D3:
+            func_A2D3_b1(); break;
+        case 0xA2D6:
+            func_A2D6_b1(); break;
+        case 0xA310:
+            func_A310_b1(); break;
+        case 0xA316:
+            func_A316_b1(); break;
         case 0xADD3:
             switch (g_current_bank) {
                 case 0: func_ADD3_b0(); break;
@@ -4371,6 +4383,8 @@ _dispatch_retry:
             func_DC12(); break;
         case 0xF71D:
             func_F71D(); break;
+        case 0xA37A:
+            func_A37A_b1(); break;
         case 0xC810:
             func_C810(); break;
         case 0x89A5:
@@ -4623,8 +4637,6 @@ _dispatch_retry:
             func_DCA5(); break;
         case 0xF7A5:
             func_F7A5(); break;
-        case 0xD087:
-            func_D087(); break;
         case 0xF520:
             func_F520(); break;
         case 0xD9D0:
@@ -4633,8 +4645,6 @@ _dispatch_retry:
             func_F3A9(); break;
         case 0xCE0A:
             func_CE0A(); break;
-        case 0xE120:
-            func_E120(); break;
         case 0xE076:
             func_E076(); break;
         case 0xE08D:
@@ -5201,10 +5211,6 @@ _dispatch_retry:
             func_8514_b0(); break;
         case 0x8DC0:
             func_8DC0_b0(); break;
-        case 0x8575:
-            func_8575_b0(); break;
-        case 0xADC8:
-            func_ADC8_b0(); break;
         case 0xA998:
             func_A998_b0(); break;
         case 0xA912:
@@ -5213,12 +5219,6 @@ _dispatch_retry:
             func_A981_b0(); break;
         case 0xA284:
             func_A284_b1(); break;
-        case 0xA28E:
-            func_A28E_b1(); break;
-        case 0xA299:
-            func_A299_b1(); break;
-        case 0xA2A5:
-            func_A2A5_b1(); break;
         case 0xA340:
             func_A340_b1(); break;
         case 0xA4D9:
@@ -5231,22 +5231,10 @@ _dispatch_retry:
             func_A3F2_b1(); break;
         case 0xA3D5:
             func_A3D5_b1(); break;
-        case 0xA365:
-            func_A365_b1(); break;
         case 0xA49D:
             func_A49D_b1(); break;
         case 0xA4CD:
             func_A4CD_b1(); break;
-        case 0xA37A:
-            func_A37A_b1(); break;
-        case 0xA2D3:
-            func_A2D3_b1(); break;
-        case 0xA2D6:
-            func_A2D6_b1(); break;
-        case 0xA310:
-            func_A310_b1(); break;
-        case 0xA316:
-            func_A316_b1(); break;
         case 0x8472:
             func_8472_b0(); break;
         case 0xB01B:

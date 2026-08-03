@@ -16,3 +16,4 @@ nesrecomp.vendored.bak/
 generated/*.preregen.bak
 
 build_ui/
+build-voxel-vs/

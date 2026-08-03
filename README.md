@@ -47,6 +47,16 @@ Built with the [NESRecomp](https://github.com/mstan/nesrecomp) framework.
 
 Yoshi is a puzzle game with no battery save, so save states are the way to bookmark a session.
 
+### Experimental 3D Diorama
+
+The launcher exposes an optional `3D Voxel Diorama` package. It gives the
+playfield frame real depth while keeping Yoshi, enemies, eggs, and other
+readable pieces as camera-facing sprite cards. The stock ROM is never patched
+and the package is disabled by default.
+
+With the package enabled, use the numpad to experiment: `8/2` pitch, `4/6`
+yaw, `7/9` roll, `+/-` zoom, `1/3` sprite scale, `0` toggle, and `5` reset.
+
 ## Building from Source
 
 Requires Visual Studio 2022 and CMake 3.20+.

@@ -7,6 +7,7 @@
 #include "nes_runtime.h"
 #include "debug_server.h"
 #include "verify_mode.h"
+#include "game_voxel.h"
 #ifdef ENABLE_NESTOPIA_ORACLE
 #include "nestopia_bridge.h"
 #endif
@@ -30,13 +31,17 @@ void game_on_init(void) {
      *   4381 — Nestopia oracle (emulated mode) */
     int port = (g_run_mode == RUN_MODE_EMULATED) ? 4381 : 4380;
     debug_server_init(port);
+    game_voxel_init();
 
     if (g_run_mode != RUN_MODE_NATIVE && g_rom_path_for_extras) {
         verify_mode_init(g_rom_path_for_extras);
     }
 }
 
-void game_on_frame(uint64_t frame_count) { (void)frame_count; }
+void game_on_frame(uint64_t frame_count) {
+    (void)frame_count;
+    game_voxel_update();
+}
 
 void game_post_nmi(uint64_t frame_count) {
     (void)frame_count;
@@ -165,4 +170,6 @@ int game_handle_debug_cmd(const char *cmd, int id, const char *json) {
     return 0;
 }
 
-void game_post_render(uint32_t *framebuf) { (void)framebuf; }
+void game_post_render(uint32_t *framebuf) {
+    game_voxel_post_render(framebuf);
+}

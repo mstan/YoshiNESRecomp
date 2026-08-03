@@ -10,6 +10,8 @@ set(NESRECOMP_ROOT ${CMAKE_SOURCE_DIR}/nesrecomp)
 # commit is the gitlink recorded in this repo. After cloning run setup.sh/.bat
 # (git submodule update --init) to fetch them at the recorded commits.
 
+set(NESRECOMP_ENABLE_MODS ON CACHE BOOL
+    "Enable package mods for Yoshi." FORCE)
 include(${NESRECOMP_ROOT}/runner/runner.cmake)
 
 list(APPEND CMAKE_PREFIX_PATH "${NESRECOMP_ROOT}/runner/external/SDL2/cmake")
@@ -18,6 +20,8 @@ find_package(SDL2 REQUIRED)
 add_executable(YoshiRecomp
     ${NESRECOMP_RUNNER_SOURCES}
     extras.c
+    game_voxel.c
+    mods/voxel_plugin.c
     nes_snapshot.c
     verify_mode.c
     generated/yoshi_full.c
@@ -31,6 +35,11 @@ target_include_directories(YoshiRecomp PRIVATE
 )
 
 target_link_libraries(YoshiRecomp PRIVATE ${SDL2_LIBRARIES})
+
+target_compile_definitions(YoshiRecomp PRIVATE
+    NESRECOMP_GAME_ID="yoshi-nes"
+    NESRECOMP_GAME_ROM_CRC32="9474c09c"
+    NESRECOMP_GAME_SDL_EVENT_HOOK=game_voxel_handle_event)
 
 # Temporary: enable stack tracking for title-screen follower investigation.
 # Remove once root cause of $0248 reset is found.
@@ -52,4 +61,12 @@ endif()
 
 # ---- Pre-boot GUI launcher (recomp-ui / Dear ImGui) ----
 include(${CMAKE_SOURCE_DIR}/recomp-ui/recomp_ui.cmake)
-recomp_target_launcher_ui(YoshiRecomp BOXART ${CMAKE_SOURCE_DIR}/boxart.tga)
+recomp_target_launcher_ui(YoshiRecomp
+    CONSOLE nes
+    BOXART ${CMAKE_SOURCE_DIR}/boxart.tga)
+
+add_custom_command(TARGET YoshiRecomp POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/mods/preloaded"
+        "$<TARGET_FILE_DIR:YoshiRecomp>/mods"
+    COMMENT "Staging Yoshi's preloaded NES mod packages")

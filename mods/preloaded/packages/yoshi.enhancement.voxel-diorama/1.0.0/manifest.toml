@@ -1,0 +1,79 @@
+format_version = 1
+id = "yoshi.enhancement.voxel-diorama"
+version = "1.0.0"
+name = "3D Voxel Diorama"
+author = "NESRecomp"
+description = "Presents Yoshi as a depth-buffered puzzle table without modifying the stock ROM."
+license = "MIT"
+resolver = "declarative"
+save_compatibility = "stock"
+
+[[target]]
+game_id = "yoshi-nes"
+rom_crc32 = "9474c09c"
+
+[[feature]]
+id = "voxel-diorama"
+name = "3D Voxel Diorama"
+description = "Raises the puzzle-well frame while reconstructing characters and pieces as oriented sprite cards."
+group = "Display"
+default_enabled = false
+
+[[plugin]]
+feature = "voxel-diorama"
+id = "yoshi.voxel-diorama"
+
+[[option]]
+feature = "voxel-diorama"
+id = "pitch"
+label = "Camera pitch"
+group = "Camera"
+type = "integer"
+default = 30
+min = 5
+max = 85
+step = 5
+
+[[option]]
+feature = "voxel-diorama"
+id = "yaw"
+label = "Camera yaw"
+group = "Camera"
+type = "integer"
+default = -15
+min = -180
+max = 180
+step = 5
+
+[[option]]
+feature = "voxel-diorama"
+id = "roll"
+label = "Camera roll"
+group = "Camera"
+type = "integer"
+default = 0
+min = -45
+max = 45
+step = 5
+
+[[option]]
+feature = "voxel-diorama"
+id = "zoom"
+label = "Zoom"
+group = "Camera"
+type = "integer"
+default = 95
+min = 50
+max = 200
+step = 5
+
+[[option]]
+feature = "voxel-diorama"
+id = "sprite-scale"
+label = "Sprite scale"
+group = "Sprites"
+type = "integer"
+default = 125
+min = 75
+max = 250
+step = 5

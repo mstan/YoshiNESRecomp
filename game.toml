@@ -6,6 +6,7 @@
 # fix the parser, do not hand-edit generated files.
 
 [game]
+name = "Yoshi"
 output_prefix = "yoshi"
 
 # ── Dispatch misses ──────────────────────────────────────────────────────────

@@ -16,3 +16,7 @@ nesrecomp.vendored.bak/
 generated/*.preregen.bak
 
 build_ui/
+
+cycle-evidence/
+build-cycle/
+build-legacy/

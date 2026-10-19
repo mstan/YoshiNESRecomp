@@ -30,6 +30,12 @@ cmake -S . -B build-cycle -DNESRECOMP_ROM="/path/to/Game.nes"
 cmake --build build-cycle --config Release --parallel 4
 ```
 
+Version 1.2.1 uses the verified USA retail payload `E7EAD93B` (128 KiB PRG,
+32 KiB CHR), replacing the previous larger input. Both the catalog header and
+the old header that incorrectly declares 64 KiB CHR are supported for this
+complete payload. See [ROM header details](docs/ROM_HEADERS.md). Saves/states
+from the previous different image are not qualified for this release.
+
 Run the executable with that same ROM path. The launcher verifies the image;
 the runtime also verifies cartridge metadata and PRG identity. `NESRECOMP_ROOT`
 and `NESRECOMP_RECOMP_UI` can name other checkouts, and cross builds accept
@@ -43,10 +49,10 @@ Cycle-native comparisons use `nesrecomp/tools/cyc/cyc_verify.py`; `--interp-only
 runs the cycle interpreter for diagnosis. Earlier `--verify` / `--emulated`
 Nestopia entry points remain in the legacy build.
 
-The owner accepted the short Windows playtest on 2026-10-04. These remain
-branch previews; no merge or release has been performed. Desktop Windows checks cover a short gameplay route and runtime
-menu/input/save-state behavior; other platforms and full-game completion have
-not been validated by this migration.
+The owner accepted the original short Windows migration playtest on 2026-10-04.
+Version 1.2.1 additionally checks header acceptance, launcher Play and 900-frame
+native/interpreter startup parity with the verified USA image. These checks do
+not establish full-game completion or qualification on other platforms.
 
 ## What Works
 

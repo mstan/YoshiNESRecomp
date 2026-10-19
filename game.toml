@@ -1,4 +1,4 @@
-# game.toml — Yoshi (NES, Mapper 1 / MMC1, 8 PRG banks, 16 CHR ROM banks)
+# Yoshi USA: mapper 1 / MMC1, 8 x 16 KiB PRG banks, 4 x 8 KiB CHR ROM banks.
 #
 # Migrated from legacy game.cfg on 2026-04-07. The .cfg format was dropped
 # upstream; Yoshi previously stayed on .cfg because the TOML parser had
